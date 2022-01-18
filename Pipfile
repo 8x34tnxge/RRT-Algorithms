@@ -4,8 +4,14 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+networkx = "*"
+numpy = "*"
+pandas = "*"
+matplotlib = "*"
 
 [dev-packages]
+loguru = "*"
+pytest = "*"
 
 [requires]
 python_version = "3.7"
