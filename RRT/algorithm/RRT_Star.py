@@ -1,4 +1,5 @@
-from RRT.core import RRT_Template
+from RRT.core import RRT
 
-class RRT_Star(RRT_Template):
+
+class RRT_Star:
     pass

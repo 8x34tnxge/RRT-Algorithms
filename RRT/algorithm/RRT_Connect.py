@@ -1,4 +1,5 @@
-from RRT.core import RRT_Template
+from RRT.core import RRT
 
-class RRT_Connect(RRT_Template):
+
+class RRT_Connect:
     pass

@@ -1,1 +1,1 @@
-from RRT.core.tree import RRT_Template
+from RRT.core.tree import RRT
