@@ -4,10 +4,13 @@ from typing import List
 
 import networkx as nx
 import numpy as np
-from RRT.util import distCalc
+from RRT.util import distCalc, arrayHash
 
+from loguru import logger
 
 class RRT:
+    """Randomly-exploring Random Tree Structure
+    """
     def __init__(self, origin: np.ndarray, target: np.ndarray) -> None:
         self.IDcounter: int = 0
         self.origin: np.ndarray = origin
@@ -15,12 +18,45 @@ class RRT:
         # use graph to replace the tree structure
         self.tree = nx.Graph()
 
+    @classmethod
     def mergeFromTrees(cls, trees: List[RRT]) -> RRT:
+        """merge a list of RRT to a new RRT
+
+        Args:
+            trees (List[RRT]): the list of RRTs to merge
+
+        Returns:
+            RRT: new RRT merged from the given list of RRTs
+        """
+        newTree = cls(trees[0].origin, trees[1].target)
+        attrSearchDict = {}
         for tree in trees:
+            table4ID = {}
+            # insert each point/node from the given trees into the new tree
+            #[x] check node existence
+            logger.debug(f"nodes: {tree.tree.nodes(data=True)}")
             for node in tree.tree.nodes(data=True):
-                cls.addNode(node)
-            for edge in tree.tree.edges:
-                pass
+                oldID, nodeInfo = node
+                logger.debug(f"node ID:{oldID}")
+                logger.debug(f"table4ID: {table4ID}")
+                if arrayHash(nodeInfo['coord']) in attrSearchDict.keys():
+                    table4ID[oldID] = attrSearchDict[arrayHash(nodeInfo['coord'])]
+                    continue
+
+                newID = newTree.addNode(nodeInfo['coord'])
+
+                # update hash table
+                attrSearchDict[arrayHash(nodeInfo['coord'])] = newID
+                table4ID[oldID] = newID
+
+            # insert each edge from the given trees into the new tree
+            for edge in tree.tree.edges.data():
+                prevID = table4ID[edge[0]]
+                postID = table4ID[edge[1]]
+                weight = edge[-1]['weight']
+                newTree.addEdge(prevID, postID)
+
+        return newTree
 
     def addNode(self, nodeInfo: np.ndarray) -> int:
         """the class method to add a node to the tree and return its ID
@@ -37,7 +73,13 @@ class RRT:
         return nodeID
 
     def addEdge(self, currID, newID) -> None:
+        """the class method to add a new edge to the tree
+
+        Args:
+            currID ([type]): the node ID of one end of the edge
+            newID ([type]): the node ID of another end of the edge
+        """
         self.tree.add_edge(currID, newID, weight=distCalc(
-            prevNodeCoordInfo=self.tree.nodes[currID],
-            postNodeCoordInfo=self.tree.nodes[newID]
+            prevNodeCoordInfo=self.tree.nodes[currID]['coord'],
+            postNodeCoordInfo=self.tree.nodes[newID]['coord']
         ))
