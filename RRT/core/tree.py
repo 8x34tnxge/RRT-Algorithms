@@ -6,8 +6,6 @@ import networkx as nx
 import numpy as np
 from RRT.util import distCalc, arrayHash
 
-from loguru import logger
-
 class RRT:
     """Randomly-exploring Random Tree Structure
     """
@@ -34,11 +32,8 @@ class RRT:
             table4ID = {}
             # insert each point/node from the given trees into the new tree
             #[x] check node existence
-            logger.debug(f"nodes: {tree.tree.nodes(data=True)}")
             for node in tree.tree.nodes(data=True):
                 oldID, nodeInfo = node
-                logger.debug(f"node ID:{oldID}")
-                logger.debug(f"table4ID: {table4ID}")
                 if arrayHash(nodeInfo['coord']) in attrSearchDict.keys():
                     table4ID[oldID] = attrSearchDict[arrayHash(nodeInfo['coord'])]
                     continue
