@@ -15,6 +15,12 @@ class RRT:
         self.target: np.ndarray = target
         # use graph to replace the tree structure
         self.tree = nx.Graph()
+    
+    def getNodes(self):
+        return self.tree.nodes.data()
+
+    def getEdges(self):
+        return self.tree.edges.data()
 
     @classmethod
     def mergeFromTrees(cls, trees: List[RRT]) -> RRT:
