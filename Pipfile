@@ -8,6 +8,7 @@ networkx = "*"
 numpy = "*"
 pandas = "*"
 matplotlib = "*"
+nptyping = "*"
 
 [dev-packages]
 loguru = "*"
