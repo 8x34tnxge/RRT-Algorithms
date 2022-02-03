@@ -12,8 +12,25 @@ from RRT.util import distCalc, arrayHash
 # [x] the method to get the shortest route from origin to target
 class RRT:
     """Randomly-exploring Random Tree Structure"""
+    ######################################
+    ############# properties #############
+    ######################################
+    ndim: int
+    origin: NDArray[Any]
+    target: NDArray[Any]
+    tree: nx.classes.graph.Graph
+    isReachTarget: bool
 
+    #########################################
+    ############# class methods #############
+    #########################################
     def __init__(self, origin: NDArray[Any], target: NDArray[Any]) -> None:
+        """the initial method of RRT
+
+        Args:
+            origin (NDArray[Any]): the coordination info of the given origin
+            target (NDArray[Any]): the coordination info of the given target
+        """
         self.IDcounter: int = 0
         if origin.ndim != target.ndim:
             raise ValueError("Origin's dimension must be equal to target's dimension")

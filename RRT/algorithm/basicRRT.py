@@ -4,7 +4,7 @@ import random
 from typing import Union
 
 import numpy as np
-from RRT.core import tree
+from RRT.core.tree import RRT
 from RRT.core.sign import Failure, Success
 from RRT.util.extendmethod import directlyExtend
 from RRT.util.samplemethod import randomSample
@@ -35,7 +35,7 @@ class BasicRRT:
 
         # initialize the forward search tree
         origin, target = missionInfo.origin, missionInfo.target
-        self.searchTree: tree = tree(origin, target)
+        self.searchTree: RRT = RRT(origin, target)
 
     def run(self):
         """the method to run the basic RRT algorithm
