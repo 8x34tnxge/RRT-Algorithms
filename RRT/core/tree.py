@@ -1,12 +1,13 @@
 from __future__ import annotations
 
-from typing import List, Tuple, Any
+from typing import Any, List
 
-from nptyping import NDArray
 import networkx as nx
 import numpy as np
-from RRT.util import distCalc, arrayHash
+from nptyping import NDArray
 from RRT.core.routeInfo import RouteInfo
+from RRT.util import arrayHash, distCalc
+
 
 class RRT:
     """Randomly-exploring Random Tree Structure"""

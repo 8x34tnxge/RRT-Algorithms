@@ -1,0 +1,2 @@
+class DroneInfo:
+    pass
