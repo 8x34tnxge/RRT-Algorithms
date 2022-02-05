@@ -167,7 +167,7 @@ class RRT:
                 prevID = table4ID[edge[0]]
                 postID = table4ID[edge[1]]
                 weight = edge[-1]["weight"]
-                newTree.addEdge(prevID, postID)
+                newTree.addEdge(prevID, postID, weight)
 
         return newTree
 
