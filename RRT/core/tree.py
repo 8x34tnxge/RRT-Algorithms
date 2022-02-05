@@ -6,12 +6,11 @@ from nptyping import NDArray
 import networkx as nx
 import numpy as np
 from RRT.util import distCalc, arrayHash
+from RRT.core.routeInfo import RouteInfo
 
-# [x] the method to check whether to reach the target
-# [x] the method to get nearestNodeID
-# [x] the method to get the shortest route from origin to target
 class RRT:
     """Randomly-exploring Random Tree Structure"""
+
     ######################################
     ############# properties #############
     ######################################
@@ -72,7 +71,7 @@ class RRT:
         minDist = np.Infinity
 
         for id, info in self.getNodes():
-            coordInfo = info['coord']
+            coordInfo = info["coord"]
             dist = np.linalg.norm(nodeInfo, coordInfo)
             if dist < minDist:
                 minDist = dist
@@ -84,24 +83,19 @@ class RRT:
         self,
         origin: NDArray[Any] = None,
         target: NDArray[Any] = None,
-        routeType: str = "nodeID",
-    ) -> Tuple[List, np.float64]:
+    ) -> RouteInfo:
         """the method to get the route information including route sequence and route length
 
         Args:
             origin (NDArray[Any], optional): the origin information (coordination info). Defaults to None.
             target (NDArray[Any], optional): the target information (coordination info). Defaults to None.
-            routeType (str, optional): the type of route sequence,
-            'nodeID' will return a list of node IDs: [1, 2, 3] for example
-            'axisInfo' will return a list containing x-coord & y-coord of nodes in order: [ [1., 2., 3.], [1., 2., 3.] ] for example.
-            Defaults to 'nodeID'.
 
         Raises:
             AttributeError: The given origin is not found in trees
             AttributeError: The given target is not found in trees
 
         Returns:
-            Tuple[List, np.float64]: route sequence and its length respectively
+            RouteInfo: the route information including route sequence, route coordination and route total length
         """
         if origin is None:
             origin = self.origin
@@ -121,26 +115,24 @@ class RRT:
         if targetID is None:
             raise AttributeError("The given target is not found in trees")
 
-        route = nx.algorithms.shortest_path(
-            self.tree, originID, targetID, weight="weight"
-        )
+        try:
+            route = nx.algorithms.shortest_path(
+                self.tree, originID, targetID, weight="weight"
+            )
+        except nx.exception.NetworkXNoPath:
+            return RouteInfo(None, None, None)
+
+        axisInfo = [[] for _ in range(self.ndim)]
+        for nodeID in route:
+            coordInfo = nodesInfo[nodeID]["coord"]
+            for dimID in range(self.ndim):
+                axisInfo[dimID].append(coordInfo[dimID])
+
         length = nx.algorithms.shortest_path_length(
             self.tree, originID, targetID, weight="weight"
         )
 
-        if routeType is "nodeID":
-            return route, length
-        elif routeType is "axisInfo":
-            axisInfo = [[] for _ in range(self.ndim)]
-            for nodeID in route:
-                coordInfo = nodesInfo[nodeID]['coord']
-                for dimID in range(self.ndim):
-                    axisInfo[dimID].append(coordInfo[dimID])
-
-            return axisInfo, length
-
-        else:
-            raise AttributeError("the param [nodeType] is not 'nodeID" or 'axisInfo')
+        return RouteInfo(route, axisInfo, length)
 
     @classmethod
     def mergeFromTrees(cls, trees: List[RRT]) -> RRT:
@@ -195,18 +187,21 @@ class RRT:
         self.tree.add_node(nodeID, coord=nodeInfo)
         return nodeID
 
-    def addEdge(self, currID, newID) -> None:
+    def addEdge(self, currID: int, newID: int, weight: np.float64 = None) -> None:
         """the class method to add a new edge to the tree
 
         Args:
-            currID ([type]): the node ID of one end of the edge
-            newID ([type]): the node ID of another end of the edge
+            currID (int): the node ID of one end of the edge
+            newID (int): the node ID of another end of the edge
+            weight (np.float64, optional): the weight/length between the given two nodes. Defaults to None.
         """
-        self.tree.add_edge(
-            currID,
-            newID,
-            weight=distCalc(
+        weight = (
+            weight
+            if weight is not None
+            else distCalc(
                 prevNodeCoordInfo=self.tree.nodes[currID]["coord"],
                 postNodeCoordInfo=self.tree.nodes[newID]["coord"],
-            ),
+            )
         )
+
+        self.tree.add_edge(currID, newID, weight=weight)

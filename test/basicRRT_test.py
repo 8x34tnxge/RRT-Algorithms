@@ -32,19 +32,18 @@ class TestBasicRRT:
         for n in newT.tree.edges.data():
             logger.debug(f"edge: {n}")
         logger.debug(f"new tree info: {newT}")
-        path, length = newT.getRoute(
+        routeInfo = newT.getRoute(
             np.array([3]),
             np.array([4]),
         )
-        logger.debug(f"path: {path}")
-        logger.debug(f"length: {length}")
-        path, length = newT.getRoute(
+        logger.debug(f"path: {routeInfo.getRoute()}")
+        logger.debug(f"length: {routeInfo.getLength()}")
+        routeInfo = newT.getRoute(
             np.array([3]),
             np.array([4]),
-            'axisInfo'
         )
-        logger.debug(f"path: {path}")
-        logger.debug(f"length: {length}")
+        logger.debug(f"path: {routeInfo.getRoute(type='coord')}")
+        logger.debug(f"length: {routeInfo.getLength()}")
 
     def test_addNode(self):
         t = RRT(

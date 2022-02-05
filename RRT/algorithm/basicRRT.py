@@ -28,6 +28,7 @@ class BasicRRT:
             maxAttempts (Union[np.int32, None], optional): the maximum number of attempts. Defaults to np.Infinity.
         """
         self.droneInfo = droneInfo
+        self.missionInfo = missionInfo
         self.mapInfo= missionInfo.mapInfo
         self.exploreProb: np.float64 = exploreProb
         self.maxAttempts: Union[np.int32, None] = maxAttempts
@@ -44,7 +45,7 @@ class BasicRRT:
             bool: whether basic RRT algorithm reach the target from origin
         """
         attemptCnt = 0
-        while not self.searchTree.reachTarget():
+        while not self.searchTree.isReachTarget:
             attemptCnt += 1
 
             if random.random() < self.exploreProb:
