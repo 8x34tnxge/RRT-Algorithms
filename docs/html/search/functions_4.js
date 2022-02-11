@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['merge_5ffrom_5ftrees_0',['merge_from_trees',['../classRRT_1_1core_1_1tree_1_1RRT.html#a80059ab56a81c443b705b704cb5f03a0',1,'RRT::core::tree::RRT']]]
+  ['is_5ffeasible_0',['is_feasible',['../classRRT_1_1core_1_1mapinfo_1_1MapInfo.html#a86d935ece3641e18fea3e76478e50aba',1,'RRT.core.mapinfo.MapInfo.is_feasible()'],['../classRRT_1_1core_1_1routeinfo_1_1RouteInfo.html#a3da0787fe102e2a684b44218295b15ae',1,'RRT.core.routeinfo.RouteInfo.is_feasible()']]],
+  ['is_5fvalid_1',['is_valid',['../classRRT_1_1core_1_1mapinfo_1_1MapInfo.html#af47ca18f596d12a7379ef5947216be6e',1,'RRT::core::mapinfo::MapInfo']]]
 ];

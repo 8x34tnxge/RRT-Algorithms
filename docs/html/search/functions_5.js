@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['run_0',['run',['../classRRT_1_1algorithm_1_1basicRRT_1_1BasicRRT.html#a67ac2a9d268d0dd7799de06506c0a3e8',1,'RRT::algorithm::basicRRT::BasicRRT']]]
+  ['merge_5ffrom_5ftrees_0',['merge_from_trees',['../classRRT_1_1core_1_1tree_1_1RRT.html#abe5ec11edf81f99616134564e4dbda6b',1,'RRT::core::tree::RRT']]]
 ];

@@ -15,7 +15,7 @@ from RRT.util.samplemethod import random_sample
 
 
 class BasicRRT:
-    """[summary]
+    """basic Rapidly-exploring Random Tree algorithm with only one forward-search tree
     """
 
     def __init__(

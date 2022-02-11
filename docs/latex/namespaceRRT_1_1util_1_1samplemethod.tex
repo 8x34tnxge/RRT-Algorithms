@@ -1,0 +1,88 @@
+\hypertarget{namespaceRRT_1_1util_1_1samplemethod}{}\doxysection{RRT.\+util.\+samplemethod Namespace Reference}
+\label{namespaceRRT_1_1util_1_1samplemethod}\index{RRT.util.samplemethod@{RRT.util.samplemethod}}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+np.\+ndarray \mbox{\hyperlink{namespaceRRT_1_1util_1_1samplemethod_a3dbfb39b5f3c7f6d733281bb6d071789}{random\+\_\+sample}} (Union\mbox{[}List\mbox{[}float\mbox{]}, np.\+ndarray\mbox{]} min\+\_\+border, Union\mbox{[}List\mbox{[}float\mbox{]}, np.\+ndarray\mbox{]} max\+\_\+border)
+\item 
+List\mbox{[}np.\+ndarray\mbox{]} \mbox{\hyperlink{namespaceRRT_1_1util_1_1samplemethod_a62d1f2383c7bb98147e4353eefa4b043}{sample\+\_\+unit\+\_\+ball}} (int num, int dim=3)
+\item 
+np.\+ndarray \mbox{\hyperlink{namespaceRRT_1_1util_1_1samplemethod_a0f94e6700022379e8fcaa05c8c0bf5cc}{get2\+D\+\_\+sample}} ()
+\item 
+np.\+ndarray \mbox{\hyperlink{namespaceRRT_1_1util_1_1samplemethod_a39aa97fec6fafaee4ecd87a893c5e410}{get3\+D\+\_\+sample}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{namespaceRRT_1_1util_1_1samplemethod_a0f94e6700022379e8fcaa05c8c0bf5cc}\label{namespaceRRT_1_1util_1_1samplemethod_a0f94e6700022379e8fcaa05c8c0bf5cc}} 
+\index{RRT.util.samplemethod@{RRT.util.samplemethod}!get2D\_sample@{get2D\_sample}}
+\index{get2D\_sample@{get2D\_sample}!RRT.util.samplemethod@{RRT.util.samplemethod}}
+\doxysubsubsection{\texorpdfstring{get2D\_sample()}{get2D\_sample()}}
+{\footnotesize\ttfamily  np.\+ndarray RRT.\+util.\+samplemethod.\+get2\+D\+\_\+sample (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}the method to sample one point/node in 2-dimensional unit ball
+
+Returns
+-------
+np.ndarray
+    the coord info of the sampled point/node
+\end{DoxyVerb}
+ \mbox{\Hypertarget{namespaceRRT_1_1util_1_1samplemethod_a39aa97fec6fafaee4ecd87a893c5e410}\label{namespaceRRT_1_1util_1_1samplemethod_a39aa97fec6fafaee4ecd87a893c5e410}} 
+\index{RRT.util.samplemethod@{RRT.util.samplemethod}!get3D\_sample@{get3D\_sample}}
+\index{get3D\_sample@{get3D\_sample}!RRT.util.samplemethod@{RRT.util.samplemethod}}
+\doxysubsubsection{\texorpdfstring{get3D\_sample()}{get3D\_sample()}}
+{\footnotesize\ttfamily  np.\+ndarray RRT.\+util.\+samplemethod.\+get3\+D\+\_\+sample (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}the method to sample one point/node in 3-dimensional unit ball
+
+Returns
+-------
+np.ndarray
+    the coord info of the sampled point/node
+\end{DoxyVerb}
+ \mbox{\Hypertarget{namespaceRRT_1_1util_1_1samplemethod_a3dbfb39b5f3c7f6d733281bb6d071789}\label{namespaceRRT_1_1util_1_1samplemethod_a3dbfb39b5f3c7f6d733281bb6d071789}} 
+\index{RRT.util.samplemethod@{RRT.util.samplemethod}!random\_sample@{random\_sample}}
+\index{random\_sample@{random\_sample}!RRT.util.samplemethod@{RRT.util.samplemethod}}
+\doxysubsubsection{\texorpdfstring{random\_sample()}{random\_sample()}}
+{\footnotesize\ttfamily  np.\+ndarray RRT.\+util.\+samplemethod.\+random\+\_\+sample (\begin{DoxyParamCaption}\item[{Union\mbox{[}List\mbox{[}float\mbox{]}, np.\+ndarray\mbox{]}}]{min\+\_\+border,  }\item[{Union\mbox{[}List\mbox{[}float\mbox{]}, np.\+ndarray\mbox{]} }]{max\+\_\+border }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}the method to randomly sample a point/node in a square space with max and min value for each dimension
+
+Parameters
+----------
+min_border : Union[List[float], np.ndarray]
+    the list of min values of dimensions
+max_border : Union[List[float], np.ndarray]
+    the list of max values of dimensions
+
+Returns
+-------
+np.ndarray
+    the coord info of the sampled point/node
+\end{DoxyVerb}
+ \mbox{\Hypertarget{namespaceRRT_1_1util_1_1samplemethod_a62d1f2383c7bb98147e4353eefa4b043}\label{namespaceRRT_1_1util_1_1samplemethod_a62d1f2383c7bb98147e4353eefa4b043}} 
+\index{RRT.util.samplemethod@{RRT.util.samplemethod}!sample\_unit\_ball@{sample\_unit\_ball}}
+\index{sample\_unit\_ball@{sample\_unit\_ball}!RRT.util.samplemethod@{RRT.util.samplemethod}}
+\doxysubsubsection{\texorpdfstring{sample\_unit\_ball()}{sample\_unit\_ball()}}
+{\footnotesize\ttfamily  List\mbox{[}np.\+ndarray\mbox{]} RRT.\+util.\+samplemethod.\+sample\+\_\+unit\+\_\+ball (\begin{DoxyParamCaption}\item[{int}]{num,  }\item[{int}]{dim = {\ttfamily 3} }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}the method to get a number of points/nodes in a unit ball for given dimensions
+
+Parameters
+----------
+num : int
+    the number of points/nodes needed to be sampled
+dim : int, optional
+    the dimension of the unit ball, by default 3
+
+Returns
+-------
+List[np.ndarray]
+    the list of sampled points/nodes
+
+Raises
+------
+ValueError
+    current version of this method only support 2 & 3 dim
+\end{DoxyVerb}
+ 
