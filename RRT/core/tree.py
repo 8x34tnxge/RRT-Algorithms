@@ -5,31 +5,26 @@ from typing import Any, List
 import networkx as nx
 import numpy as np
 from nptyping import NDArray
-from RRT.core.routeInfo import RouteInfo
-from RRT.util import arrayHash, distCalc
+from RRT.core.routeinfo import RouteInfo
+from RRT.util import array_hash, dist_calc
 
 
 class RRT:
-    """Randomly-exploring Random Tree Structure"""
+    def __init__(self, origin: NDArray[Any], target: NDArray[Any]):
 
-    ######################################
-    ############# properties #############
-    ######################################
-    ndim: int
-    origin: NDArray[Any]
-    target: NDArray[Any]
-    tree: nx.classes.graph.Graph
-    isReachTarget: bool
-
-    #########################################
-    ############# class methods #############
-    #########################################
-    def __init__(self, origin: NDArray[Any], target: NDArray[Any]) -> None:
         """the initial method of RRT
 
-        Args:
-            origin (NDArray[Any]): the coordination info of the given origin
-            target (NDArray[Any]): the coordination info of the given target
+        Parameters
+        ----------
+        origin : NDArray[Any]
+            the coordination info of the given origin
+        target : NDArray[Any]
+            the coordination info of the given target
+
+        Raises
+        ------
+        ValueError
+            the ndim of variable [origin, target] is not equal
         """
         self.IDcounter: int = 0
         if origin.ndim != target.ndim:
@@ -38,65 +33,82 @@ class RRT:
         self.origin: NDArray[Any] = origin
         self.target: NDArray[Any] = target
         # use graph to replace the tree structure
-        self.tree = nx.Graph()
-        self.addNode(origin)
+        self.tree: nx.classes.graph.Graph = nx.Graph()
+        self.add_node(origin)
 
-        self.isReachTarget = False
+        self.is_reach_target: bool = False
 
-    def getNodes(self) -> nx.classes.reportviews.NodeDataView:
-        """the method to get the nodes from the tree
+    def get_nodes(self) -> nx.classes.reportviews.NodeDataView:
 
-        Returns:
-            nx.classes.reportviews.NodeDataView: the nodes info
+        """the instance method to get the nodes from the tree
+
+        Returns
+        -------
+        nx.classes.reportviews.NodeDataView
+            the node infomation in tree
         """
         return self.tree.nodes.data()
 
-    def getEdges(self) -> nx.classes.reportviews.EdgeDataView:
-        """the method to get the edges from the tree
+    def get_edges(self) -> nx.classes.reportviews.EdgeDataView:
+        """the instance method to get the edges from the tree
 
-        Returns:
-            nx.classes.reportviews.NodeDataView: the edges info
+        Returns
+        -------
+        nx.classes.reportviews.EdgeDataView
+            the edge information in tree
         """
         return self.tree.edges.data()
 
-    def getNearestNeighbors(self, nodeInfo: NDArray[Any]) -> int:
-        """the class method to get nearest neighbors according to the given node coordination info
+    def get_nearest_neighbors(self, node_info: NDArray[Any]) -> int:
+        """the instance method to get nearest neighbors according to the given node coordination info
 
-        Args:
-            nodeInfo (NDArray[Any]): the coordination info of the given node
+        Parameters
+        ----------
+        node_info : NDArray[Any]
+            the coordination info of the given node
 
-        Returns:
-            int: the ID of the nearest neighbor point/node
+        Returns
+        -------
+        int
+            the ID of the nearest neighbor point/node
         """
-        nearestNodeID = 0
-        minDist = np.Infinity
+        nearest_node_ID = 0
+        min_dist = np.Infinity
 
         for id, info in self.getNodes():
-            coordInfo = info["coord"]
-            dist = np.linalg.norm(nodeInfo, coordInfo)
-            if dist < minDist:
-                minDist = dist
-                nearestNodeID = id
+            coord_info = info["coord"]
+            dist = np.linalg.norm(node_info, coord_info)
+            if dist < min_dist:
+                min_dist = dist
+                nearest_node_ID = id
 
-        return nearestNodeID
+        return nearest_node_ID
 
-    def getRoute(
+    def get_route(
         self,
         origin: NDArray[Any] = None,
         target: NDArray[Any] = None,
     ) -> RouteInfo:
-        """the method to get the route information including route sequence and route length
+        """the instance method to get the route information including route sequence and route length
 
-        Args:
-            origin (NDArray[Any], optional): the origin information (coordination info). Defaults to None.
-            target (NDArray[Any], optional): the target information (coordination info). Defaults to None.
+        Parameters
+        ----------
+        origin : NDArray[Any], optional
+            the origin information (coordination info), by default None
+        target : NDArray[Any], optional
+            the target information (coordination info), by default None
 
-        Raises:
-            AttributeError: The given origin is not found in trees
-            AttributeError: The given target is not found in trees
+        Returns
+        -------
+        RouteInfo
+            the route information including route sequence, route coordination and route total length
 
-        Returns:
-            RouteInfo: the route information including route sequence, route coordination and route total length
+        Raises
+        ------
+        AttributeError
+            The given origin is not found in trees
+        AttributeError
+            The given target is not found in trees
         """
         if origin is None:
             origin = self.origin
@@ -104,12 +116,12 @@ class RRT:
         if target is None:
             target = self.target
 
-        nodesInfo = self.getNodes()
+        nodes_info = self.getNodes()
         originID, targetID = None, None
-        for nodeID, nodeInfo in nodesInfo:
-            if all(origin == nodeInfo["coord"]):
+        for nodeID, node_info in nodes_info:
+            if all(origin == node_info["coord"]):
                 originID = nodeID
-            if all(target == nodeInfo["coord"]):
+            if all(target == node_info["coord"]):
                 targetID = nodeID
         if originID is None:
             raise AttributeError("The given origin is not found in trees")
@@ -123,44 +135,48 @@ class RRT:
         except nx.exception.NetworkXNoPath:
             return RouteInfo(None, None, None)
 
-        axisInfo = [[] for _ in range(self.ndim)]
+        axis_info = [[] for _ in range(self.ndim)]
         for nodeID in route:
-            coordInfo = nodesInfo[nodeID]["coord"]
+            coord_info = nodes_info[nodeID]["coord"]
             for dimID in range(self.ndim):
-                axisInfo[dimID].append(coordInfo[dimID])
+                axis_info[dimID].append(coord_info[dimID])
 
         length = nx.algorithms.shortest_path_length(
             self.tree, originID, targetID, weight="weight"
         )
 
-        return RouteInfo(route, axisInfo, length)
+        return RouteInfo(np.array(route), np.array(axis_info).T, np.float64(length))
 
     @classmethod
-    def mergeFromTrees(cls, trees: List[RRT]) -> RRT:
-        """merge a list of RRT to a new RRT
+    def merge_from_trees(cls, trees: List[RRT]) -> RRT:
+        """the class method to merge a list of RRTs to a new RRT
 
-        Args:
-            trees (List[RRT]): the list of RRTs to merge
+        Parameters
+        ----------
+        trees : List[RRT]
+            the list of RRTs to merge
 
-        Returns:
-            RRT: new RRT merged from the given list of RRTs
+        Returns
+        -------
+        RRT
+            new RRT merged from the given list of RRTs
         """
-        newTree = cls(trees[0].origin, trees[1].target)
-        attrSearchDict = {}
+        new_tree = cls(trees[0].origin, trees[1].target)
+        attr_search_dict = {}
         for tree in trees:
             table4ID = {}
             # insert each point/node from the given trees into the new tree
             # [x] check node existence
             for node in tree.tree.nodes(data=True):
-                oldID, nodeInfo = node
-                if arrayHash(nodeInfo["coord"]) in attrSearchDict.keys():
-                    table4ID[oldID] = attrSearchDict[arrayHash(nodeInfo["coord"])]
+                oldID, node_info = node
+                if array_hash(node_info["coord"]) in attr_search_dict.keys():
+                    table4ID[oldID] = attr_search_dict[array_hash(node_info["coord"])]
                     continue
 
-                newID = newTree.addNode(nodeInfo["coord"])
+                newID = new_tree.addNode(node_info["coord"])
 
                 # update hash table
-                attrSearchDict[arrayHash(nodeInfo["coord"])] = newID
+                attr_search_dict[array_hash(node_info["coord"])] = newID
                 table4ID[oldID] = newID
 
             # insert each edge from the given trees into the new tree
@@ -168,40 +184,48 @@ class RRT:
                 prevID = table4ID[edge[0]]
                 postID = table4ID[edge[1]]
                 weight = edge[-1]["weight"]
-                newTree.addEdge(prevID, postID, weight)
+                new_tree.addEdge(prevID, postID, weight)
 
-        return newTree
+        return new_tree
 
-    def addNode(self, nodeInfo: NDArray[Any]) -> int:
-        """the class method to add a node to the tree and return its ID
+    def add_node(self, node_info: NDArray[Any]) -> int:
+        """the instance method to add a node to the tree and return its ID
 
-        Args:
-            nodeInfo (NDArray[Any]): the info of the new point/node
+        Parameters
+        ----------
+        node_info : NDArray[Any]
+            the info of the new point/node
 
-        Returns:
-            int: the ID of this new point/node
+        Returns
+        -------
+        int
+            the ID of this new point/node
         """
         self.IDcounter += 1
         nodeID = self.IDcounter
-        if str(nodeInfo) == str(self.target):
-            self.isReachTarget = True
-        self.tree.add_node(nodeID, coord=nodeInfo)
+        if str(node_info) == str(self.target):
+            self.is_reach_target = True
+        self.tree.add_node(nodeID, coord=node_info)
         return nodeID
 
-    def addEdge(self, currID: int, newID: int, weight: np.float64 = None) -> None:
-        """the class method to add a new edge to the tree
+    def add_edge(self, currID: int, newID: int, weight: np.float64 = None) -> None:
+        """the instance method to add a new edge to the tree
 
-        Args:
-            currID (int): the node ID of one end of the edge
-            newID (int): the node ID of another end of the edge
-            weight (np.float64, optional): the weight/length between the given two nodes. Defaults to None.
+        Parameters
+        ----------
+        currID : int
+            the node ID of one end of the edge
+        newID : int
+            the node ID of another end of the edge
+        weight : np.float64, optional
+            the weight/length between the given two nodes, by default None
         """
         weight = (
             weight
             if weight is not None
-            else distCalc(
-                prevNodeCoordInfo=self.tree.nodes[currID]["coord"],
-                postNodeCoordInfo=self.tree.nodes[newID]["coord"],
+            else dist_calc(
+                prev_node_coord_info=self.tree.nodes[currID]["coord"],
+                post_node_coord_info=self.tree.nodes[newID]["coord"],
             )
         )
 

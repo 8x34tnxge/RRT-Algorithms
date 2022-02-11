@@ -1,2 +1,2 @@
-from RRT.util.distCalc import distCalc
-from RRT.util.arrayHash import arrayHash
+from RRT.util.distcalc import dist_calc
+from RRT.util.arrayhash import array_hash
