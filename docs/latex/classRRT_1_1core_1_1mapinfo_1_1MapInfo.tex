@@ -1,0 +1,61 @@
+\hypertarget{classRRT_1_1core_1_1mapinfo_1_1MapInfo}{}\doxysection{RRT.\+core.\+mapinfo.\+Map\+Info Class Reference}
+\label{classRRT_1_1core_1_1mapinfo_1_1MapInfo}\index{RRT.core.mapinfo.MapInfo@{RRT.core.mapinfo.MapInfo}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{classRRT_1_1core_1_1mapinfo_1_1MapInfo_a71697128e612113259ad3403244a0c19}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, List\mbox{[}str\mbox{]} map, str sample\+\_\+level)
+\item 
+\mbox{\Hypertarget{classRRT_1_1core_1_1mapinfo_1_1MapInfo_a4c94c990d83eb269d04be7259c7172c9}\label{classRRT_1_1core_1_1mapinfo_1_1MapInfo_a4c94c990d83eb269d04be7259c7172c9}} 
+bool {\bfseries is\+\_\+valid} (self)
+\item 
+bool \mbox{\hyperlink{classRRT_1_1core_1_1mapinfo_1_1MapInfo_a3d7241d4db545c3be54337da4d3fc899}{is\+\_\+feasible}} (self, \mbox{\hyperlink{classRRT_1_1core_1_1routeinfo_1_1RouteInfo}{Route\+Info}} route\+\_\+info)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classRRT_1_1core_1_1mapinfo_1_1MapInfo_a71697128e612113259ad3403244a0c19}\label{classRRT_1_1core_1_1mapinfo_1_1MapInfo_a71697128e612113259ad3403244a0c19}} 
+\index{RRT.core.mapinfo.MapInfo@{RRT.core.mapinfo.MapInfo}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!RRT.core.mapinfo.MapInfo@{RRT.core.mapinfo.MapInfo}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily def RRT.\+core.\+mapinfo.\+Map\+Info.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{List\mbox{[}str\mbox{]}}]{map,  }\item[{str}]{sample\+\_\+level }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}the initial method for MapInfo
+
+Parameters
+----------
+map : List[str]
+    the array of map. 0 stands for empty, 1 stands for origin, 2 stands for target, 3 stands for wall.
+sample_level : str
+    sample level for algorithm. Only to "discrete", "continues"
+
+Raises
+------
+ValueError
+    The variable [map] or [sample_level] is invalid.
+\end{DoxyVerb}
+ 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classRRT_1_1core_1_1mapinfo_1_1MapInfo_a3d7241d4db545c3be54337da4d3fc899}\label{classRRT_1_1core_1_1mapinfo_1_1MapInfo_a3d7241d4db545c3be54337da4d3fc899}} 
+\index{RRT.core.mapinfo.MapInfo@{RRT.core.mapinfo.MapInfo}!is\_feasible@{is\_feasible}}
+\index{is\_feasible@{is\_feasible}!RRT.core.mapinfo.MapInfo@{RRT.core.mapinfo.MapInfo}}
+\doxysubsubsection{\texorpdfstring{is\_feasible()}{is\_feasible()}}
+{\footnotesize\ttfamily  bool RRT.\+core.\+mapinfo.\+Map\+Info.\+is\+\_\+feasible (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{\mbox{\hyperlink{classRRT_1_1core_1_1routeinfo_1_1RouteInfo}{Route\+Info}}}]{route\+\_\+info }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}the instance method to determine whether the route solution is feasible
+
+Parameters
+----------
+route_info : RouteInfo
+    the route information from algorithm
+
+Returns
+-------
+bool
+    whether the route solution is feasible
+\end{DoxyVerb}
+ 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+RRT/core/mapinfo.\+py\end{DoxyCompactItemize}
