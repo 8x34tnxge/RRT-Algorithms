@@ -1,2 +1,2 @@
-Success = 1
-Failure = 0
+Success: int = 1
+Failure: int = 0

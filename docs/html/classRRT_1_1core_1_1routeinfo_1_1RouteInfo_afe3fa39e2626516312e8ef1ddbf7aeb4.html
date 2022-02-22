@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.3"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>RRT-Algorithms: RRT/core/sign.py File Reference</title>
+<title>RRT-Algorithms: RRT.core.routeinfo.RouteInfo.get_route</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -62,30 +62,69 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_452b60bbfaea4d0a1f97a7632e662de5.html">RRT</a></li><li class="navelem"><a class="el" href="dir_a8ba3709f1508ce37755224e5bc9fef3.html">core</a></li>  </ul>
+<li class="navelem"><a class="el" href="namespaceRRT.html">RRT</a></li><li class="navelem"><a class="el" href="namespaceRRT_1_1core.html">core</a></li><li class="navelem"><a class="el" href="namespaceRRT_1_1core_1_1routeinfo.html">routeinfo</a></li><li class="navelem"><a class="el" href="classRRT_1_1core_1_1routeinfo_1_1RouteInfo.html">RouteInfo</a></li>  </ul>
 </div>
 </div><!-- top -->
-<div class="header">
-  <div class="summary">
-<a href="#namespaces">Namespaces</a> &#124;
-<a href="#var-members">Variables</a>  </div>
-  <div class="headertitle"><div class="title">sign.py File Reference</div></div>
-</div><!--header-->
 <div class="contents">
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
-Namespaces</h2></td></tr>
-<tr class="memitem:namespaceRRT"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceRRT.html">RRT</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:namespaceRRT_1_1core"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceRRT_1_1core.html">RRT.core</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:namespaceRRT_1_1core_1_1sign"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceRRT_1_1core_1_1sign.html">RRT.core.sign</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:a61569f2965b7a369eb10b6d75d410d11"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceRRT_1_1core_1_1sign.html#a61569f2965b7a369eb10b6d75d410d11">int</a></td></tr>
-<tr class="separator:a61569f2965b7a369eb10b6d75d410d11"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<table cellspacing="0" cellpadding="0" border="0">
+  <tr>
+   <td valign="top">
+      <div class="navtab">
+        <table>
+          <tr><td class="navtab"><a class="navtab" href="classRRT_1_1core_1_1routeinfo_1_1RouteInfo_a18c7976aaad3bad6a6735445056ca75e.html#a18c7976aaad3bad6a6735445056ca75e">__init__</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="classRRT_1_1core_1_1routeinfo_1_1RouteInfo_a79c4f3265cffe7904adf2079b3f30d09.html#a79c4f3265cffe7904adf2079b3f30d09">get_length</a></td></tr>
+          <tr><td class="navtabHL"><a class="navtab" href="classRRT_1_1core_1_1routeinfo_1_1RouteInfo_afe3fa39e2626516312e8ef1ddbf7aeb4.html#afe3fa39e2626516312e8ef1ddbf7aeb4">get_route</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="classRRT_1_1core_1_1routeinfo_1_1RouteInfo_a3da0787fe102e2a684b44218295b15ae.html#a3da0787fe102e2a684b44218295b15ae">is_feasible</a></td></tr>
+        </table>
+      </div>
+   </td>
+   <td valign="top" class="mempage">
+<a id="afe3fa39e2626516312e8ef1ddbf7aeb4" name="afe3fa39e2626516312e8ef1ddbf7aeb4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afe3fa39e2626516312e8ef1ddbf7aeb4">&#9670;&nbsp;</a></span>get_route()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> Union[NDArray[(Any)], NDArray[(Any, Any)]] get_route </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">str &#160;</td>
+          <td class="paramname"><em>route_type</em> = <code>&quot;sequence&quot;</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">[summary]
+
+Parameters
+-------
+route_type : str
+    the type of needed route
+
+Returns
+-------
+Union[NDArray[(Any)], NDArray[(Any, Any)]]
+    [description]
+
+Raises
+------
+ValueError
+    the variable [route_type] is not 'sequence' or 'coord'
+</pre> 
+</div>
+</div>
+    </td>
+  </tr>
 </table>
 </div><!-- contents -->
 <!-- start footer part -->

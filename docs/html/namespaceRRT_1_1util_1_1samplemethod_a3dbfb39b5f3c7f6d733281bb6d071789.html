@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.3"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>RRT-Algorithms: RRT/core/sign.py File Reference</title>
+<title>RRT-Algorithms: RRT.util.samplemethod.random_sample</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -62,30 +62,67 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_452b60bbfaea4d0a1f97a7632e662de5.html">RRT</a></li><li class="navelem"><a class="el" href="dir_a8ba3709f1508ce37755224e5bc9fef3.html">core</a></li>  </ul>
+<li class="navelem"><a class="el" href="namespaceRRT.html">RRT</a></li><li class="navelem"><a class="el" href="namespaceRRT_1_1util.html">util</a></li><li class="navelem"><a class="el" href="namespaceRRT_1_1util_1_1samplemethod.html">samplemethod</a></li>  </ul>
 </div>
 </div><!-- top -->
-<div class="header">
-  <div class="summary">
-<a href="#namespaces">Namespaces</a> &#124;
-<a href="#var-members">Variables</a>  </div>
-  <div class="headertitle"><div class="title">sign.py File Reference</div></div>
-</div><!--header-->
 <div class="contents">
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
-Namespaces</h2></td></tr>
-<tr class="memitem:namespaceRRT"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceRRT.html">RRT</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:namespaceRRT_1_1core"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceRRT_1_1core.html">RRT.core</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:namespaceRRT_1_1core_1_1sign"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceRRT_1_1core_1_1sign.html">RRT.core.sign</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:a61569f2965b7a369eb10b6d75d410d11"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceRRT_1_1core_1_1sign.html#a61569f2965b7a369eb10b6d75d410d11">int</a></td></tr>
-<tr class="separator:a61569f2965b7a369eb10b6d75d410d11"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<table cellspacing="0" cellpadding="0" border="0">
+  <tr>
+   <td valign="top">
+      <div class="navtab">
+        <table>
+          <tr><td class="navtab"><a class="navtab" href="namespaceRRT_1_1util_1_1samplemethod_a0f94e6700022379e8fcaa05c8c0bf5cc.html#a0f94e6700022379e8fcaa05c8c0bf5cc">get2D_sample</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="namespaceRRT_1_1util_1_1samplemethod_a39aa97fec6fafaee4ecd87a893c5e410.html#a39aa97fec6fafaee4ecd87a893c5e410">get3D_sample</a></td></tr>
+          <tr><td class="navtabHL"><a class="navtab" href="namespaceRRT_1_1util_1_1samplemethod_a3dbfb39b5f3c7f6d733281bb6d071789.html#a3dbfb39b5f3c7f6d733281bb6d071789">random_sample</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="namespaceRRT_1_1util_1_1samplemethod_a62d1f2383c7bb98147e4353eefa4b043.html#a62d1f2383c7bb98147e4353eefa4b043">sample_unit_ball</a></td></tr>
+        </table>
+      </div>
+   </td>
+   <td valign="top" class="mempage">
+<a id="a3dbfb39b5f3c7f6d733281bb6d071789" name="a3dbfb39b5f3c7f6d733281bb6d071789"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3dbfb39b5f3c7f6d733281bb6d071789">&#9670;&nbsp;</a></span>random_sample()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> np.ndarray RRT.util.samplemethod.random_sample </td>
+          <td>(</td>
+          <td class="paramtype">Union[List[float], np.ndarray]&#160;</td>
+          <td class="paramname"><em>min_border</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Union[List[float], np.ndarray]
+&#160;</td>
+          <td class="paramname"><em>max_border</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">the method to randomly sample a point/node in a square space with max and min value for each dimension
+
+Parameters
+----------
+min_border : Union[List[float], np.ndarray]
+    the list of min values of dimensions
+max_border : Union[List[float], np.ndarray]
+    the list of max values of dimensions
+
+Returns
+-------
+np.ndarray
+    the coord info of the sampled point/node
+</pre> 
+</div>
+</div>
+    </td>
+  </tr>
 </table>
 </div><!-- contents -->
 <!-- start footer part -->
