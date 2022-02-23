@@ -116,7 +116,7 @@ class RRT:
         if target is None:
             target = self.target
 
-        nodes_info = self.getNodes()
+        nodes_info = self.get_nodes()
         originID, targetID = None, None
         for nodeID, node_info in nodes_info:
             if all(origin == node_info["coord"]):
@@ -173,7 +173,7 @@ class RRT:
                     table4ID[oldID] = attr_search_dict[array_hash(node_info["coord"])]
                     continue
 
-                newID = new_tree.addNode(node_info["coord"])
+                newID = new_tree.add_node(node_info["coord"])
 
                 # update hash table
                 attr_search_dict[array_hash(node_info["coord"])] = newID
@@ -184,7 +184,7 @@ class RRT:
                 prevID = table4ID[edge[0]]
                 postID = table4ID[edge[1]]
                 weight = edge[-1]["weight"]
-                new_tree.addEdge(prevID, postID, weight)
+                new_tree.add_edge(prevID, postID, weight)
 
         return new_tree
 
