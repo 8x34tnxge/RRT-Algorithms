@@ -1,4 +1,5 @@
 from __future__ import annotations
+from loguru import logger
 
 import random
 from typing import Union, Any
@@ -10,6 +11,7 @@ from RRT.core.mapinfo import MapInfo
 from RRT.core.missioninfo import MissionInfo
 from RRT.core.sign import Failure, Success
 from RRT.core.tree import RRT
+from RRT.util.angle import calc_unit_vector
 from RRT.util.extendmethod import directly_extend
 from RRT.util.samplemethod import random_sample
 
@@ -66,13 +68,18 @@ class BasicRRT:
         while not self.search_tree.is_reach_target:
             attempt_cnt += 1
 
-            if random.random() < self.explore_prob:
+            explore = random.random() < self.explore_prob
+            if explore:
                 new_sample = random_sample(self.mapInfo.min_border, self.mapInfo.max_border)
             else:
                 new_sample = self.mission_info.target
 
             neighbors = self.search_tree.get_nearest_neighbors(new_sample, num=1)
             # [ ] ignore the failure of RRT Extension
+            if explore:
+                neighbor_info = self.search_tree.get_nodes()[neighbors[0]]['coord']
+                unit_vector = calc_unit_vector(neighbor_info, new_sample)
+                new_sample = neighbor_info + unit_vector * self.step_size * random.random()
             directly_extend(self.search_tree, new_sample, neighbors[0])
 
             if np.isfinite(self.max_attempts) and attempt_cnt > self.max_attempts:

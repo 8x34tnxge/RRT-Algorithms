@@ -9,7 +9,7 @@ def test_basic_RRT():
     mission_info = MissionInfo(
         MapInfo(get_test_map())
     )
-    alg = BasicRRT(None, mission_info, 0.5, 1, 100)
+    alg = BasicRRT(None, mission_info, 0.9, 1, 100)
     res = alg.run()
     logger.debug(f"algorithm running result: {res}")
 
