@@ -7,6 +7,7 @@ import numpy as np
 from nptyping import NDArray
 from RRT.core.routeinfo import RouteInfo
 from RRT.util import array_hash, dist_calc
+from loguru import logger
 
 
 class RRT:
@@ -201,6 +202,13 @@ class RRT:
         int
             the ID of this new point/node
         """
+        # prevent duplicated node from adding
+        nodes = self.get_nodes()
+        for node in nodes:
+            logger.debug(node)
+            if str(node_info) == str(node[-1]['coord']):
+                return node[0]
+
         self.IDcounter += 1
         nodeID = self.IDcounter
         if str(node_info) == str(self.target):
