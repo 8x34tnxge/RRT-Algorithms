@@ -1,28 +1,4 @@
 var searchData=
 [
-  ['algorithm_0',['algorithm',['../namespaceRRT_1_1algorithm.html',1,'RRT']]],
-  ['arrayhash_1',['arrayhash',['../namespaceRRT_1_1util_1_1arrayhash.html',1,'RRT::util']]],
-  ['basicrrt_2',['basicRRT',['../namespaceRRT_1_1algorithm_1_1basicRRT.html',1,'RRT::algorithm']]],
-  ['core_3',['core',['../namespaceRRT_1_1core.html',1,'RRT']]],
-  ['distcalc_4',['distcalc',['../namespaceRRT_1_1util_1_1distcalc.html',1,'RRT::util']]],
-  ['droneinfo_5',['droneinfo',['../namespaceRRT_1_1core_1_1droneinfo.html',1,'RRT::core']]],
-  ['extendmethod_6',['extendmethod',['../namespaceRRT_1_1util_1_1extendmethod.html',1,'RRT::util']]],
-  ['mapinfo_7',['mapinfo',['../namespaceRRT_1_1core_1_1mapinfo.html',1,'RRT::core']]],
-  ['missioninfo_8',['missioninfo',['../namespaceRRT_1_1core_1_1missioninfo.html',1,'RRT::core']]],
-  ['random_5fsample_9',['random_sample',['../namespaceRRT_1_1util_1_1samplemethod.html#a3dbfb39b5f3c7f6d733281bb6d071789',1,'RRT::util::samplemethod']]],
-  ['readme_2emd_10',['README.md',['../README_8md.html',1,'']]],
-  ['routeinfo_11',['routeinfo',['../namespaceRRT_1_1core_1_1routeinfo.html',1,'RRT::core']]],
-  ['routeinfo_12',['RouteInfo',['../classRRT_1_1core_1_1routeinfo_1_1RouteInfo.html',1,'RRT::core::routeinfo']]],
-  ['routeinfo_2epy_13',['routeinfo.py',['../routeinfo_8py.html',1,'']]],
-  ['rrt_14',['RRT',['../namespaceRRT.html',1,'RRT'],['../classRRT_1_1core_1_1tree_1_1RRT.html',1,'RRT']]],
-  ['rrt_2dalgorithms_15',['RRT-Algorithms',['../index.html',1,'']]],
-  ['rrt_5fconnect_16',['RRT_Connect',['../namespaceRRT_1_1algorithm_1_1RRT__Connect.html',1,'RRT.algorithm.RRT_Connect'],['../classRRT_1_1algorithm_1_1RRT__Connect_1_1RRT__Connect.html',1,'RRT_Connect']]],
-  ['rrt_5fconnect_2epy_17',['RRT_Connect.py',['../RRT__Connect_8py.html',1,'']]],
-  ['rrt_5fstar_18',['RRT_Star',['../namespaceRRT_1_1algorithm_1_1RRT__Star.html',1,'RRT.algorithm.RRT_Star'],['../classRRT_1_1algorithm_1_1RRT__Star_1_1RRT__Star.html',1,'RRT_Star']]],
-  ['rrt_5fstar_2epy_19',['RRT_Star.py',['../RRT__Star_8py.html',1,'']]],
-  ['run_20',['run',['../classRRT_1_1algorithm_1_1basicRRT_1_1BasicRRT.html#a863ca55aebc14637a2e75528617ff727',1,'RRT::algorithm::basicRRT::BasicRRT']]],
-  ['samplemethod_21',['samplemethod',['../namespaceRRT_1_1util_1_1samplemethod.html',1,'RRT::util']]],
-  ['sign_22',['sign',['../namespaceRRT_1_1core_1_1sign.html',1,'RRT::core']]],
-  ['tree_23',['tree',['../namespaceRRT_1_1core_1_1tree.html',1,'RRT::core']]],
-  ['util_24',['util',['../namespaceRRT_1_1util.html',1,'RRT']]]
+  ['load_5fmap_0',['load_map',['../classRRT_1_1config_1_1map__info__loader_1_1MapInfoLoader.html#a3c3776c176190f2aa46a8b7f7f6fdb80',1,'RRT::config::map_info_loader::MapInfoLoader']]]
 ];

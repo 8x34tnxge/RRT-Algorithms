@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['sample_5funit_5fball_0',['sample_unit_ball',['../namespaceRRT_1_1util_1_1samplemethod.html#a62d1f2383c7bb98147e4353eefa4b043',1,'RRT::util::samplemethod']]]
+  ['load_5fmap_0',['load_map',['../classRRT_1_1config_1_1map__info__loader_1_1MapInfoLoader.html#a3c3776c176190f2aa46a8b7f7f6fdb80',1,'RRT::config::map_info_loader::MapInfoLoader']]]
 ];

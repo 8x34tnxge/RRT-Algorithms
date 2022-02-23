@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['_5f_5finit_5f_5f_2epy_0',['__init__.py',['../util_2____init_____8py.html',1,'']]]
+  ['universal_5fconfig_5floader_2epy_0',['universal_config_loader.py',['../universal__config__loader_8py.html',1,'']]]
 ];

@@ -68,6 +68,7 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="classRRT_1_1core_1_1mapinfo_1_1MapInfo-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">MapInfo Class Reference</div></div>
 </div><!--header-->
@@ -75,16 +76,31 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a446abb8cda0dcb01f9e1b3e9b865356a"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRRT_1_1core_1_1mapinfo_1_1MapInfo.html#a446abb8cda0dcb01f9e1b3e9b865356a">__init__</a> (self, List[str] map, str sample_level)</td></tr>
-<tr class="separator:a446abb8cda0dcb01f9e1b3e9b865356a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af45d8c684eb734ce9bbc4fb08ae3497f"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRRT_1_1core_1_1mapinfo_1_1MapInfo.html#af45d8c684eb734ce9bbc4fb08ae3497f">__init__</a> (self, List[str] <a class="el" href="classRRT_1_1core_1_1mapinfo_1_1MapInfo.html#a9ec9dda576db2a36c42c1c3af155d07c">map</a>, str sample_level=&quot;continues&quot;)</td></tr>
+<tr class="separator:af45d8c684eb734ce9bbc4fb08ae3497f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1913ce26a8a8646c11254cdc683ce1e1"><td class="memItemLeft" align="right" valign="top">NDArray[Any]&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRRT_1_1core_1_1mapinfo_1_1MapInfo.html#a1913ce26a8a8646c11254cdc683ce1e1">extract_origin_info</a> (self)</td></tr>
+<tr class="separator:a1913ce26a8a8646c11254cdc683ce1e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa2860e97a4d7de0ca719db198d1295fe"><td class="memItemLeft" align="right" valign="top">NDArray[Any]&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRRT_1_1core_1_1mapinfo_1_1MapInfo.html#aa2860e97a4d7de0ca719db198d1295fe">extract_target_info</a> (self)</td></tr>
+<tr class="separator:aa2860e97a4d7de0ca719db198d1295fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af47ca18f596d12a7379ef5947216be6e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRRT_1_1core_1_1mapinfo_1_1MapInfo.html#af47ca18f596d12a7379ef5947216be6e">is_valid</a> (self)</td></tr>
 <tr class="separator:af47ca18f596d12a7379ef5947216be6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a86d935ece3641e18fea3e76478e50aba"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRRT_1_1core_1_1mapinfo_1_1MapInfo.html#a86d935ece3641e18fea3e76478e50aba">is_feasible</a> (self, <a class="el" href="classRRT_1_1core_1_1routeinfo_1_1RouteInfo.html">RouteInfo</a> route_info)</td></tr>
-<tr class="separator:a86d935ece3641e18fea3e76478e50aba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f28c9f96ebf02d3ea0b495f7a569eff"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRRT_1_1core_1_1mapinfo_1_1MapInfo.html#a7f28c9f96ebf02d3ea0b495f7a569eff">is_feasible</a> (self, <a class="el" href="classRRT_1_1core_1_1routeinfo_1_1RouteInfo.html">RouteInfo</a> route_info, int fill_num=30)</td></tr>
+<tr class="separator:a7f28c9f96ebf02d3ea0b495f7a569eff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a73747310136cc482a1d500f2cc2c8807"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRRT_1_1core_1_1mapinfo_1_1MapInfo.html#a73747310136cc482a1d500f2cc2c8807">check_point_feasible</a> (self, NDArray[Any] coordination, int node_num, int ndim)</td></tr>
+<tr class="separator:a73747310136cc482a1d500f2cc2c8807"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:a06dbc3a3eb5aaab80edf32ea607f1ef3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRRT_1_1core_1_1mapinfo_1_1MapInfo.html#a06dbc3a3eb5aaab80edf32ea607f1ef3">origin</a></td></tr>
+<tr class="separator:a06dbc3a3eb5aaab80edf32ea607f1ef3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d2c023108742a1ce78ba9823c06ea35"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRRT_1_1core_1_1mapinfo_1_1MapInfo.html#a5d2c023108742a1ce78ba9823c06ea35">target</a></td></tr>
+<tr class="separator:a5d2c023108742a1ce78ba9823c06ea35"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ec9dda576db2a36c42c1c3af155d07c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRRT_1_1core_1_1mapinfo_1_1MapInfo.html#a9ec9dda576db2a36c42c1c3af155d07c">map</a></td></tr>
+<tr class="separator:a9ec9dda576db2a36c42c1c3af155d07c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a446abb8cda0dcb01f9e1b3e9b865356a" name="a446abb8cda0dcb01f9e1b3e9b865356a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a446abb8cda0dcb01f9e1b3e9b865356a">&#9670;&nbsp;</a></span>__init__()</h2>
+<a id="af45d8c684eb734ce9bbc4fb08ae3497f" name="af45d8c684eb734ce9bbc4fb08ae3497f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af45d8c684eb734ce9bbc4fb08ae3497f">&#9670;&nbsp;</a></span>__init__()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -104,8 +120,8 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">str&#160;</td>
-          <td class="paramname"><em>sample_level</em>&#160;</td>
+          <td class="paramtype">str &#160;</td>
+          <td class="paramname"><em>sample_level</em> = <code>&quot;continues&quot;</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -121,7 +137,7 @@ Parameters
 map : List[str]
     the array of map. 0 stands for empty, 1 stands for origin, 2 stands for target, 3 stands for wall.
 sample_level : str
-    sample level for algorithm. Only to "discrete", "continues"
+    sample level for algorithm. Only to "discrete", "continues", by default 'continues'
 
 Raises
 ------
@@ -131,8 +147,112 @@ ValueError
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a86d935ece3641e18fea3e76478e50aba" name="a86d935ece3641e18fea3e76478e50aba"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a86d935ece3641e18fea3e76478e50aba">&#9670;&nbsp;</a></span>is_feasible()</h2>
+<a id="a73747310136cc482a1d500f2cc2c8807" name="a73747310136cc482a1d500f2cc2c8807"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a73747310136cc482a1d500f2cc2c8807">&#9670;&nbsp;</a></span>check_point_feasible()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> bool check_point_feasible </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">NDArray[Any]&#160;</td>
+          <td class="paramname"><em>coordination</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>node_num</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int
+    &#160;</td>
+          <td class="paramname"><em>ndim</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">the instance method to check whether the point is feasible
+
+Parameters
+----------
+coordination : NDArray[Any]
+    the route coordination from route info
+node_num : int
+    the number of node of the given route from route info
+ndim : int
+    the number of dimension
+
+Returns
+-------
+bool
+    whether each point in route is feasible
+</pre> 
+</div>
+</div>
+<a id="a1913ce26a8a8646c11254cdc683ce1e1" name="a1913ce26a8a8646c11254cdc683ce1e1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1913ce26a8a8646c11254cdc683ce1e1">&#9670;&nbsp;</a></span>extract_origin_info()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> NDArray[Any] extract_origin_info </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">the instance method to extract the origin infomation/coordination from the given map info
+
+Returns
+-------
+NDArray[Any]
+    the origin infomation/coordination
+</pre> 
+</div>
+</div>
+<a id="aa2860e97a4d7de0ca719db198d1295fe" name="aa2860e97a4d7de0ca719db198d1295fe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa2860e97a4d7de0ca719db198d1295fe">&#9670;&nbsp;</a></span>extract_target_info()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> NDArray[Any] extract_target_info </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">the instance method to extract the target infomation/coordination from the given map info
+
+Returns
+-------
+NDArray[Any]
+    the target information/coordination
+</pre> 
+</div>
+</div>
+<a id="a7f28c9f96ebf02d3ea0b495f7a569eff" name="a7f28c9f96ebf02d3ea0b495f7a569eff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7f28c9f96ebf02d3ea0b495f7a569eff">&#9670;&nbsp;</a></span>is_feasible()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -147,7 +267,13 @@ ValueError
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="classRRT_1_1core_1_1routeinfo_1_1RouteInfo.html">RouteInfo</a>&#160;</td>
-          <td class="paramname"><em>route_info</em>&#160;</td>
+          <td class="paramname"><em>route_info</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int &#160;</td>
+          <td class="paramname"><em>fill_num</em> = <code>30</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -162,6 +288,8 @@ Parameters
 ----------
 route_info : RouteInfo
     the route information from algorithm
+fill_num : int
+    the number of line points to be filled in route
 
 Returns
 -------
@@ -182,6 +310,55 @@ bool
           <td class="paramtype">&#160;</td>
           <td class="paramname"><em>self</em></td><td>)</td>
           <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">the instance method to check whether the given map info is valid
+
+Returns
+-------
+bool
+    the result of whether the given map info is valid
+</pre> 
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a9ec9dda576db2a36c42c1c3af155d07c" name="a9ec9dda576db2a36c42c1c3af155d07c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9ec9dda576db2a36c42c1c3af155d07c">&#9670;&nbsp;</a></span>map</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">map</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a06dbc3a3eb5aaab80edf32ea607f1ef3" name="a06dbc3a3eb5aaab80edf32ea607f1ef3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a06dbc3a3eb5aaab80edf32ea607f1ef3">&#9670;&nbsp;</a></span>origin</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">origin</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a5d2c023108742a1ce78ba9823c06ea35" name="a5d2c023108742a1ce78ba9823c06ea35"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5d2c023108742a1ce78ba9823c06ea35">&#9670;&nbsp;</a></span>target</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">target</td>
         </tr>
       </table>
 </div><div class="memdoc">
