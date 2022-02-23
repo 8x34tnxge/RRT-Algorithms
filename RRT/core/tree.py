@@ -7,12 +7,10 @@ import numpy as np
 from nptyping import NDArray
 from RRT.core.routeinfo import RouteInfo
 from RRT.util import array_hash, dist_calc
-from loguru import logger
 
 
 class RRT:
     def __init__(self, origin: NDArray[Any], target: NDArray[Any]):
-
         """the initial method of RRT
 
         Parameters
@@ -28,9 +26,9 @@ class RRT:
             the ndim of variable [origin, target] is not equal
         """
         self.IDcounter: int = 0
-        if origin.ndim != target.ndim:
+        if origin.shape[0] != target.shape[0]:
             raise ValueError("Origin's dimension must be equal to target's dimension")
-        self.ndim: int = origin.ndim
+        self.ndim: int = origin.shape[0]
         self.origin: NDArray[Any] = origin
         self.target: NDArray[Any] = target
         # use graph to replace the tree structure
@@ -60,30 +58,36 @@ class RRT:
         """
         return self.tree.edges.data()
 
-    def get_nearest_neighbors(self, node_info: NDArray[Any]) -> int:
+    def get_nearest_neighbors(self, node_info: NDArray[Any], num: int = 1) -> List[int]:
         """the instance method to get nearest neighbors according to the given node coordination info
 
         Parameters
         ----------
         node_info : NDArray[Any]
             the coordination info of the given node
+        num : int
+            the number of the nearest neighbors
 
         Returns
         -------
-        int
-            the ID of the nearest neighbor point/node
+        List[int]
+            the ID of the nearest neighbor point(s)/node(s)
         """
-        nearest_node_ID = 0
-        min_dist = np.Infinity
+        result = []
+        while len(result) < num:
+            nearest_node_ID = 0
+            min_dist = np.Infinity
 
-        for id, info in self.getNodes():
-            coord_info = info["coord"]
-            dist = np.linalg.norm(node_info, coord_info)
-            if dist < min_dist:
-                min_dist = dist
-                nearest_node_ID = id
+            for id, info in self.get_nodes():
+                coord_info = info["coord"]
+                dist = np.linalg.norm([node_info, coord_info])
+                if dist < min_dist:
+                    min_dist = dist
+                    nearest_node_ID = id
 
-        return nearest_node_ID
+            result.append(nearest_node_ID)
+
+        return result
 
     def get_route(
         self,
@@ -205,7 +209,6 @@ class RRT:
         # prevent duplicated node from adding
         nodes = self.get_nodes()
         for node in nodes:
-            logger.debug(node)
             if str(node_info) == str(node[-1]['coord']):
                 return node[0]
 
@@ -238,3 +241,17 @@ class RRT:
         )
 
         self.tree.add_edge(currID, newID, weight=weight)
+
+    def reach_target(self) -> bool:
+        """the instance method to check whether the solution is reach the target
+
+        Returns
+        -------
+        bool
+            the result of whether the solution is reach the target
+        """
+        nodes = self.get_nodes()
+        for node in nodes:
+            if str(self.target) == str(node[-1]['coord']):
+                return True
+        return False

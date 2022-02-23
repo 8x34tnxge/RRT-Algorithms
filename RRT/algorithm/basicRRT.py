@@ -43,7 +43,7 @@ class BasicRRT:
         """
         self.drone_info: DroneInfo = drone_info
         self.mission_info: MissionInfo = mission_info
-        self.mapInfo: MapInfo = mission_info.mapInfo
+        self.mapInfo: MapInfo = mission_info.map_info
         self.explore_prob: np.float64 = explore_prob
         self.max_attempts: Union[np.int32, None] = max_attempts
         self.step_size: np.float64 = step_size
@@ -69,17 +69,23 @@ class BasicRRT:
             if random.random() < self.explore_prob:
                 new_sample = random_sample(self.mapInfo.min_border, self.mapInfo.max_border)
             else:
-                new_sample = self.mapInfo.target
+                new_sample = self.mission_info.target
 
             neighbors = self.search_tree.get_nearest_neighbors(new_sample, num=1)
             # [ ] ignore the failure of RRT Extension
-            directly_extend(self.search_tree, new_sample, neighbors)
+            directly_extend(self.search_tree, new_sample, neighbors[0])
 
             if np.isfinite(self.max_attempts) and attempt_cnt > self.max_attempts:
                 break
 
         if attempt_cnt > self.max_attempts:
             return Failure
-        if not self.search_tree.reachTarget():
+        if not self.search_tree.reach_target():
             return Failure
         return Success
+
+    def get_route(self):
+        return self.search_tree.get_route(
+            origin = self.mission_info.origin,
+            target = self.mission_info.target
+        )

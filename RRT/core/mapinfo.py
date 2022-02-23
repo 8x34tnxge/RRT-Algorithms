@@ -33,9 +33,6 @@ class MapInfo:
         """
         self.map: NDArray[(Any, ...)] = np.array(map)
 
-        self.origin = self.extract_origin_info()
-        self.target = self.extract_target_info()
-
         self.min_border: NDArray[Any] = np.zeros(self.map.ndim, dtype=np.int32)
         self.max_border: NDArray[Any] = (
             np.ones(self.map.ndim, dtype=np.int32) * self.map.shape
@@ -48,35 +45,6 @@ class MapInfo:
                 "The variable [map] or [sample_level] must be invalid. Please check these variables!"
             )
 
-    def extract_origin_info(self) -> NDArray[Any]:
-        """the instance method to extract the origin infomation/coordination from the given map info
-
-        Returns
-        -------
-        NDArray[Any]
-            the origin infomation/coordination
-        """
-        x, y = np.nonzero(self.map == 1)
-        # each map should have only one origin
-        assert x.shape[0] == 1 and y.shape[0] == 1
-
-        origin = np.array([x, y]).reshape([-1])
-        return origin
-
-    def extract_target_info(self) -> NDArray[Any]:
-        """the instance method to extract the target infomation/coordination from the given map info
-
-        Returns
-        -------
-        NDArray[Any]
-            the target information/coordination
-        """
-        x, y = np.nonzero(self.map == 2)
-        # each map should have only one target
-        assert x.shape[0] == 1 and y.shape[0] == 1
-
-        target = np.array([x, y]).reshape([-1])
-        return target
 
     def is_valid(self) -> bool:
         """the instance method to check whether the given map info is valid
@@ -91,7 +59,7 @@ class MapInfo:
             return Failure
 
         # if sample level is invalid
-        if self.sample_level != "discrete" or self.sample_level != "continues":
+        if self.sample_level != "discrete" and self.sample_level != "continues":
             return Failure
 
         return Success
