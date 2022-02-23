@@ -1,6 +1,8 @@
 SYSTEM:
   MAP: [
-    "no-wall.yaml"
+    "no-wall.yaml",
+    "simple-map.yaml",
+    "hard-map.yaml",
   ]
 
 TEST:
