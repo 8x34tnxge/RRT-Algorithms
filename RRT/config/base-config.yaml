@@ -1,0 +1,7 @@
+SYSTEM:
+  MAP: [
+    "no-wall.yaml"
+  ]
+
+TEST:
+  MAP: "no-wall"

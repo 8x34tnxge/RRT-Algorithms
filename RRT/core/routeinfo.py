@@ -39,7 +39,7 @@ class RouteInfo:
         Returns
         -------
         Union[NDArray[(Any)], NDArray[(Any, Any)]]
-            [description]
+            the needed route information
 
         Raises
         ------

@@ -9,6 +9,7 @@ numpy = "*"
 pandas = "*"
 matplotlib = "*"
 nptyping = "*"
+yacs = "*"
 
 [dev-packages]
 loguru = "*"

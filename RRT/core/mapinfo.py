@@ -4,19 +4,19 @@ from typing import Any, List
 import numpy as np
 from nptyping import NDArray
 from RRT.core.routeinfo import RouteInfo
-from RRT.core.sign import Success, Failure
+from RRT.core.sign import Failure, Success
 from RRT.util.comb import combination_from_candidates
-
 
 # declare map constant
 EMPTY = 0
 ORIGIN = 1
 TARGET = 2
 WALL = 3
+
 # [x] initial method
 # [x] the method to check whether the route is feasible
 class MapInfo:
-    def __init__(self, map: List[str], sample_level: str):
+    def __init__(self, map: List[str], sample_level: str = "continues"):
         """the initial method for MapInfo
 
         Parameters
@@ -24,7 +24,7 @@ class MapInfo:
         map : List[str]
             the array of map. 0 stands for empty, 1 stands for origin, 2 stands for target, 3 stands for wall.
         sample_level : str
-            sample level for algorithm. Only to "discrete", "continues"
+            sample level for algorithm. Only to "discrete", "continues", by default 'continues'
 
         Raises
         ------
@@ -32,10 +32,15 @@ class MapInfo:
             The variable [map] or [sample_level] is invalid.
         """
         self.map: NDArray[(Any, ...)] = np.array(map)
+
+        self.origin = self.extract_origin_info()
+        self.target = self.extract_target_info()
+
         self.min_border: NDArray[Any] = np.zeros(self.map.ndim, dtype=np.int32)
         self.max_border: NDArray[Any] = (
             np.ones(self.map.ndim, dtype=np.int32) * self.map.shape
         )
+
         self.sample_level: str = sample_level
 
         if not self.is_valid():
@@ -43,16 +48,53 @@ class MapInfo:
                 "The variable [map] or [sample_level] must be invalid. Please check these variables!"
             )
 
+    def extract_origin_info(self) -> NDArray[Any]:
+        """the instance method to extract the origin infomation/coordination from the given map info
+
+        Returns
+        -------
+        NDArray[Any]
+            the origin infomation/coordination
+        """
+        x, y = np.nonzero(self.map == 1)
+        # each map should have only one origin
+        assert x.shape[0] == 1 and y.shape[0] == 1
+
+        origin = np.array([x, y]).reshape([-1])
+        return origin
+
+    def extract_target_info(self) -> NDArray[Any]:
+        """the instance method to extract the target infomation/coordination from the given map info
+
+        Returns
+        -------
+        NDArray[Any]
+            the target information/coordination
+        """
+        x, y = np.nonzero(self.map == 2)
+        # each map should have only one target
+        assert x.shape[0] == 1 and y.shape[0] == 1
+
+        target = np.array([x, y]).reshape([-1])
+        return target
+
     def is_valid(self) -> bool:
+        """the instance method to check whether the given map info is valid
+
+        Returns
+        -------
+        bool
+            the result of whether the given map info is valid
+        """
         # if map is not a array or tensor but object
         if self.map.dtype == "O":
-            return False
+            return Failure
 
         # if sample level is invalid
         if self.sample_level != "discrete" or self.sample_level != "continues":
-            return False
+            return Failure
 
-        return True
+        return Success
 
     # [ ] consider the safe distance between drone and wall
     def is_feasible(self, route_info: RouteInfo, fill_num: int = 30) -> bool:
