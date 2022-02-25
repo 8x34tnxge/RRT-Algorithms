@@ -3,6 +3,7 @@ from RRT.core.mapinfo import MapInfo
 from RRT.core.missioninfo import MissionInfo
 from RRT.algorithm.basicRRT import BasicRRT
 from loguru import logger
+from RRT.util.visualize import visualize
 
 
 def test_basic_RRT():
@@ -17,6 +18,8 @@ def test_basic_RRT():
     logger.debug(f"path: {route_info.get_route()}")
     logger.debug(f"coordination: {route_info.get_route(route_type='coord')}")
     logger.debug(f"length: {route_info.get_length()}")
+
+    visualize(mission_info, route_info, 'test.png')
 
 def test_RRT_connect():
     pass

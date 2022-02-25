@@ -9,6 +9,7 @@ from nptyping import NDArray
 from RRT.core.droneinfo import DroneInfo
 from RRT.core.mapinfo import MapInfo
 from RRT.core.missioninfo import MissionInfo
+from RRT.core.routeinfo import RouteInfo
 from RRT.core.sign import Failure, Success
 from RRT.core.tree import RRT
 from RRT.util.angle import calc_unit_vector
@@ -91,7 +92,14 @@ class BasicRRT:
             return Failure
         return Success
 
-    def get_route(self):
+    def get_route(self) -> RouteInfo:
+        """the instance method to get route info
+
+        Returns
+        -------
+        RouteInfo
+            the route information containing the route from origin to target
+        """
         return self.search_tree.get_route(
             origin = self.mission_info.origin,
             target = self.mission_info.target

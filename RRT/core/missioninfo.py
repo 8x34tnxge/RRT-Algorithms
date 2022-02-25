@@ -20,11 +20,8 @@ class MissionInfo:
         NDArray[Any]
             the origin infomation/coordination
         """
-        x, y = np.nonzero(self.map_info.map == 1)
-        # each map should have only one origin
-        assert x.shape[0] == 1 and y.shape[0] == 1
-
-        origin = np.array([x, y]).reshape([-1])
+        coord = np.nonzero(self.map_info.map == 1)
+        origin = np.array(coord).reshape([-1])
         return origin
 
     def extract_target_info(self) -> NDArray[Any]:
@@ -35,9 +32,6 @@ class MissionInfo:
         NDArray[Any]
             the target information/coordination
         """
-        x, y = np.nonzero(self.map_info.map == 2)
-        # each map should have only one target
-        assert x.shape[0] == 1 and y.shape[0] == 1
-
-        target = np.array([x, y]).reshape([-1])
+        coord = np.nonzero(self.map_info.map == 2)
+        target = np.array(coord).reshape([-1])
         return target

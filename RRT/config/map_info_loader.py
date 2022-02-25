@@ -10,7 +10,8 @@ class MapInfoLoader(ConfigLoader):
 
     def load_map(self, map_file_name: Text):
         file_name = os.path.basename(map_file_name).rsplit(".", maxsplit=1)[0]
-        assert file_name not in self.container.keys()
+        if file_name in self.container.keys():
+            return
 
         config = CfgNode()
         config.MAP = None

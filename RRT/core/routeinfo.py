@@ -29,12 +29,12 @@ class RouteInfo:
     def get_route(
         self, route_type: str = "sequence"
     ) -> Union[NDArray[(Any)], NDArray[(Any, Any)]]:
-        """[summary]
+        """the instance method to obtain the needed route
 
         Parameters
         -------
         route_type : str
-            the type of needed route
+            the type of needed route, only be 'sequence' or 'coord'
 
         Returns
         -------
