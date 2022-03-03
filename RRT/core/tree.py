@@ -7,7 +7,7 @@ from collections import namedtuple
 import networkx as nx
 import numpy as np
 from nptyping import NDArray
-from RRT.core.routeinfo import RouteInfo
+from RRT.core.info import RouteInfo
 from RRT.util import array_hash, dist_calc
 
 

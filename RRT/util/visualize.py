@@ -10,8 +10,7 @@ import numpy as np
 from matplotlib.patches import Patch
 from mpl_toolkits.mplot3d import Axes3D
 from nptyping import NDArray
-from RRT.core.missioninfo import MissionInfo
-from RRT.core.routeinfo import RouteInfo
+from RRT.core.info import MissionInfo, RouteInfo
 from RRT.config import get_config
 
 plt.set_loglevel("info")

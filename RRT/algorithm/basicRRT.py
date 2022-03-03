@@ -5,13 +5,9 @@ from typing import Any, Union
 
 import numpy as np
 from nptyping import NDArray
-from RRT.core.droneinfo import DroneInfo
-from RRT.core.mapinfo import MapInfo
-from RRT.core.missioninfo import MissionInfo
-from RRT.core.routeinfo import RouteInfo
-from RRT.core.sign import Failure, Success
+from RRT.core.info import DroneInfo, MapInfo, MissionInfo, RouteInfo
+from RRT.core.sign import FAILURE, SUCCESS
 from RRT.core.tree import RRT
-from RRT.util.angle import calc_unit_vector
 from RRT.util.distcalc import dist_calc
 from RRT.util.extendmethod import directly_extend
 from RRT.util.samplemethod import random_sample, resample
@@ -98,7 +94,7 @@ class BasicRRT:
                 break
 
         if attempt_cnt > self.max_attempts:
-            return Failure
+            return FAILURE
         return self.search_tree.is_reach_target
 
     def get_route(self) -> RouteInfo:

@@ -1,21 +1,98 @@
 import math
-from typing import Any, List
-from loguru import logger
+from typing import Any, List, Union
 
 import numpy as np
 from nptyping import NDArray
-from RRT.core.routeinfo import RouteInfo
-from RRT.core.sign import Failure, Success
+from RRT.core.sign import FAILURE, SUCCESS, EMPTY, ORIGIN, TARGET, WALL
+from RRT.util.distcalc import dist_calc
 from RRT.util.comb import combination_from_candidates
 
-# declare map constant
-EMPTY = 0
-ORIGIN = 1
-TARGET = 2
-WALL = 3
 
-# [x] initial method
-# [x] the method to check whether the route is feasible
+class RouteInfo:
+    def __init__(
+        self,
+        sequence: NDArray[(Any)],
+        coords: NDArray[(Any, Any)],
+        length: np.float64,
+    ):
+        """the initial method for RouteInfo
+
+        Parameters
+        ----------
+        sequence : List[Any]
+            the list of point/node ID in order.
+        coords : List[Any]
+            the multi-dim list of coordination of points/nodes respectively.
+        length : np.float64
+            the length of the route
+        """
+        self._sequence: List[Any] = sequence
+        self._coords: List[Any] = coords
+        self._length: np.float64 = length
+
+    def append(self, node_coord):
+        self._sequence.append(0)
+        self._length += dist_calc(self._coords[-1], node_coord)
+        self._coords.append(node_coord)
+        return self
+
+    def get_route(
+        self, route_type: str = "sequence"
+    ) -> Union[NDArray[(Any)], NDArray[(Any, Any)]]:
+        """the instance method to obtain the needed route
+
+        Parameters
+        -------
+        route_type : str
+            the type of needed route, only be 'sequence' or 'coord'
+
+        Returns
+        -------
+        Union[NDArray[(Any)], NDArray[(Any, Any)]]
+            the needed route information
+
+        Raises
+        ------
+        ValueError
+            the variable [route_type] is not 'sequence' or 'coord'
+        """
+        if route_type == "sequence":
+            return np.array(self._sequence)
+        elif route_type == "coord":
+            return np.array(self._coords)
+        else:
+            raise ValueError(
+                f"The variable [route_type] must be 'sequence' or 'coord'! its value is [{route_type}] now."
+            )
+
+    def get_length(self) -> np.float64:
+        """the instance method to get the length of the route
+
+        Returns
+        -------
+        np.float64
+            the length of the route
+        """
+        return self._length
+
+    def is_feasible(self) -> bool:
+        """the method to get the result of whether the current solution is feasible
+
+        Returns
+        -------
+        bool
+            the result of whether the current solution is feasible
+        """
+        if self._sequence is None or self._coords is None or self._length is None:
+            return False
+        else:
+            return True
+
+
+class DroneInfo:
+    pass
+
+
 class MapInfo:
     def __init__(self, map: List[str], sample_level: str = "continues"):
         """the initial method for MapInfo
@@ -46,7 +123,6 @@ class MapInfo:
                 "The variable [map] or [sample_level] must be invalid. Please check these variables!"
             )
 
-
     def _is_valid(self) -> bool:
         """the private method to check whether the given map info is valid
 
@@ -57,13 +133,13 @@ class MapInfo:
         """
         # if map is not a array or tensor but object
         if self.map.dtype == "O":
-            return Failure
+            return FAILURE
 
         # if sample level is invalid
         if self.sample_level != "discrete" and self.sample_level != "continues":
-            return Failure
+            return FAILURE
 
-        return Success
+        return SUCCESS
 
     # [ ] consider the safe distance between drone and wall
     def is_feasible(self, route_info: RouteInfo, fill_num: int = 30) -> bool:
@@ -96,7 +172,9 @@ class MapInfo:
                 (
                     new_coordination,
                     np.linspace(
-                        coordination[node_id-1, :], coordination[node_id, :], num=fill_num
+                        coordination[node_id - 1, :],
+                        coordination[node_id, :],
+                        num=fill_num,
                     ),
                 ),
             )
@@ -156,6 +234,38 @@ class MapInfo:
             )
             for comb in combinations:
                 if self.map[tuple(map(int, comb))] == WALL:
-                    return Failure
+                    return FAILURE
 
-        return Success
+        return SUCCESS
+
+
+class MissionInfo:
+    def __init__(self, map_info: MapInfo):
+        self.map_info = map_info
+
+        self.origin = self.extract_origin_info()
+        self.target = self.extract_target_info()
+
+    def extract_origin_info(self) -> NDArray[Any]:
+        """the instance method to extract the origin infomation/coordination from the given map info
+
+        Returns
+        -------
+        NDArray[Any]
+            the origin infomation/coordination
+        """
+        coord = np.nonzero(self.map_info.map == 1)
+        origin = np.array(coord).reshape([-1])
+        return origin
+
+    def extract_target_info(self) -> NDArray[Any]:
+        """the instance method to extract the target infomation/coordination from the given map info
+
+        Returns
+        -------
+        NDArray[Any]
+            the target information/coordination
+        """
+        coord = np.nonzero(self.map_info.map == 2)
+        target = np.array(coord).reshape([-1])
+        return target
