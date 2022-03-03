@@ -1,8 +1,9 @@
 import math
 import random
-from typing import List, Union
+from typing import Any, List, Union
 
 import numpy as np
+from nptyping import NDArray
 from RRT.util.angle import calc_unit_vector
 
 
@@ -123,7 +124,24 @@ def get3D_sample() -> np.ndarray:
     return sample
 
 
-def resample(origin, end, step_size):
+def resample(origin: NDArray[Any], end: NDArray[Any], step_size: float) -> NDArray[Any]:
+    """the method to resample from origin to end based on step size
+
+    Parameters
+    ----------
+    origin : NDArray[Any]
+        the nearest node position
+    end : NDArray[Any]
+        the sampled position
+    step_size : float
+        the size of each step
+
+    Returns
+    -------
+    NDArray[Any]
+        the resampled position
+    """
     unit_vector = calc_unit_vector(origin, end)
     new_sample = origin + unit_vector * step_size * 1
+
     return new_sample
