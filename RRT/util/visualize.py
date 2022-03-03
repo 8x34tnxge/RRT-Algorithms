@@ -1,6 +1,8 @@
 import os
 from typing import Any
-
+import logging
+logging.getLogger('matplotlib').setLevel(logging.WARNING)
+logging.getLogger('PIL').setLevel(logging.WARNING)
 import pickle
 import matplotlib.figure
 import matplotlib.pyplot as plt
@@ -69,7 +71,7 @@ def visualize_2d(atlas: NDArray[Any], route_info: RouteInfo) -> matplotlib.figur
         interpolation="none",
         vmin=0,
         vmax=1,
-        catlas="Greys",
+        cmap="Greys",
         aspect="equal",
     )
 

@@ -28,7 +28,7 @@ def combination_from_candidates(
     for candidate in candidates:
         # extract each leaf node
         for _ in range(leaf_num):
-            tmpComb = combinations.get() if leaf_num != 1 else []
+            tmpComb = combinations.get() if combinations.empty() is not True else []
             # copy each leaf node for [element number] time and append the element in the end
             for elem in candidate:
                 tmp = list()

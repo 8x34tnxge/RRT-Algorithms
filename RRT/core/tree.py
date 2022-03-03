@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 from typing import Any, List
+from loguru import logger
+from collections import namedtuple
 
 import networkx as nx
 import numpy as np
@@ -73,21 +75,22 @@ class RRT:
         List[int]
             the ID of the nearest neighbor point(s)/node(s)
         """
-        result = []
-        while len(result) < num:
-            nearest_node_ID = 0
-            min_dist = np.Infinity
+        assert num > 0
 
-            for id, info in self.get_nodes():
-                coord_info = info["coord"]
-                dist = np.linalg.norm([node_info, coord_info])
-                if dist < min_dist:
-                    min_dist = dist
-                    nearest_node_ID = id
+        rel_info = namedtuple('rel_info', ('node_id', 'dist'))
+        info_list = []
+        for id, info in self.get_nodes():
+            coord_info = info['coord']
+            dist = dist_calc(coord_info, node_info)
+            info_list.append(rel_info(id, dist))
 
-            result.append(nearest_node_ID)
+        ret = []
+        num = num if num < len(info_list) else len(info_list)
+        info_list.sort(key=lambda x: x.dist)
+        for idx in range(num):
+            ret.append(info_list[idx].node_id)
 
-        return result
+        return ret
 
     def get_route(
         self,
@@ -140,17 +143,17 @@ class RRT:
         except nx.exception.NetworkXNoPath:
             return RouteInfo(None, None, None)
 
-        axis_info = [[] for _ in range(self.ndim)]
+        axis_info = []
         for nodeID in route:
             coord_info = nodes_info[nodeID]["coord"]
-            for dimID in range(self.ndim):
-                axis_info[dimID].append(coord_info[dimID])
+            axis_info.append(coord_info)
+            # for dimID in range(self.ndim):
+            #     axis_info[dimID].append(coord_info[dimID])
 
         length = nx.algorithms.shortest_path_length(
             self.tree, originID, targetID, weight="weight"
         )
-
-        return RouteInfo(np.array(route), np.array(axis_info).T, np.float64(length))
+        return RouteInfo(route, axis_info, np.float64(length))
 
     @classmethod
     def merge_from_trees(cls, trees: List[RRT]) -> RRT:
@@ -241,17 +244,3 @@ class RRT:
         )
 
         self.tree.add_edge(currID, newID, weight=weight)
-
-    def reach_target(self) -> bool:
-        """the instance method to check whether the solution is reach the target
-
-        Returns
-        -------
-        bool
-            the result of whether the solution is reach the target
-        """
-        nodes = self.get_nodes()
-        for node in nodes:
-            if str(self.target) == str(node[-1]['coord']):
-                return True
-        return False

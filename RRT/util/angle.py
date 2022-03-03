@@ -19,6 +19,8 @@ def calc_unit_vector(head_coord_info: NDArray[Any], tail_coord_info: NDArray[Any
     """
     delta_vector: NDArray[Any]= tail_coord_info - head_coord_info
     vector_magnitude= np.linalg.norm(delta_vector)
+    if vector_magnitude == 0:
+        return np.zeros(delta_vector.shape)
     unit_vector = delta_vector / vector_magnitude
 
     return unit_vector

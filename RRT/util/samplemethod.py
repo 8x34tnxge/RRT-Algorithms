@@ -3,10 +3,13 @@ import random
 from typing import List, Union
 
 import numpy as np
+from RRT.util.angle import calc_unit_vector
 
 
 def random_sample(
-    min_border: Union[List[float], np.ndarray], max_border: Union[List[float], np.ndarray]
+    min_border: Union[List[float], np.ndarray],
+    max_border: Union[List[float], np.ndarray],
+    use_integer: bool = True
 ) -> np.ndarray:
     """the method to randomly sample a point/node in a square space with max and min value for each dimension
 
@@ -23,8 +26,11 @@ def random_sample(
         the coord info of the sampled point/node
     """
     sample_coord = []
-    for minVal, maxVal in zip(min_border, max_border):
-        sample_coord.append(random.randint(minVal, maxVal))
+    for min_val, max_val in zip(min_border, max_border):
+        if use_integer:
+            sample_coord.append(random.randint(math.ceil(min_val), math.floor(max_val)))
+        else:
+            sample_coord.append(min_val + random.random() * (max_val - min_val))
 
     # convert list to array for better math manipulation
     sample_coord = np.array(sample_coord)
@@ -32,7 +38,7 @@ def random_sample(
     return sample_coord
 
 
-def sample_unit_ball(num: int, dim: int=3) -> List[np.ndarray]:
+def sample_unit_ball(num: int, dim: int = 3) -> List[np.ndarray]:
     """the method to get a number of points/nodes in a unit ball for given dimensions
 
     Parameters
@@ -115,3 +121,9 @@ def get3D_sample() -> np.ndarray:
 
     sample = np.array([x, y, z])
     return sample
+
+
+def resample(origin, end, step_size):
+    unit_vector = calc_unit_vector(origin, end)
+    new_sample = origin + unit_vector * step_size * 1
+    return new_sample

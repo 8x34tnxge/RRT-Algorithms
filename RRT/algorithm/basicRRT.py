@@ -1,8 +1,7 @@
 from __future__ import annotations
-from loguru import logger
 
 import random
-from typing import Union, Any
+from typing import Any, Union
 
 import numpy as np
 from nptyping import NDArray
@@ -13,13 +12,13 @@ from RRT.core.routeinfo import RouteInfo
 from RRT.core.sign import Failure, Success
 from RRT.core.tree import RRT
 from RRT.util.angle import calc_unit_vector
+from RRT.util.distcalc import dist_calc
 from RRT.util.extendmethod import directly_extend
-from RRT.util.samplemethod import random_sample
+from RRT.util.samplemethod import random_sample, resample
 
 
 class BasicRRT:
-    """basic Rapidly-exploring Random Tree algorithm with only one forward-search tree
-    """
+    """basic Rapidly-exploring Random Tree algorithm with only one forward-search tree"""
 
     def __init__(
         self,
@@ -46,7 +45,7 @@ class BasicRRT:
         """
         self.drone_info: DroneInfo = drone_info
         self.mission_info: MissionInfo = mission_info
-        self.mapInfo: MapInfo = mission_info.map_info
+        self.map_info: MapInfo = mission_info.map_info
         self.explore_prob: np.float64 = explore_prob
         self.max_attempts: Union[np.int32, None] = max_attempts
         self.step_size: np.float64 = step_size
@@ -71,26 +70,36 @@ class BasicRRT:
 
             explore = random.random() < self.explore_prob
             if explore:
-                new_sample = random_sample(self.mapInfo.min_border, self.mapInfo.max_border)
+                new_sample = random_sample(
+                    self.map_info.min_border, self.map_info.max_border
+                )
             else:
                 new_sample = self.mission_info.target
 
             neighbors = self.search_tree.get_nearest_neighbors(new_sample, num=1)
-            # [ ] ignore the failure of RRT Extension
+            neighbor_info = self.search_tree.get_nodes()[neighbors[0]]["coord"]
+
             if explore:
-                neighbor_info = self.search_tree.get_nodes()[neighbors[0]]['coord']
-                unit_vector = calc_unit_vector(neighbor_info, new_sample)
-                new_sample = neighbor_info + unit_vector * self.step_size * random.random()
-            directly_extend(self.search_tree, new_sample, neighbors[0])
+                new_sample = resample(neighbor_info, new_sample, self.step_size)
+            else:
+                out_range = dist_calc(neighbor_info, new_sample) > self.step_size
+                new_sample = (
+                    resample(neighbor_info, new_sample, self.step_size)
+                    if out_range
+                    else new_sample
+                )
+
+            if self.mission_info.map_info.is_feasible(
+                self.search_tree.get_route(target=neighbor_info).append(new_sample)
+            ):
+                directly_extend(self.search_tree, new_sample, neighbors[0])
 
             if np.isfinite(self.max_attempts) and attempt_cnt > self.max_attempts:
                 break
 
         if attempt_cnt > self.max_attempts:
             return Failure
-        if not self.search_tree.reach_target():
-            return Failure
-        return Success
+        return self.search_tree.is_reach_target
 
     def get_route(self) -> RouteInfo:
         """the instance method to get route info
@@ -101,6 +110,5 @@ class BasicRRT:
             the route information containing the route from origin to target
         """
         return self.search_tree.get_route(
-            origin = self.mission_info.origin,
-            target = self.mission_info.target
+            origin=self.mission_info.origin, target=self.mission_info.target
         )
