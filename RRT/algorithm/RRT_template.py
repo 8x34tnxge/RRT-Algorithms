@@ -1,7 +1,13 @@
 from abc import ABC, abstractmethod
-from RRT.core.droneinfo
+from typing import Any, Union
 
-class RRT(ABC):
+import numpy as np
+from RRT.core import RRT
+from nptyping import NDArray
+from RRT.core.info import DroneInfo, MapInfo, MissionInfo, RouteInfo
+
+
+class RRT_Template(ABC):
     def __init__(
         self,
         drone_info: DroneInfo,
@@ -37,3 +43,25 @@ class RRT(ABC):
         target: NDArray[Any]
         origin, target = mission_info.origin, mission_info.target
         self.search_tree: RRT = RRT(origin, target)
+
+    @abstractmethod
+    def run(self) -> bool:
+        """the method to run the basic RRT algorithm
+
+        Returns
+        -------
+        bool
+            whether basic RRT algorithm reach the target from origin
+        """
+        pass
+
+    @abstractmethod
+    def get_route(self) -> RouteInfo:
+        """the instance method to get route info
+
+        Returns
+        -------
+        RouteInfo
+            the route information containing the route from origin to target
+        """
+        pass

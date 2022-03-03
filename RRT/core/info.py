@@ -3,9 +3,9 @@ from typing import Any, List, Union
 
 import numpy as np
 from nptyping import NDArray
-from RRT.core.sign import FAILURE, SUCCESS, EMPTY, ORIGIN, TARGET, WALL
-from RRT.util.distcalc import dist_calc
+from RRT.core.sign import EMPTY, FAILURE, ORIGIN, SUCCESS, TARGET, WALL
 from RRT.util.comb import combination_from_candidates
+from RRT.util.distcalc import dist_calc
 
 
 class RouteInfo:

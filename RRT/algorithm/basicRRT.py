@@ -1,19 +1,18 @@
 from __future__ import annotations
 
 import random
-from typing import Any, Union
 
 import numpy as np
-from nptyping import NDArray
-from RRT.core.info import DroneInfo, MapInfo, MissionInfo, RouteInfo
-from RRT.core.sign import FAILURE, SUCCESS
-from RRT.core.tree import RRT
+from RRT.algorithm.RRT_template import RRT_Template
+from RRT.core import RRT
+from RRT.core.info import DroneInfo, MissionInfo, RouteInfo
+from RRT.core.sign import FAILURE
 from RRT.util.distcalc import dist_calc
 from RRT.util.extendmethod import directly_extend
 from RRT.util.samplemethod import random_sample, resample
 
 
-class BasicRRT:
+class BasicRRT(RRT_Template):
     """basic Rapidly-exploring Random Tree algorithm with only one forward-search tree"""
 
     def __init__(
@@ -24,7 +23,7 @@ class BasicRRT:
         step_size: np.float64,
         max_attempts: np.int32 = np.Infinity,
     ):
-        """the init method of the basic RRT
+        """the init method of RRT
 
         Parameters
         ----------
@@ -39,18 +38,8 @@ class BasicRRT:
         max_attempts : np.int32, optional
             the maximum number of attempts, by default np.Infinity
         """
-        self.drone_info: DroneInfo = drone_info
-        self.mission_info: MissionInfo = mission_info
-        self.map_info: MapInfo = mission_info.map_info
-        self.explore_prob: np.float64 = explore_prob
-        self.max_attempts: Union[np.int32, None] = max_attempts
-        self.step_size: np.float64 = step_size
-
-        # initialize the forward search tree
-        origin: NDArray[Any]
-        target: NDArray[Any]
-        origin, target = mission_info.origin, mission_info.target
-        self.search_tree: RRT = RRT(origin, target)
+        super().__init__(drone_info, mission_info, explore_prob, step_size, max_attempts)
+        self.search_tree: RRT = RRT(mission_info.origin, mission_info.target)
 
     def run(self) -> bool:
         """the method to run the basic RRT algorithm
