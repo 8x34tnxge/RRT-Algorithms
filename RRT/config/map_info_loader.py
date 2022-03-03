@@ -1,11 +1,14 @@
 import os
 from typing import Text
-from yacs.config import CfgNode
+
 from RRT.config.config_loader import ConfigLoader
-from loguru import logger
+from yacs.config import CfgNode
+
 
 class MapInfoLoader(ConfigLoader):
-    def __init__(self, ):
+    def __init__(
+        self,
+    ):
         self.container = {}
 
     def load_map(self, map_file_name: Text):

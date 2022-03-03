@@ -1,7 +1,5 @@
-import numpy as np
 from queue import SimpleQueue
-from typing import List, Any, Callable
-from nptyping import NDArray
+from typing import Any, Callable, List
 
 
 def combination_from_candidates(
@@ -12,7 +10,7 @@ def combination_from_candidates(
     Parameters
     ----------
     candidates : List[Any]
-        the list of each candidate 
+        the list of each candidate
     converter : Callable, optional
         the converter to transfer the combination to ideal type, by default lambda x: x
 

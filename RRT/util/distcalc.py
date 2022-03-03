@@ -1,6 +1,9 @@
 import numpy as np
 
-def dist_calc(prev_node_coord_info: np.ndarray, post_node_coord_info: np.ndarray) -> np.ndarray:
+
+def dist_calc(
+    prev_node_coord_info: np.ndarray, post_node_coord_info: np.ndarray
+) -> np.ndarray:
     """the method to calc distance between two points/nodes in arbitrary dimensional space
 
     Parameters

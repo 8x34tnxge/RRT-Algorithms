@@ -1,17 +1,18 @@
+import logging
 import os
 from typing import Any
-import logging
-logging.getLogger('matplotlib').setLevel(logging.WARNING)
-logging.getLogger('PIL').setLevel(logging.WARNING)
+
+logging.getLogger("matplotlib").setLevel(logging.WARNING)
+logging.getLogger("PIL").setLevel(logging.WARNING)
 import pickle
+
 import matplotlib.figure
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.patches import Patch
-from mpl_toolkits.mplot3d import Axes3D
 from nptyping import NDArray
-from RRT.core.info import MissionInfo, RouteInfo
 from RRT.config import get_config
+from RRT.core.info import MissionInfo, RouteInfo
 
 plt.set_loglevel("info")
 
@@ -43,11 +44,16 @@ def visualize(mission_info: MissionInfo, route_info: RouteInfo, file_name: str):
     else:
         raise ValueError("the number of dimension must be 2 or 3!")
 
-    with open(os.path.join(config.get_attr().SYSTEM.SAVE_DIR, file_name+".pickle"), 'wb') as f:
+    with open(
+        os.path.join(config.get_attr().SYSTEM.SAVE_DIR, file_name + ".pickle"), "wb"
+    ) as f:
         pickle.dump(fig, f)
     fig.savefig(os.path.join(config.get_attr().SYSTEM.SAVE_DIR, file_name))
 
-def visualize_2d(atlas: NDArray[Any], route_info: RouteInfo) -> matplotlib.figure.Figure:
+
+def visualize_2d(
+    atlas: NDArray[Any], route_info: RouteInfo
+) -> matplotlib.figure.Figure:
     """the method to draw 2D figure
 
     Parameters
@@ -107,7 +113,7 @@ def visualize_2d(atlas: NDArray[Any], route_info: RouteInfo) -> matplotlib.figur
     return fig
 
 
-def visualize_3d(atlas: NDArray[Any], route_info: RouteInfo):   
+def visualize_3d(atlas: NDArray[Any], route_info: RouteInfo):
     """the method to draw 3D figure
 
     Parameters
@@ -123,19 +129,25 @@ def visualize_3d(atlas: NDArray[Any], route_info: RouteInfo):
         the 3D figure
     """
     fig = plt.figure()
-    ax = plt.subplot(111, projection='3d')
+    ax = plt.subplot(111, projection="3d")
 
     # Route Section
     coordination = route_info.get_route(route_type="coord")
-    route, = ax.plot(coordination[:, 0], coordination[:, 1], coordination[:, 2], color="C1", label='Route')
+    (route,) = ax.plot(
+        coordination[:, 0],
+        coordination[:, 1],
+        coordination[:, 2],
+        color="C1",
+        label="Route",
+    )
 
     # # add origin info
     coord = np.nonzero(atlas == 1)
-    origin = ax.scatter(coord[0], coord[1], coord[2], c="r", label='Origin')
+    origin = ax.scatter(coord[0], coord[1], coord[2], c="r", label="Origin")
 
     # # add target info
     coord = np.nonzero(atlas == 2)
-    target = ax.scatter(coord[0], coord[1], coord[2], c="b", label='Target')
+    target = ax.scatter(coord[0], coord[1], coord[2], c="b", label="Target")
 
     # render the color of buildings
     wall_alpha = 1
@@ -147,7 +159,7 @@ def visualize_3d(atlas: NDArray[Any], route_info: RouteInfo):
     for x, y, z in zip(wall_x, wall_y, wall_z):
         colors[x, y, z] = [1, 1, 1, wall_alpha]
 
-    ax.voxels(atlas, facecolors=colors, label='Building')
+    ax.voxels(atlas, facecolors=colors, label="Building")
 
     # add the legend of above things
     legend_handles = [
@@ -156,7 +168,15 @@ def visualize_3d(atlas: NDArray[Any], route_info: RouteInfo):
         origin,
         target,
     ]
-    fig.legend(handles=legend_handles, labels=["Building", "Route", "Origin", "Target", ])
+    fig.legend(
+        handles=legend_handles,
+        labels=[
+            "Building",
+            "Route",
+            "Origin",
+            "Target",
+        ],
+    )
 
     # remove the axes info
     ax.set_xticks([])

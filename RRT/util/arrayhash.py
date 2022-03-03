@@ -1,5 +1,6 @@
 import numpy as np
 
+
 def array_hash(array: np.ndarray) -> str:
     """the method to convert an array/ndarray to a hashable object (str)
 

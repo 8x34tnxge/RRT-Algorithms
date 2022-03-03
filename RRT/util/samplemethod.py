@@ -9,7 +9,7 @@ from RRT.util.angle import calc_unit_vector
 def random_sample(
     min_border: Union[List[float], np.ndarray],
     max_border: Union[List[float], np.ndarray],
-    use_integer: bool = True
+    use_integer: bool = True,
 ) -> np.ndarray:
     """the method to randomly sample a point/node in a square space with max and min value for each dimension
 

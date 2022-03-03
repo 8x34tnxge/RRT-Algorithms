@@ -38,7 +38,9 @@ class BasicRRT(RRT_Template):
         max_attempts : np.int32, optional
             the maximum number of attempts, by default np.Infinity
         """
-        super().__init__(drone_info, mission_info, explore_prob, step_size, max_attempts)
+        super().__init__(
+            drone_info, mission_info, explore_prob, step_size, max_attempts
+        )
         self.search_tree: RRT = RRT(mission_info.origin, mission_info.target)
 
     def run(self) -> bool:
