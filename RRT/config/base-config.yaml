@@ -8,4 +8,4 @@ SYSTEM:
   SAVE_DIR: "./output"
 
 TEST:
-  MAP: "map"
+  MAP: "simple-map"

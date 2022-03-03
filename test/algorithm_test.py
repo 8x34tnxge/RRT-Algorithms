@@ -10,7 +10,7 @@ def test_basic_RRT():
     mission_info = MissionInfo(
         MapInfo(get_test_map())
     )
-    alg: BasicRRT = BasicRRT(None, mission_info, 0.5, 5, 1000)
+    alg: BasicRRT = BasicRRT(None, mission_info, 0.5, 3)
     res = alg.run()
     logger.debug(f"nodes: {alg.search_tree.get_nodes()}")
     logger.debug(f"edges: {alg.search_tree.get_edges()}")

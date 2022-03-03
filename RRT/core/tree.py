@@ -212,12 +212,12 @@ class RRT:
         # prevent duplicated node from adding
         nodes = self.get_nodes()
         for node in nodes:
-            if str(node_info) == str(node[-1]['coord']):
+            if all(node_info == node[-1]['coord']):
                 return node[0]
 
         self.IDcounter += 1
         nodeID = self.IDcounter
-        if str(node_info) == str(self.target):
+        if all(node_info == self.target):
             self.is_reach_target = True
         self.tree.add_node(nodeID, coord=node_info)
         return nodeID
