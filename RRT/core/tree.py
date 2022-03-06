@@ -77,10 +77,10 @@ class RRT:
         """
         assert num > 0
 
-        rel_info = namedtuple('rel_info', ('node_id', 'dist'))
+        rel_info = namedtuple("rel_info", ("node_id", "dist"))
         info_list = []
         for id, info in self.get_nodes():
-            coord_info = info['coord']
+            coord_info = info["coord"]
             dist = dist_calc(coord_info, node_info)
             info_list.append(rel_info(id, dist))
 
@@ -156,20 +156,26 @@ class RRT:
         return RouteInfo(route, axis_info, np.float64(length))
 
     @classmethod
-    def merge_from_trees(cls, trees: List[RRT]) -> RRT:
+    def merge_from_trees(
+        cls, trees: List[RRT], origin: NDArray[Any], target: NDArray[Any]
+    ) -> RRT:
         """the class method to merge a list of RRTs to a new RRT
 
         Parameters
         ----------
         trees : List[RRT]
             the list of RRTs to merge
+        origin : NDArray[Any]
+            the coordination info of the given origin
+        target : NDArray[Any]
+            the coordination info of the given target
 
         Returns
         -------
         RRT
             new RRT merged from the given list of RRTs
         """
-        new_tree = cls(trees[0].origin, trees[1].target)
+        new_tree = cls(origin, target)
         attr_search_dict = {}
         for tree in trees:
             table4ID = {}
@@ -194,6 +200,7 @@ class RRT:
                 weight = edge[-1]["weight"]
                 new_tree.add_edge(prevID, postID, weight)
 
+        new_tree.update_status()
         return new_tree
 
     def add_node(self, node_info: NDArray[Any]) -> int:
@@ -212,13 +219,13 @@ class RRT:
         # prevent duplicated node from adding
         nodes = self.get_nodes()
         for node in nodes:
-            if all(node_info == node[-1]['coord']):
+            if all(node_info == node[-1]["coord"]):
                 return node[0]
 
         self.IDcounter += 1
         nodeID = self.IDcounter
-        if all(node_info == self.target):
-            self.is_reach_target = True
+        # if all(node_info == self.target):
+        #     self.is_reach_target = True
         self.tree.add_node(nodeID, coord=node_info)
         return nodeID
 
@@ -244,3 +251,15 @@ class RRT:
         )
 
         self.tree.add_edge(currID, newID, weight=weight)
+
+    def update_status(self):
+        """the instance method to update reach status
+        """
+        try:
+            route_info = self.get_route()
+            if route_info.get_length() == None:
+                self.is_reach_target = False
+            else:
+                self.is_reach_target = True
+        except AttributeError :
+            self.is_reach_target = False

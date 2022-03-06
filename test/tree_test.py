@@ -44,7 +44,7 @@ def test_merge():
         t2.add_node(test_nodes[n])
     t2.add_edge(1, 2)
 
-    newT = RRT.merge_from_trees([t1, t2])
+    newT = RRT.merge_from_trees([t1, t2], t1.origin, t1.target)
     logger.debug(f"nodes: {newT.get_nodes()}")
     logger.debug(f"edges: {newT.get_edges()}")
 

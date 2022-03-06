@@ -42,7 +42,6 @@ class RRT_Template(ABC):
         origin: NDArray[Any]
         target: NDArray[Any]
         origin, target = mission_info.origin, mission_info.target
-        self.search_tree: RRT = RRT(origin, target)
 
     @abstractmethod
     def run(self) -> bool:

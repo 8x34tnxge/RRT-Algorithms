@@ -81,6 +81,7 @@ class BasicRRT(RRT_Template):
             ):
                 directly_extend(self.search_tree, new_sample, neighbors[0])
 
+            self.search_tree.update_status()
             if np.isfinite(self.max_attempts) and attempt_cnt > self.max_attempts:
                 break
 
