@@ -1,0 +1,11 @@
+SYSTEM:
+  MAP: [
+    "no-wall.yaml",
+    "simple-map.yaml",
+    "hard-map.yaml",
+    "map.yaml"
+  ]
+  SAVE_DIR: "./output"
+
+TEST:
+  MAP: "simple-map"
