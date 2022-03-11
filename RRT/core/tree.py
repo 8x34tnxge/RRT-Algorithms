@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from collections import namedtuple
-from typing import Any, List
+from typing import Any, List, Callable, Dict
 
 import networkx as nx
 import numpy as np
@@ -60,7 +60,7 @@ class RRT:
         """
         return self.tree.edges.data()
 
-    def get_nearest_neighbors(self, node_info: NDArray[Any], num: int = 1) -> List[int]:
+    def get_nearest_neighbors(self, node_info: NDArray[Any], num: int = 1, condition: Callable = lambda x: True) -> List[int]:
         """the instance method to get nearest neighbors according to the given node coordination info
 
         Parameters
@@ -69,6 +69,8 @@ class RRT:
             the coordination info of the given node
         num : int
             the number of the nearest neighbors
+        condition: Callable
+            the function to judge whether to keep the neighbor based on distance
 
         Returns
         -------
@@ -88,9 +90,27 @@ class RRT:
         num = num if num < len(info_list) else len(info_list)
         info_list.sort(key=lambda x: x.dist)
         for idx in range(num):
+            if condition(info_list[idx].dist) is False:
+                continue
             ret.append(info_list[idx].node_id)
 
         return ret
+
+    def get_node_attr(self, node_id: int) -> Dict:
+        """the instance method to get the attributions from node id
+
+        Parameters
+        ----------
+        node_id : int
+            the id of node
+
+        Returns
+        -------
+        Dict
+            the attribution of the node
+        """
+        node_attr = self.get_nodes()[node_id]
+        return node_attr
 
     def get_route(
         self,
@@ -224,8 +244,6 @@ class RRT:
 
         self.IDcounter += 1
         nodeID = self.IDcounter
-        # if all(node_info == self.target):
-        #     self.is_reach_target = True
         self.tree.add_node(nodeID, coord=node_info)
         return nodeID
 
@@ -245,8 +263,8 @@ class RRT:
             weight
             if weight is not None
             else dist_calc(
-                prev_node_coord_info=self.tree.nodes[currID]["coord"],
-                post_node_coord_info=self.tree.nodes[newID]["coord"],
+                prev_node_coord_info=self.get_node_attr(currID)["coord"],
+                post_node_coord_info=self.get_node_attr(newID)["coord"],
             )
         )
 

@@ -19,7 +19,6 @@ class BasicRRT(RRT_Template):
         self,
         drone_info: DroneInfo,
         mission_info: MissionInfo,
-        explore_prob: np.float64,
         step_size: np.float64,
         max_attempts: np.int32 = np.Infinity,
     ):
@@ -31,15 +30,13 @@ class BasicRRT(RRT_Template):
             the drone infomation
         mission_info : MissionInfo
             the mission infomation
-        explore_prob : np.float64
-            the probability of exploration (1 - the probability of going forward target)
         step_size : np.float64
             the size/length of each step
         max_attempts : np.int32, optional
             the maximum number of attempts, by default np.Infinity
         """
         super().__init__(
-            drone_info, mission_info, explore_prob, step_size, max_attempts
+            drone_info, mission_info, 1, step_size, max_attempts
         )
         self.search_tree: RRT = RRT(mission_info.origin, mission_info.target)
 
@@ -55,26 +52,14 @@ class BasicRRT(RRT_Template):
         while not self.search_tree.is_reach_target:
             attempt_cnt += 1
 
-            explore = random.random() < self.explore_prob
-            if explore:
-                new_sample = random_sample(
-                    self.map_info.min_border, self.map_info.max_border
-                )
-            else:
-                new_sample = self.mission_info.target
+            new_sample = random_sample(
+                self.map_info.min_border, self.map_info.max_border
+            )
 
             neighbors = self.search_tree.get_nearest_neighbors(new_sample, num=1)
-            neighbor_info = self.search_tree.get_nodes()[neighbors[0]]["coord"]
+            neighbor_info = self.search_tree.get_node_attr(neighbors[0])["coord"]
 
-            if explore:
-                new_sample = resample(neighbor_info, new_sample, self.step_size)
-            else:
-                out_range = dist_calc(neighbor_info, new_sample) > self.step_size
-                new_sample = (
-                    resample(neighbor_info, new_sample, self.step_size)
-                    if out_range
-                    else new_sample
-                )
+            new_sample = resample(neighbor_info, new_sample, self.step_size)
 
             if self.mission_info.map_info.is_feasible(
                 self.search_tree.get_route(target=neighbor_info).append(new_sample)

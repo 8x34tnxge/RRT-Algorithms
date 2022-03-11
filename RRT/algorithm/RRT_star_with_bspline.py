@@ -10,8 +10,7 @@ from loguru import logger
 from RRT.core.sign import FAILURE
 from RRT.util.extendmethod import extend_with_rewire
 
-
-class RRT_Star(RRT_Template):
+class RRT_Star_With_BSpline(RRT_Template):
     def __init__(
         self,
         drone_info: DroneInfo,
@@ -89,7 +88,7 @@ class RRT_Star(RRT_Template):
                     else new_sample
                 )
 
-            extend_with_rewire(self.map_info, curr_tree, curr_tree.origin, new_sample, 5)
+            extend_with_rewire(self.map_info, curr_tree, curr_tree.origin, new_sample, 5, smooth_method='bspline')
 
             merged_tree = RRT.merge_from_trees(self.tree_roots, origin, target)
             logger.debug(merged_tree.is_reach_target)

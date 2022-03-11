@@ -48,7 +48,7 @@ class RRT_Connect(RRT_Template):
         self.backward_search_tree = RRT(target, origin)
         self.ret_tree = RRT(origin, target)
 
-        # [ ] only contain forward-search & backward-search
+        # [x] only contain forward-search & backward-search
         self.tree_roots = [self.forward_search_tree, self.backward_search_tree]
 
         # [ ] add more attr(s)
@@ -77,7 +77,7 @@ class RRT_Connect(RRT_Template):
                 new_sample = curr_tree.target
 
             neighbors = curr_tree.get_nearest_neighbors(new_sample, num=1)
-            neighbor_info = curr_tree.get_nodes()[neighbors[0]]["coord"]
+            neighbor_info = curr_tree.get_node_attr(neighbors[0])["coord"]
 
             if explore:
                 new_sample = resample(neighbor_info, new_sample, self.step_size)
@@ -95,7 +95,6 @@ class RRT_Connect(RRT_Template):
                 directly_extend(curr_tree, new_sample, neighbors[0])
 
             merged_tree = RRT.merge_from_trees(self.tree_roots, origin, target)
-            logger.debug(merged_tree.is_reach_target)
             # [ ] optimizing instand of direct breaking
             if merged_tree.is_reach_target:
                 self.ret_tree = merged_tree

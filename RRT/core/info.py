@@ -6,6 +6,7 @@ from nptyping import NDArray
 from RRT.core.sign import EMPTY, FAILURE, ORIGIN, SUCCESS, TARGET, WALL
 from RRT.util.comb import combination_from_candidates
 from RRT.util.distcalc import dist_calc
+from RRT.util.bspline import path_smooth_with_bspline
 
 
 class RouteInfo:
@@ -142,7 +143,7 @@ class MapInfo:
         return SUCCESS
 
     # [ ] consider the safe distance between drone and wall
-    def is_feasible(self, route_info: RouteInfo, fill_num: int = 30) -> bool:
+    def is_feasible(self, route_info: RouteInfo, fill_num: int = 30, method='line') -> bool:
         """the instance method to determine whether the route solution is feasible
 
         Parameters
@@ -164,20 +165,23 @@ class MapInfo:
         assert ndim == self.map.ndim
 
         # complete the detailed route filing with line points
-        new_coordination = np.linspace(
-            coordination[0, :], coordination[1, :], num=fill_num
-        )
-        for node_id in range(2, node_num):
-            new_coordination = np.concatenate(
-                (
-                    new_coordination,
-                    np.linspace(
-                        coordination[node_id - 1, :],
-                        coordination[node_id, :],
-                        num=fill_num,
-                    ),
-                ),
+        if method == 'line':
+            new_coordination = np.linspace(
+                coordination[0, :], coordination[1, :], num=fill_num
             )
+            for node_id in range(2, node_num):
+                new_coordination = np.concatenate(
+                    (
+                        new_coordination,
+                        np.linspace(
+                            coordination[node_id - 1, :],
+                            coordination[node_id, :],
+                            num=fill_num,
+                        ),
+                    ),
+                )
+        else:
+            new_coordination = path_smooth_with_bspline(coordination)
 
         # check the feasibility
         return self.check_point_feasible(new_coordination, *new_coordination.shape)
