@@ -74,14 +74,16 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a3dbfb39b5f3c7f6d733281bb6d071789"><td class="memItemLeft" align="right" valign="top">np.ndarray&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceRRT_1_1util_1_1samplemethod.html#a3dbfb39b5f3c7f6d733281bb6d071789">random_sample</a> (Union[List[float], np.ndarray] min_border, Union[List[float], np.ndarray] max_border)</td></tr>
-<tr class="separator:a3dbfb39b5f3c7f6d733281bb6d071789"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a870bd2908ecd420d3060425b7afc7928"><td class="memItemLeft" align="right" valign="top">np.ndarray&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceRRT_1_1util_1_1samplemethod.html#a870bd2908ecd420d3060425b7afc7928">random_sample</a> (Union[List[float], np.ndarray] min_border, Union[List[float], np.ndarray] max_border, bool use_integer=True)</td></tr>
+<tr class="separator:a870bd2908ecd420d3060425b7afc7928"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a62d1f2383c7bb98147e4353eefa4b043"><td class="memItemLeft" align="right" valign="top">List[np.ndarray]&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceRRT_1_1util_1_1samplemethod.html#a62d1f2383c7bb98147e4353eefa4b043">sample_unit_ball</a> (int num, int dim=3)</td></tr>
 <tr class="separator:a62d1f2383c7bb98147e4353eefa4b043"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0f94e6700022379e8fcaa05c8c0bf5cc"><td class="memItemLeft" align="right" valign="top">np.ndarray&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceRRT_1_1util_1_1samplemethod.html#a0f94e6700022379e8fcaa05c8c0bf5cc">get2D_sample</a> ()</td></tr>
 <tr class="separator:a0f94e6700022379e8fcaa05c8c0bf5cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a39aa97fec6fafaee4ecd87a893c5e410"><td class="memItemLeft" align="right" valign="top">np.ndarray&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceRRT_1_1util_1_1samplemethod.html#a39aa97fec6fafaee4ecd87a893c5e410">get3D_sample</a> ()</td></tr>
 <tr class="separator:a39aa97fec6fafaee4ecd87a893c5e410"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a92c0c364c5238d207d693fa047c8b493"><td class="memItemLeft" align="right" valign="top">NDArray[Any]&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceRRT_1_1util_1_1samplemethod.html#a92c0c364c5238d207d693fa047c8b493">resample</a> (NDArray[Any] origin, NDArray[Any] end, float step_size)</td></tr>
+<tr class="separator:a92c0c364c5238d207d693fa047c8b493"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="a0f94e6700022379e8fcaa05c8c0bf5cc" name="a0f94e6700022379e8fcaa05c8c0bf5cc"></a>
@@ -130,8 +132,8 @@ np.ndarray
 </pre> 
 </div>
 </div>
-<a id="a3dbfb39b5f3c7f6d733281bb6d071789" name="a3dbfb39b5f3c7f6d733281bb6d071789"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3dbfb39b5f3c7f6d733281bb6d071789">&#9670;&nbsp;</a></span>random_sample()</h2>
+<a id="a870bd2908ecd420d3060425b7afc7928" name="a870bd2908ecd420d3060425b7afc7928"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a870bd2908ecd420d3060425b7afc7928">&#9670;&nbsp;</a></span>random_sample()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -145,9 +147,14 @@ np.ndarray
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">Union[List[float], np.ndarray]
-&#160;</td>
-          <td class="paramname"><em>max_border</em>&#160;</td>
+          <td class="paramtype">Union[List[float], np.ndarray]&#160;</td>
+          <td class="paramname"><em>max_border</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool &#160;</td>
+          <td class="paramname"><em>use_integer</em> = <code>True</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -172,6 +179,55 @@ np.ndarray
 </pre> 
 </div>
 </div>
+<a id="a92c0c364c5238d207d693fa047c8b493" name="a92c0c364c5238d207d693fa047c8b493"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a92c0c364c5238d207d693fa047c8b493">&#9670;&nbsp;</a></span>resample()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> NDArray[Any] RRT.util.samplemethod.resample </td>
+          <td>(</td>
+          <td class="paramtype">NDArray[Any]&#160;</td>
+          <td class="paramname"><em>origin</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">NDArray[Any]&#160;</td>
+          <td class="paramname"><em>end</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>step_size</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">the method to resample from origin to end based on step size
+
+Parameters
+----------
+origin : NDArray[Any]
+    the nearest node position
+end : NDArray[Any]
+    the sampled position
+step_size : float
+    the size of each step
+
+Returns
+-------
+NDArray[Any]
+    the resampled position
+</pre> 
+</div>
+</div>
 <a id="a62d1f2383c7bb98147e4353eefa4b043" name="a62d1f2383c7bb98147e4353eefa4b043"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a62d1f2383c7bb98147e4353eefa4b043">&#9670;&nbsp;</a></span>sample_unit_ball()</h2>
 
@@ -187,7 +243,7 @@ np.ndarray
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int&#160;</td>
+          <td class="paramtype">int &#160;</td>
           <td class="paramname"><em>dim</em> = <code>3</code>&#160;</td>
         </tr>
         <tr>

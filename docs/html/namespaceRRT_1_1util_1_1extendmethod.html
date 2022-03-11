@@ -74,12 +74,14 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a5c55e5af9e648bf27d908d19e2f7e0a6"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceRRT_1_1util_1_1extendmethod.html#a5c55e5af9e648bf27d908d19e2f7e0a6">directly_extend</a> (<a class="el" href="classRRT_1_1core_1_1tree_1_1RRT.html">RRT</a> tree, np.ndarray new_node_info, int nearest_node_ID)</td></tr>
-<tr class="separator:a5c55e5af9e648bf27d908d19e2f7e0a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aed886bd692a2eed8f9c2b431d3793e57"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceRRT_1_1util_1_1extendmethod.html#aed886bd692a2eed8f9c2b431d3793e57">directly_extend</a> (<a class="el" href="classRRT_1_1core_1_1tree_1_1RRT.html">RRT</a> tree, NDArray[Any] new_node_info, int nearest_node_ID)</td></tr>
+<tr class="separator:aed886bd692a2eed8f9c2b431d3793e57"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a48180abaa5009986ac9be8cfe91e0a12"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classRRT_1_1core_1_1tree_1_1RRT.html">RRT</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceRRT_1_1util_1_1extendmethod.html#a48180abaa5009986ac9be8cfe91e0a12">extend_with_rewire</a> (<a class="el" href="classRRT_1_1core_1_1info_1_1MapInfo.html">MapInfo</a> map_info, <a class="el" href="classRRT_1_1core_1_1tree_1_1RRT.html">RRT</a> tree, NDArray[Any] root, NDArray[Any] new_node_info, float radius, smooth_method='line')</td></tr>
+<tr class="separator:a48180abaa5009986ac9be8cfe91e0a12"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="a5c55e5af9e648bf27d908d19e2f7e0a6" name="a5c55e5af9e648bf27d908d19e2f7e0a6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5c55e5af9e648bf27d908d19e2f7e0a6">&#9670;&nbsp;</a></span>directly_extend()</h2>
+<a id="aed886bd692a2eed8f9c2b431d3793e57" name="aed886bd692a2eed8f9c2b431d3793e57"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aed886bd692a2eed8f9c2b431d3793e57">&#9670;&nbsp;</a></span>directly_extend()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -93,7 +95,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">np.ndarray&#160;</td>
+          <td class="paramtype">NDArray[Any]&#160;</td>
           <td class="paramname"><em>new_node_info</em>, </td>
         </tr>
         <tr>
@@ -101,6 +103,68 @@ Functions</h2></td></tr>
           <td></td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>nearest_node_ID</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">the method to directly extend the tree from nearest node using new node
+
+Parameters
+----------
+tree : RRT
+    the tree storing the node and edge info
+new_node_info : NDArray[Any]
+    the info of node to be inserted to tree
+nearest_node_ID : int
+    the id of the nearest node from new node
+</pre> 
+</div>
+</div>
+<a id="a48180abaa5009986ac9be8cfe91e0a12" name="a48180abaa5009986ac9be8cfe91e0a12"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a48180abaa5009986ac9be8cfe91e0a12">&#9670;&nbsp;</a></span>extend_with_rewire()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> <a class="el" href="classRRT_1_1core_1_1tree_1_1RRT.html">RRT</a> RRT.util.extendmethod.extend_with_rewire </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classRRT_1_1core_1_1info_1_1MapInfo.html">MapInfo</a>&#160;</td>
+          <td class="paramname"><em>map_info</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classRRT_1_1core_1_1tree_1_1RRT.html">RRT</a>&#160;</td>
+          <td class="paramname"><em>tree</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">NDArray[Any]&#160;</td>
+          <td class="paramname"><em>root</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">NDArray[Any]&#160;</td>
+          <td class="paramname"><em>new_node_info</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>radius</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>smooth_method</em> = <code>'line'</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
