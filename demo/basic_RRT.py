@@ -7,6 +7,7 @@ from RRT.config import map_loader
 from RRT.core.info import MapInfo, MissionInfo
 from RRT.util.visualize import visualize
 
+
 ## ArgumentParser ##
 parser = argparse.ArgumentParser(
     description=\

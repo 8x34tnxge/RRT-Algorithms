@@ -35,7 +35,7 @@ def visualize(mission_info: MissionInfo, route_info: RouteInfo, file_name: str):
     ValueError
         the number of dimension must be 2 or 3!
     """
-    logger.debug(route_info.get_route('coord'))
+    # logger.debug(route_info.get_route('coord'))
     config = get_config()
     atlas = mission_info.map_info.map
     ndim = atlas.ndim

@@ -26,4 +26,6 @@ clean:
 	@rm -rf ./output/*
 	@echo "Cleaning the log files"
 	@rm -rf ./log/*
+	@echo "Cleaning the map files"
+	@rm -rf ./RRT/config/map/test_*.yaml
 	@echo "Cleaning Finished!"

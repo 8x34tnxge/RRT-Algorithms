@@ -91,7 +91,7 @@ class RRT_Star_With_BSpline(RRT_Template):
             extend_with_rewire(self.map_info, curr_tree, curr_tree.origin, new_sample, 5, smooth_method='bspline')
 
             merged_tree = RRT.merge_from_trees(self.tree_roots, origin, target)
-            logger.debug(merged_tree.is_reach_target)
+            # logger.debug(merged_tree.is_reach_target)
             # [ ] optimizing instand of direct breaking
             if merged_tree.is_reach_target:
                 self.ret_tree = merged_tree

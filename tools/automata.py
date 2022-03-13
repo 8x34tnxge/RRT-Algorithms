@@ -1,4 +1,5 @@
 import os
+
 from tqdm import trange
 
 ## ArgumentParser ##
@@ -118,19 +119,22 @@ for n in map_create_iterator:
 alg_list = os.listdir(args.alg_dir)
 alg_name_list = list(map(lambda x: x.rsplit('.')[0], alg_list))
 
+alg_run_iterator = trange(args.num * len(alg_list))
 for map_id in range(args.num):
     for alg_name, alg_file in zip(alg_name_list, alg_list):
-        print(alg_name)
+        alg_run_iterator.desc = f'map: test_{map_id+1}\talg: {alg_name}'
+        alg_run_iterator.update()
         if alg_name == 'basic_RRT':
             continue
         # [ ] change the const into args
         os.system(' '.join([
             'pipenv', 'run', 'python',
             os.path.join(args.alg_dir,alg_file),
-            '-m', f'test_{map_id}',
+            '-m', f'test_{map_id+1}',
             '-s', '3.',
             '-a', '1000'
         ]))
+        
 
 ## Data Save ##
 

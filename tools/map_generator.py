@@ -99,7 +99,8 @@ def generate_2d_map(opt: argparse.Namespace) -> NDArray[(Any, Any)]:
     # origin & target generation
     empty_num = np.count_nonzero(ret == EMPTY)
     empty_x, empty_y = np.nonzero(ret == EMPTY)
-    origin_id, target_id = np.random.randint(empty_num, size=(2, ))
+
+    origin_id, target_id = np.random.choice(range(empty_num), 2)
 
     ret[empty_x[origin_id], empty_y[origin_id]] = ORIGIN
     ret[empty_x[target_id], empty_y[target_id]] = TARGET
