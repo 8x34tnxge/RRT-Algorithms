@@ -47,6 +47,8 @@ def visualize(mission_info: MissionInfo, route_info: RouteInfo, file_name: str):
         raise ValueError("the number of dimension must be 2 or 3!")
 
     save_dir = config.get_attr().SYSTEM.SAVE_DIR
+    if not os.path.exists(save_dir):
+        os.mkdir(save_dir)
 
     img_data_dir = os.path.join(save_dir, 'img_data')
     if not os.path.exists(img_data_dir):
