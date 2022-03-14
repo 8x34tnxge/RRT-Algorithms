@@ -25,15 +25,15 @@ jobs:
       
     - name: Algorithm Run
       run: make run MAP_NUM=1 BOUNDARY_X=50 BOUNDARY_Y=50 &> run.log
-    
-    - name: Archive Code Results
-      uses: actions/upload-artifact@v3
-      with:
-        name: code-coverage-report
-        path: ./output
         
     - name: Archive Logs
       uses: actions/upload-artifact@v3
       with:
         name: code-coverage-report
         path: ./*.log
+        
+    - name: Archive Code Results
+      uses: actions/upload-artifact@v3
+      with:
+        name: code-coverage-report
+        path: ./output/
