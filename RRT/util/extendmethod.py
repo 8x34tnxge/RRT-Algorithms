@@ -1,9 +1,10 @@
-import numpy as np
 from typing import Any
+
+import numpy as np
 from nptyping import NDArray
 from RRT.core import RRT as RRT
-from RRT.util.distcalc import dist_calc
 from RRT.core.info import MapInfo
+from RRT.util.distcalc import dist_calc
 
 
 def directly_extend(tree: RRT, new_node_info: NDArray[Any], nearest_node_ID: int):

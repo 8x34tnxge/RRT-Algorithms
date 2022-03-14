@@ -1,10 +1,8 @@
 import logging
-import os
 from typing import Any
 
 logging.getLogger("matplotlib").setLevel(logging.WARNING)
 logging.getLogger("PIL").setLevel(logging.WARNING)
-import pickle
 
 import matplotlib.figure
 import matplotlib.pyplot as plt

@@ -3,7 +3,6 @@ from typing import Any, Union
 
 import numpy as np
 from nptyping import NDArray
-from RRT.core import RRT
 from RRT.core.info import DroneInfo, MapInfo, MissionInfo, RouteInfo
 
 

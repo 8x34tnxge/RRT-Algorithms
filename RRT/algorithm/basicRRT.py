@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-import random
-
 import numpy as np
 from RRT.algorithm.RRT_template import RRT_Template
 from RRT.core import RRT

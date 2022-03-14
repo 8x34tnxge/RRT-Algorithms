@@ -1,8 +1,8 @@
 import os
 import pickle
-from posixpath import sep
-import pandas as pd
+
 import matplotlib
+import pandas as pd
 
 
 def save(file, obj):

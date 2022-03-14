@@ -1,5 +1,4 @@
 import random
-from audioop import reverse
 
 import numpy as np
 from RRT.algorithm.RRT_template import RRT_Template

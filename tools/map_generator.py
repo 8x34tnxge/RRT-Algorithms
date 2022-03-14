@@ -100,7 +100,13 @@ def generate_2d_map(opt: argparse.Namespace) -> NDArray[(Any, Any)]:
     empty_num = np.count_nonzero(ret == EMPTY)
     empty_x, empty_y = np.nonzero(ret == EMPTY)
 
-    origin_id, target_id = np.random.choice(range(empty_num), 2, replace=True)
+    origin_id= np.random.choice(range(empty_num), 1)
+    available_choice = []
+    for available_id, (x, y) in enumerate(zip(empty_x, empty_y)):
+        dist = np.linalg.norm(np.array([empty_x[origin_id] - x, empty_y[origin_id] - y]))
+        if dist >= boundary.min() / 2:
+            available_choice.append(available_id)
+    target_id = np.random.choice(available_choice, 1)
 
     ret[empty_x[origin_id], empty_y[origin_id]] = ORIGIN
     ret[empty_x[target_id], empty_y[target_id]] = TARGET

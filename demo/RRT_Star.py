@@ -1,5 +1,3 @@
-import os
-import pickle
 import argparse
 
 import numpy as np
@@ -7,6 +5,7 @@ from RRT.algorithm.RRT_Star import RRT_Star
 from RRT.config import map_loader
 from RRT.core.info import MapInfo, MissionInfo
 from RRT.util.visualize import visualize
+
 from util import save
 
 ## ArgumentParser ##

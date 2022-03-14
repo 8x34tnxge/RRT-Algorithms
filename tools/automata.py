@@ -145,7 +145,7 @@ for map_id in range(args.num):
         if stat == 0:
             runtime_record[f'test_{map_id+1}_{alg_name}'] = time.time() - start_time
         else:
-            runtime_record[f'test_{map_id+1}_{alg_name}'] = np.inf
+            runtime_record[f'test_{map_id+1}_{alg_name}'] = np.nan
 
 ## Data Save ##
 route_info_list = os.listdir('./output/route_info')
@@ -167,7 +167,7 @@ for map_id in range(args.num):
                 route_info = pickle.load(f)
                 lengths.append(route_info.get_length())
         except FileNotFoundError:
-            lengths.append(np.inf)
+            lengths.append(np.nan)
         runtimes.append(runtime_record[f'test_{map_id+1}_{alg_name}'])
 
 run_data = pd.DataFrame({

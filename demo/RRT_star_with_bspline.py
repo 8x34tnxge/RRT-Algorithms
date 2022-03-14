@@ -1,15 +1,13 @@
-import os
-import pickle
 import argparse
 
 import numpy as np
 from RRT.algorithm.RRT_star_with_bspline import RRT_Star_With_BSpline
 from RRT.config import map_loader
 from RRT.core.info import MapInfo, MissionInfo
-from RRT.util.visualize import visualize
 from RRT.util.bspline import path_smooth_with_bspline
-from util import save
+from RRT.util.visualize import visualize
 
+from util import save
 
 ## ArgumentParser ##
 parser = argparse.ArgumentParser(

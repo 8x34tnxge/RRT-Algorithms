@@ -1,5 +1,3 @@
-import os
-import pickle
 import argparse
 
 import numpy as np
@@ -7,8 +5,8 @@ from RRT.algorithm.basicRRT import BasicRRT
 from RRT.config import map_loader
 from RRT.core.info import MapInfo, MissionInfo
 from RRT.util.visualize import visualize
-from util import save
 
+from util import save
 
 ## ArgumentParser ##
 parser = argparse.ArgumentParser(

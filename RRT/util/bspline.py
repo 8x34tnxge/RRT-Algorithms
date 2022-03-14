@@ -1,7 +1,9 @@
+from typing import Any
+
 import numpy as np
 import scipy.interpolate as si
-from typing import Tuple, Any
 from nptyping import NDArray
+
 
 # reference: [https://stackoverflow.com/questions/34803197/fast-b-spline-algorithm-with-numpy-scipy]
 def bspline(cv, n=100, degree=3, periodic=False):

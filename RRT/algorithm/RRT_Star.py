@@ -4,11 +4,10 @@ import numpy as np
 from RRT.algorithm.RRT_template import RRT_Template
 from RRT.core import RRT
 from RRT.core.info import DroneInfo, MissionInfo, RouteInfo
-from RRT.util.samplemethod import resample, random_sample
-from RRT.util.distcalc import dist_calc
-from loguru import logger
 from RRT.core.sign import FAILURE
+from RRT.util.distcalc import dist_calc
 from RRT.util.extendmethod import extend_with_rewire
+from RRT.util.samplemethod import random_sample, resample
 
 
 class RRT_Star(RRT_Template):

@@ -1,8 +1,8 @@
 import os
 
+from RRT.config.config_update import config_update
 from RRT.config.map_info_loader import MapInfoLoader
 from RRT.config.universal_config_loader import UniversalConfigLoader
-from RRT.config.config_update import config_update
 
 # universal config loader
 config_dir = "./RRT/config/"
