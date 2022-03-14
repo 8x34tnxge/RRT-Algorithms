@@ -5,7 +5,6 @@ from typing import Any
 logging.getLogger("matplotlib").setLevel(logging.WARNING)
 logging.getLogger("PIL").setLevel(logging.WARNING)
 import pickle
-from loguru import logger
 
 import matplotlib.figure
 import matplotlib.pyplot as plt
@@ -18,7 +17,7 @@ from RRT.core.info import MissionInfo, RouteInfo
 plt.set_loglevel("info")
 
 
-def visualize(mission_info: MissionInfo, route_info: RouteInfo, file_name: str):
+def visualize(mission_info: MissionInfo, route_info: RouteInfo) -> matplotlib.figure.Figure:
     """the method to visualize the result based on the mission info and route info, and save it to file
 
     Parameters
@@ -27,8 +26,6 @@ def visualize(mission_info: MissionInfo, route_info: RouteInfo, file_name: str):
         the mission infomation
     route_info : RouteInfo
         the route information
-    file_name : str
-        the file name to be saved
 
     Raises
     ------
@@ -46,22 +43,7 @@ def visualize(mission_info: MissionInfo, route_info: RouteInfo, file_name: str):
     else:
         raise ValueError("the number of dimension must be 2 or 3!")
 
-    save_dir = config.get_attr().SYSTEM.SAVE_DIR
-    if not os.path.exists(save_dir):
-        os.mkdir(save_dir)
-
-    img_data_dir = os.path.join(save_dir, 'img_data')
-    if not os.path.exists(img_data_dir):
-        os.mkdir(img_data_dir)
-    with open(
-        os.path.join(img_data_dir, file_name + ".pickle"), "wb"
-    ) as f:
-        pickle.dump(fig, f)
-
-    img_dir = os.path.join(save_dir, 'img')
-    if not os.path.exists(img_dir):
-        os.mkdir(img_dir)
-    fig.savefig(os.path.join(img_dir, file_name))
+    return fig
 
 
 def visualize_2d(
@@ -122,6 +104,7 @@ def visualize_2d(
         Patch(facecolor="C1", edgecolor="w"),
     ]
     fig.legend(handles=legend_handles, labels=["Wall", "Origin", "Target", "Route"])
+    plt.title(f'Length: {route_info.get_length()}')
 
     return fig
 

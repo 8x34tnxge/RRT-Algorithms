@@ -1,9 +1,12 @@
-import os
-
-from tqdm import trange
-
 ## ArgumentParser ##
 import argparse
+import os
+import pickle
+import time
+
+import numpy as np
+import pandas as pd
+from tqdm import trange
 
 parser = argparse.ArgumentParser(
     description=\
@@ -120,23 +123,60 @@ alg_list = os.listdir(args.alg_dir)
 alg_name_list = list(map(lambda x: x.rsplit('.')[0], alg_list))
 
 alg_run_iterator = trange(args.num * len(alg_list))
+runtime_record = {}
 for map_id in range(args.num):
     for alg_name, alg_file in zip(alg_name_list, alg_list):
         alg_run_iterator.desc = f'map: test_{map_id+1}\talg: {alg_name}'
         alg_run_iterator.update()
-        if alg_name == 'basic_RRT':
+        if alg_name == 'basicRRT' or alg_name == 'util':
             continue
         # [ ] change the const into args
-        os.system(' '.join([
+        # record time unit: s
+        start_time = time.time()
+        stat = os.system(' '.join([
             'pipenv', 'run', 'python',
             os.path.join(args.alg_dir,alg_file),
             '-m', f'test_{map_id+1}',
             '-s', '3.',
             '-a', '1000'
         ]))
-        
+
+        # here 0 means the program is working with out error
+        if stat == 0:
+            runtime_record[f'test_{map_id+1}_{alg_name}'] = time.time() - start_time
+        else:
+            runtime_record[f'test_{map_id+1}_{alg_name}'] = np.inf
 
 ## Data Save ##
+route_info_list = os.listdir('./output/route_info')
+route_info_name_list = list(map(lambda x: x.rsplit('.')[0], route_info_list))
+
+algs = []
+maps = []
+lengths = []
+runtimes = []
+
+for map_id in range(args.num):
+    for alg_name in alg_name_list:
+        if alg_name in ['basicRRT', 'util']:
+            continue
+        algs.append(alg_name)
+        maps.append(f'test_{map_id+1}')
+        try:
+            with open(os.path.join('./output/route_info', f'test_{map_id+1}_{alg_name}'+'.pickle'), 'rb') as f:
+                route_info = pickle.load(f)
+                lengths.append(route_info.get_length())
+        except FileNotFoundError:
+            lengths.append(np.inf)
+        runtimes.append(runtime_record[f'test_{map_id+1}_{alg_name}'])
+
+run_data = pd.DataFrame({
+    "Algorithm": algs,
+    "Map": maps,
+    "Cost": lengths,
+    "Runtime": runtimes
+})
+run_data.to_csv('./output/data.csv', sep=',', index=False)
 
 ## LaTex Conversion ##
 

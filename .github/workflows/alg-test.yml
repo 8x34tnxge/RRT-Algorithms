@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
+  alg-test:
 
     runs-on: ubuntu-latest
 
@@ -24,16 +24,16 @@ jobs:
       run: make clean
       
     - name: Algorithm Run
-      run: make run MAP_NUM=1 BOUNDARY_X=50 BOUNDARY_Y=50 &> run.log
+      run: make run MAP_NUM=100 BOUNDARY_X=50 BOUNDARY_Y=50 &> run.log
         
     - name: Archive Logs
       uses: actions/upload-artifact@v3
       with:
-        name: code-coverage-report
+        name: runtime-log
         path: ./*.log
         
     - name: Archive Code Results
       uses: actions/upload-artifact@v3
       with:
-        name: code-coverage-report
+        name: code-report
         path: ./output

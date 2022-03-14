@@ -1,12 +1,14 @@
 import math
+import os
+import pickle
 from typing import Any, List, Union
 
 import numpy as np
 from nptyping import NDArray
 from RRT.core.sign import EMPTY, FAILURE, ORIGIN, SUCCESS, TARGET, WALL
+from RRT.util.bspline import path_smooth_with_bspline
 from RRT.util.comb import combination_from_candidates
 from RRT.util.distcalc import dist_calc
-from RRT.util.bspline import path_smooth_with_bspline
 
 
 class RouteInfo:
@@ -88,6 +90,28 @@ class RouteInfo:
             return False
         else:
             return True
+
+    def save(self, save_name: str, save_dir: str):
+        if not os.path.exists(save_dir):
+            os.mkdir(save_dir)
+            # raise ValueError("save directory is not exists")
+        with open(os.path.join(save_dir, save_name+'.pickle'), 'wb') as f:
+            pickle.dump(self, f)
+
+    def smooth_route(self, smooth_method, *args, **kwargs):
+        self._coords = smooth_method(self._coords, *args, **kwargs)
+        self.update_length()
+
+    def update_length(self):
+        if isinstance(self._coords, list):
+            coords = np.array(self._coords)
+        else:
+            coords = self._coords
+        point_num = coords.shape[0]
+        length = 0
+        for i in range(point_num-1):
+            length += dist_calc(coords[i, :],  coords[i+1, :])
+        self.length = length
 
 
 class DroneInfo:

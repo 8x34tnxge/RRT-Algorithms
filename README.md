@@ -13,6 +13,7 @@ the implementation of Rapidly-exploring Random Tree
 - [ ] implement the auto-record function to generate large number of 2d/3d maps,
       monitor the performance of each algorithm in different maps (2d/3d),
       and save them into files.
+- [ ] update docstring
 - [ ] add more extend methods.
 - [ ] add more sample methods.
 - [ ] optimize the algorithm efficiency.

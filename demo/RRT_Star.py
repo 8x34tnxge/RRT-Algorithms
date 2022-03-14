@@ -1,10 +1,13 @@
+import os
+import pickle
 import argparse
 
 import numpy as np
-from RRT.algorithm.RRT_Connect import RRT_Connect
+from RRT.algorithm.RRT_Star import RRT_Star
 from RRT.config import map_loader
 from RRT.core.info import MapInfo, MissionInfo
 from RRT.util.visualize import visualize
+from util import save
 
 ## ArgumentParser ##
 parser = argparse.ArgumentParser(
@@ -55,15 +58,15 @@ args = parser.parse_args()
 if args.prob > 1 or args.prob < 0:
     parser.error("the prob must be [0, 1]")
 
-
 ## Algorithm Running ##
 mission_info = MissionInfo(
     MapInfo(map_loader.get_map(args.map))
 )
-alg: RRT_Connect = RRT_Connect(None, mission_info, args.prob, args.step_size, args.attempt if args.attempt > 0 else np.Infinity)
+alg: RRT_Star = RRT_Star(None, mission_info, args.prob, args.step_size, args.attempt if args.attempt > 0 else np.inf)
 res = alg.run()
 
 route_info = alg.get_route()
+route_info.update_length()
 
 if args.output_name == 'none':
     alg_name = alg.__module__.split('.')[-1]
@@ -71,4 +74,9 @@ if args.output_name == 'none':
 else:
     save_name = args.output_name
 
-visualize(mission_info, route_info, ".".join([save_name, 'png']))
+
+fig = visualize(mission_info, route_info)
+
+save(f'./output/img/{save_name}.png', fig)
+save(f'./output/img_data/{save_name}.pickle', fig)
+save(f'./output/route_info/{save_name}.pickle', route_info)

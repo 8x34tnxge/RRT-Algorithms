@@ -27,7 +27,7 @@ def test_basic_RRT_2d():
     logger.debug(f"length: {route_info.get_length()}")
 
     alg_name = alg.__module__.split('.')[-1]
-    visualize(mission_info, route_info, f'test_{alg_name}_2d.png')
+    visualize(mission_info, route_info)
 
 def test_RRT_with_probability_2d():
     mission_info = MissionInfo(
@@ -46,7 +46,7 @@ def test_RRT_with_probability_2d():
     logger.debug(f"length: {route_info.get_length()}")
 
     alg_name = alg.__module__.split('.')[-1]
-    visualize(mission_info, route_info, f'test_{alg_name}_2d.png')
+    visualize(mission_info, route_info)
 
 def test_RRT_connect_2d():
     mission_info = MissionInfo(
@@ -65,7 +65,7 @@ def test_RRT_connect_2d():
     logger.debug(f"length: {route_info.get_length()}")
 
     alg_name = alg.__module__.split('.')[-1]
-    visualize(mission_info, route_info, f'test_{alg_name}_2d.png')
+    visualize(mission_info, route_info)
 
 
 def test_RRT_star_2d():
@@ -85,7 +85,7 @@ def test_RRT_star_2d():
     logger.debug(f"length: {route_info.get_length()}")
 
     alg_name = alg.__module__.split('.')[-1]
-    visualize(mission_info, route_info, f'test_{alg_name}_2d.png')
+    visualize(mission_info, route_info)
 
 def test_RRT_star_with_bspline_2d():
     mission_info = MissionInfo(
@@ -99,13 +99,13 @@ def test_RRT_star_with_bspline_2d():
 
     # route_info = alg.get_route()
     route_info = alg.get_route()
-    route_info._coords = path_smooth_with_bspline(route_info._coords)
+    route_info.smooth_route(path_smooth_with_bspline)
     logger.debug(f"path: {route_info.get_route()}")
     logger.debug(f"coordination: {route_info.get_route(route_type='coord')}")
     logger.debug(f"length: {route_info.get_length()}")
 
     alg_name = alg.__module__.split('.')[-1]
-    visualize(mission_info, route_info, f'test_{alg_name}_2d.png')
+    visualize(mission_info, route_info)
 
 def test_basic_RRT_3d():
     mission_info = MissionInfo(
@@ -124,7 +124,7 @@ def test_basic_RRT_3d():
     logger.debug(f"length: {route_info.get_length()}")
 
     alg_name = alg.__module__.split('.')[-1]
-    visualize(mission_info, route_info, f'test_{alg_name}_3d.png')
+    visualize(mission_info, route_info)
 
 def test_RRT_with_probability_3d():
     mission_info = MissionInfo(
@@ -143,7 +143,7 @@ def test_RRT_with_probability_3d():
     logger.debug(f"length: {route_info.get_length()}")
 
     alg_name = alg.__module__.split('.')[-1]
-    visualize(mission_info, route_info, f'test_{alg_name}_3d.png')
+    visualize(mission_info, route_info)
 
 def test_RRT_connect_3d():
     mission_info = MissionInfo(
@@ -162,7 +162,7 @@ def test_RRT_connect_3d():
     logger.debug(f"length: {route_info.get_length()}")
 
     alg_name = alg.__module__.split('.')[-1]
-    visualize(mission_info, route_info, f'test_{alg_name}_3d.png')
+    visualize(mission_info, route_info)
 
 
 def test_RRT_star_3d():
@@ -182,7 +182,7 @@ def test_RRT_star_3d():
     logger.debug(f"length: {route_info.get_length()}")
 
     alg_name = alg.__module__.split('.')[-1]
-    visualize(mission_info, route_info, f'test_{alg_name}_3d.png')
+    visualize(mission_info, route_info)
 
 def test_RRT_star_with_bspline_3d():
     mission_info = MissionInfo(
@@ -196,10 +196,10 @@ def test_RRT_star_with_bspline_3d():
 
     # route_info = alg.get_route()
     route_info = alg.get_route()
-    route_info._coords = path_smooth_with_bspline(route_info._coords)
+    route_info.smooth_route(path_smooth_with_bspline)
     logger.debug(f"path: {route_info.get_route()}")
     logger.debug(f"coordination: {route_info.get_route(route_type='coord')}")
     logger.debug(f"length: {route_info.get_length()}")
 
     alg_name = alg.__module__.split('.')[-1]
-    visualize(mission_info, route_info, f'test_{alg_name}_3d.png')
+    visualize(mission_info, route_info)

@@ -1,3 +1,5 @@
+import os
+import pickle
 import argparse
 
 import numpy as np
@@ -6,6 +8,7 @@ from RRT.config import map_loader
 from RRT.core.info import MapInfo, MissionInfo
 from RRT.util.visualize import visualize
 from RRT.util.bspline import path_smooth_with_bspline
+from util import save
 
 
 ## ArgumentParser ##
@@ -61,11 +64,11 @@ if args.prob > 1 or args.prob < 0:
 mission_info = MissionInfo(
     MapInfo(map_loader.get_map(args.map))
 )
-alg: RRT_Star_With_BSpline = RRT_Star_With_BSpline(None, mission_info, args.prob, args.step_size, args.attempt if args.attempt > 0 else np.Infinity)
+alg: RRT_Star_With_BSpline = RRT_Star_With_BSpline(None, mission_info, args.prob, args.step_size, args.attempt if args.attempt > 0 else np.inf)
 res = alg.run()
 
 route_info = alg.get_route()
-route_info._coords = path_smooth_with_bspline(route_info._coords)
+route_info.smooth_route(path_smooth_with_bspline)
 
 if args.output_name == 'none':
     alg_name = alg.__module__.split('.')[-1]
@@ -73,4 +76,9 @@ if args.output_name == 'none':
 else:
     save_name = args.output_name
 
-visualize(mission_info, route_info, ".".join([save_name, 'png']))
+
+fig = visualize(mission_info, route_info)
+
+save(f'./output/img/{save_name}.png', fig)
+save(f'./output/img_data/{save_name}.pickle', fig)
+save(f'./output/route_info/{save_name}.pickle', route_info)
