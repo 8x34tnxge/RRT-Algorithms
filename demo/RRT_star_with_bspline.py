@@ -6,6 +6,8 @@ from RRT.algorithm.RRT_star_with_bspline import RRT_Star_With_BSpline
 from RRT.config import map_loader
 from RRT.core.info import MapInfo, MissionInfo
 from RRT.util.visualize import visualize
+from RRT.util.bspline import path_smooth_with_bspline
+
 
 ## ArgumentParser ##
 parser = argparse.ArgumentParser(
@@ -64,6 +66,7 @@ alg: RRT_Star_With_BSpline = RRT_Star_With_BSpline(None, mission_info, args.prob
 res = alg.run()
 
 route_info = alg.get_route()
+route_info._coords = path_smooth_with_bspline(route_info._coords)
 
 if args.output_name == 'none':
     alg_name = alg.__module__.split('.')[-1]
