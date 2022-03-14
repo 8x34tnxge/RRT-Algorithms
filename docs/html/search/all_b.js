@@ -1,5 +1,6 @@
 var searchData=
 [
+<<<<<<< HEAD
   ['algorithm_0',['algorithm',['../namespaceRRT_1_1algorithm.html',1,'RRT']]],
   ['arrayhash_1',['arrayhash',['../namespaceRRT_1_1util_1_1arrayhash.html',1,'RRT::util']]],
   ['basicrrt_2',['basicRRT',['../namespaceRRT_1_1algorithm_1_1basicRRT.html',1,'RRT::algorithm']]],
@@ -30,4 +31,8 @@ var searchData=
   ['tree_27',['tree',['../namespaceRRT_1_1core_1_1tree.html',1,'RRT::core']]],
   ['universal_5fconfig_5floader_28',['universal_config_loader',['../namespaceRRT_1_1config_1_1universal__config__loader.html',1,'RRT::config']]],
   ['util_29',['util',['../namespaceRRT_1_1util.html',1,'RRT']]]
+=======
+  ['origin_0',['origin',['../classRRT_1_1core_1_1info_1_1MissionInfo.html#a06dbc3a3eb5aaab80edf32ea607f1ef3',1,'RRT::core::info::MissionInfo']]],
+  ['origin_1',['ORIGIN',['../namespaceRRT_1_1core_1_1sign.html#a5a66ec8d0c61a7b20fb4f300fa5a2b09',1,'RRT::core::sign']]]
+>>>>>>> algdev
 ];

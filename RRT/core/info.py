@@ -164,6 +164,16 @@ class MapInfo:
         # coord-pair's dimension must be equal to map's
         assert ndim == self.map.ndim
 
+<<<<<<< HEAD
+=======
+        for coord in coordination:
+            for dim in range(ndim):
+                if coord[dim] < self.min_border[dim]:
+                    return FAILURE
+                if coord[dim] > self.max_border[dim]:
+                    return FAILURE
+
+>>>>>>> algdev
         # complete the detailed route filing with line points
         if method == 'line':
             new_coordination = np.linspace(
