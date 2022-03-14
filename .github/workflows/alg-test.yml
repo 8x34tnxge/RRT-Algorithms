@@ -23,8 +23,5 @@ jobs:
     - name: Clean Useless File
       run: make clean
       
-    - name: Test
-      run: make test
-      
     - name: Algorithm Run
-      run: make run
+      run: make run MAP_NUM=1000 BOUNDARY_X=50 BOUNDARY_Y=50 &> logs/run.log
