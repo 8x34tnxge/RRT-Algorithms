@@ -24,4 +24,4 @@ jobs:
       run: make clean
       
     - name: Algorithm Run
-      run: make run MAP_NUM=1000 BOUNDARY_X=50 BOUNDARY_Y=50 &> run.log
+      run: make run MAP_NUM=1 BOUNDARY_X=50 BOUNDARY_Y=50 &> run.log
