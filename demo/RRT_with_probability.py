@@ -1,6 +1,4 @@
 import argparse
-import os
-import time
 
 import numpy as np
 from RRT.algorithm.RRT_with_probability import RRT_With_Probability
@@ -68,7 +66,6 @@ route_info = alg.get_route()
 
 if args.output_name == 'none':
     alg_name = alg.__module__.split('.')[-1]
-    save_name = f'{args.map}_{alg_name}_{time.ctime()}'
 else:
     save_name = args.output_name
 

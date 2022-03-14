@@ -1,5 +1,4 @@
 import argparse
-import time
 
 import numpy as np
 from RRT.algorithm.RRT_star_with_bspline import RRT_Star_With_BSpline
@@ -70,7 +69,7 @@ route_info._coords = path_smooth_with_bspline(route_info._coords)
 
 if args.output_name == 'none':
     alg_name = alg.__module__.split('.')[-1]
-    save_name = f'{args.map}_{alg_name}_{time.ctime()}'
+    save_name = f'{args.map}_{alg_name}'
 else:
     save_name = args.output_name
 
