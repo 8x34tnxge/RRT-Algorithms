@@ -1,12 +1,14 @@
 import os
-from typing import List
 
 from RRT.config.map_info_loader import MapInfoLoader
 from RRT.config.universal_config_loader import UniversalConfigLoader
+from RRT.config.config_update import config_update
 
 # universal config loader
 config_dir = "./RRT/config/"
+config_file_name = "base-config.yaml"
 config_loader = UniversalConfigLoader()
+config_update(config_dir, config_file_name, os.path.join(config_dir, 'map'))
 config_loader.appendConfig(os.path.join(config_dir, "base-config.yaml"))
 
 # map info loader
@@ -35,14 +37,3 @@ def get_map_config() -> MapInfoLoader:
         config map singleton
     """
     return map_loader
-
-
-def get_test_map() -> List:
-    """return test map info 
-
-    Returns
-    -------
-    List
-        test map
-    """
-    return map_loader.get_map(config_loader.get_attr().TEST.MAP)

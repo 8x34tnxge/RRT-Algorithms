@@ -9,7 +9,6 @@ from RRT.core.sign import FAILURE
 from RRT.util.distcalc import dist_calc
 from RRT.util.extendmethod import directly_extend
 from RRT.util.samplemethod import random_sample, resample
-from loguru import logger
 
 
 class RRT_Connect(RRT_Template):

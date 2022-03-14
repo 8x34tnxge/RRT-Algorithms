@@ -12,6 +12,7 @@ nptyping = "*"
 yacs = "*"
 scipy = "*"
 geomdl = "*"
+tqdm = "*"
 
 [dev-packages]
 loguru = "*"

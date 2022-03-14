@@ -4,7 +4,7 @@ from RRT.algorithm import BasicRRT
 from loguru import logger
 
 logger.remove(0)
-logger.add("test.log")
+logger.add("logs/test.log")
 
 test_origin = np.array([1])
 test_target = np.array([1])
