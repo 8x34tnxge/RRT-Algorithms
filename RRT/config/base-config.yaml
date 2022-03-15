@@ -3,11 +3,8 @@ SYSTEM:
     "map.yaml",
     "simple-map.yaml",
     "no-wall.yaml",
-    "test_4.yaml",
     "hard-map.yaml",
     "test_2.yaml",
-    "test_5.yaml",
-    "test_3.yaml",
     "test_1.yaml",
   ]
   SAVE_DIR: "./output"

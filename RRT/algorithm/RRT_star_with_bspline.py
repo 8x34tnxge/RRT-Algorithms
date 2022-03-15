@@ -1,7 +1,6 @@
 import random
 
 import numpy as np
-from loguru import logger
 from RRT.algorithm.RRT_template import RRT_Template
 from RRT.core import RRT
 from RRT.core.info import DroneInfo, MissionInfo, RouteInfo
@@ -9,6 +8,7 @@ from RRT.core.sign import FAILURE
 from RRT.util.distcalc import dist_calc
 from RRT.util.extendmethod import extend_with_rewire
 from RRT.util.samplemethod import random_sample, resample
+from RRT.util.bspline import path_smooth_with_bspline
 
 
 class RRT_Star_With_BSpline(RRT_Template):
@@ -115,9 +115,12 @@ class RRT_Star_With_BSpline(RRT_Template):
         RouteInfo
             the route information containing the route from origin to target
         """
-        return self.ret_tree.get_route(
+        route_info = self.ret_tree.get_route(
             origin=self.mission_info.origin, target=self.mission_info.target
         )
+        route_info.smooth_route(path_smooth_with_bspline)
+
+        return route_info
 
     def swap_tree(self):
         """the instance method to swap/reverse the tree root"""
