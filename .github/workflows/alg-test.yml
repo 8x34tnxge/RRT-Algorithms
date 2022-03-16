@@ -24,7 +24,7 @@ jobs:
       run: make clean
       
     - name: Algorithm Run
-      run: make run MAP_NUM=500 BOUNDARY_X=50 BOUNDARY_Y=50 &> run.log
+      run: make run MAP_NUM=200 BOUNDARY_X=50 BOUNDARY_Y=50 &> run.log
         
     - name: Archive Logs
       uses: actions/upload-artifact@v3
