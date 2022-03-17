@@ -6,13 +6,13 @@ name = "pypi"
 [packages]
 networkx = "*"
 numpy = "*"
-pandas = "*"
 matplotlib = "*"
 nptyping = "*"
 yacs = "*"
-scipy = "*"
 geomdl = "*"
 tqdm = "*"
+pandas = "*"
+scipy = "*"
 
 [dev-packages]
 loguru = "*"

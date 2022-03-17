@@ -18,13 +18,13 @@ jobs:
     - name: Install Python, pipenv and Pipfile packages
       uses: palewire/install-python-pipenv-pipfile@v2
       with:
-        python-version: 3.7
+        python-version: pypy-3.7
 
     - name: Clean Useless File
       run: make clean
       
     - name: Algorithm Run
-      run: make run MAP_NUM=200 BOUNDARY_X=50 BOUNDARY_Y=50 &> run.log
+      run: make run MAP_NUM=50 BOUNDARY_X=50 BOUNDARY_Y=50 &> run.log
         
     - name: Archive Logs
       uses: actions/upload-artifact@v3
