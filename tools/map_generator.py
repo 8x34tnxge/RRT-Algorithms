@@ -81,20 +81,20 @@ def get_opt():
 
 def generate_2d_map(opt: argparse.Namespace) -> NDArray[(Any, Any)]:
     boundary = np.array(list(map(int, opt.boundary)))[:2]
+    if opt.wall is True:
+        boundary -= 2
 
     # basic map generation
-    ret = np.ones(boundary - 2) * EMPTY
+    ret = np.random.choice([EMPTY, WALL], size=boundary, p=[1 - opt.block_prob, opt.block_prob])
     if opt.wall is True:
         ret = np.pad(ret, 1, constant_values=WALL)
-    else:
-        ret = np.pad(ret, 1, constant_values=EMPTY)
 
     # block/obstacle/wall generation
-    rndProb = np.random.random(size=(np.count_nonzero(ret == EMPTY)))
-    empty_x, empty_y = np.nonzero(ret == EMPTY)
-    for id in range(rndProb.shape[0]):
-        if rndProb[id] < opt.block_prob:
-            ret[empty_x[id], empty_y[id]] = WALL
+    # rndProb = np.random.random(size=(np.count_nonzero(ret == EMPTY)))
+    # empty_x, empty_y = np.nonzero(ret == EMPTY)
+    # for id in range(rndProb.shape[0]):
+    #     if rndProb[id] < opt.block_prob:
+    #         ret[empty_x[id], empty_y[id]] = WALL
 
     # origin & target generation
     empty_num = np.count_nonzero(ret == EMPTY)

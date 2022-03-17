@@ -169,7 +169,7 @@ for map_id in range(args.num):
             map_name=map_name,
             prob=0.3,
             step_size=3,
-            max_attempts=3000
+            max_attempts=1000
         )
         start_time = time.time()
 
