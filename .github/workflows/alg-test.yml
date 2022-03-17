@@ -18,7 +18,7 @@ jobs:
     - name: Install Python, pipenv and Pipfile packages
       uses: palewire/install-python-pipenv-pipfile@v2
       with:
-        python-version: pypy-3.7
+        python-version: pypy3.7-7.3.7
 
     - name: Clean Useless File
       run: make clean
