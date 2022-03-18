@@ -21,7 +21,7 @@ class RRT_With_Probability(RRT_Template):
         mission_info: MissionInfo,
         explore_prob: np.float64,
         step_size: np.float64,
-        max_attempts: np.int32 = np.Infinity,
+        max_attempts: np.int32 = np.inf,
     ):
         """the init method of RRT
 
@@ -36,7 +36,7 @@ class RRT_With_Probability(RRT_Template):
         step_size : np.float64
             the size/length of each step
         max_attempts : np.int32, optional
-            the maximum number of attempts, by default np.Infinity
+            the maximum number of attempts, by default np.inf
         """
         super().__init__(
             drone_info, mission_info, explore_prob, step_size, max_attempts
@@ -52,7 +52,7 @@ class RRT_With_Probability(RRT_Template):
             whether basic RRT algorithm reach the target from origin
         """
         attempt_cnt = 0
-        while not self.search_tree.is_reach_target:
+        while True:
             attempt_cnt += 1
 
             explore = random.random() < self.explore_prob
@@ -80,13 +80,13 @@ class RRT_With_Probability(RRT_Template):
                 self.search_tree.get_route(target=neighbor_info).append(new_sample)
             ):
                 directly_extend(self.search_tree, new_sample, neighbors[0])
-
             self.search_tree.update_status()
+
             if np.isfinite(self.max_attempts) and attempt_cnt > self.max_attempts:
                 break
+            elif np.isinf(self.max_attempts) and self.search_tree.is_reach_target:
+                break
 
-        if attempt_cnt > self.max_attempts:
-            return FAILURE
         return self.search_tree.is_reach_target
 
     def get_route(self) -> RouteInfo:

@@ -5,6 +5,8 @@ from nptyping import NDArray
 from RRT.core import RRT as RRT
 from RRT.core.info import MapInfo
 from RRT.util.distcalc import dist_calc
+from loguru import logger
+logger.add("logs/run.log")
 
 
 def directly_extend(tree: RRT, new_node_info: NDArray[Any], nearest_node_ID: int):
@@ -41,6 +43,7 @@ def extend_with_rewire(map_info: MapInfo, tree: RRT, root: NDArray[Any], new_nod
         return
     new_node_id = tree.add_node(new_node_info)
     tree.add_edge(min_id, new_node_id)
+    tree.update_status()
 
     # rewire edge
     for neighbor in neighbors:

@@ -17,7 +17,7 @@ class RRT_Connect(RRT_Template):
         mission_info: MissionInfo,
         explore_prob: np.float64,
         step_size: np.float64,
-        max_attempts: np.int32 = np.Infinity,
+        max_attempts: np.int32 = np.inf,
     ):
         """the init method of RRT
 
@@ -32,7 +32,7 @@ class RRT_Connect(RRT_Template):
         step_size : np.float64
             the size/length of each step
         max_attempts : np.int32, optional
-            the maximum number of attempts, by default np.Infinity
+            the maximum number of attempts, by default np.inf
         """
         super().__init__(
             drone_info, mission_info, explore_prob, step_size, max_attempts
@@ -42,14 +42,11 @@ class RRT_Connect(RRT_Template):
         origin = mission_info.origin
         target = mission_info.target
 
-        self.forward_search_tree = RRT(origin, target)
-        self.backward_search_tree = RRT(target, origin)
         self.ret_tree = RRT(origin, target)
 
-        # [x] only contain forward-search & backward-search
-        self.tree_roots = [self.forward_search_tree, self.backward_search_tree]
-
         # [ ] add more attr(s)
+        self.root_id = [self.ret_tree.origin_id, self.ret_tree.target_id]
+
 
     def run(self) -> bool:
         """the method to run the basic RRT algorithm
@@ -60,11 +57,10 @@ class RRT_Connect(RRT_Template):
             whether basic RRT algorithm reach the target from origin
         """
         attempt_cnt = 0
-        origin = self.mission_info.origin
-        target = self.mission_info.target
-        while not self.ret_tree.is_reach_target:
-            attempt_cnt += 1
-            curr_tree = self.tree_roots[0]
+        while True:
+            attempt_cnt += 1 #if self.root_id[0] == self.ret_tree.target_id else 0
+            origin_info = self.ret_tree.get_node_attr(self.root_id[0])['coord']
+            target_info = self.ret_tree.get_node_attr(self.root_id[-1])['coord']
 
             explore = random.random() < self.explore_prob
             if explore:
@@ -72,10 +68,10 @@ class RRT_Connect(RRT_Template):
                     self.map_info.min_border, self.map_info.max_border
                 )
             else:
-                new_sample = curr_tree.target
+                new_sample = target_info
 
-            neighbors = curr_tree.get_nearest_neighbors(new_sample, num=1)
-            neighbor_info = curr_tree.get_node_attr(neighbors[0])["coord"]
+            neighbors = self.ret_tree.get_nearest_neighbors(new_sample, root_id=self.root_id[0], num=1)
+            neighbor_info = self.ret_tree.get_node_attr(neighbors[0])["coord"]
 
             if explore:
                 new_sample = resample(neighbor_info, new_sample, self.step_size)
@@ -88,23 +84,18 @@ class RRT_Connect(RRT_Template):
                 )
 
             if self.mission_info.map_info.is_feasible(
-                curr_tree.get_route(target=neighbor_info).append(new_sample)
+                self.ret_tree.get_route(origin=origin_info,target=neighbor_info).append(new_sample)
             ):
-                directly_extend(curr_tree, new_sample, neighbors[0])
-
-            merged_tree = RRT.merge_from_trees(self.tree_roots, origin, target)
-            # [ ] optimizing instand of direct breaking
-            if merged_tree.is_reach_target:
-                self.ret_tree = merged_tree
-                break
+                directly_extend(self.ret_tree, new_sample, neighbors[0])
+            self.ret_tree.update_status()
 
             self.swap_tree()
 
-            if np.isfinite(self.max_attempts) and (attempt_cnt // 2) > self.max_attempts:
+            if np.isfinite(self.max_attempts) and attempt_cnt > self.max_attempts:
+                break
+            elif np.isinf(self.max_attempts) and self.ret_tree.is_reach_target:
                 break
 
-        if attempt_cnt > self.max_attempts:
-            return FAILURE
         return self.ret_tree.is_reach_target
 
     def get_route(self) -> RouteInfo:
@@ -122,4 +113,4 @@ class RRT_Connect(RRT_Template):
     def swap_tree(self):
         """the instance method to swap/reverse the tree root
         """
-        self.tree_roots.reverse()
+        self.root_id.reverse()

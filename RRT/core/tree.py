@@ -7,7 +7,7 @@ import networkx as nx
 import numpy as np
 from loguru import logger
 from nptyping import NDArray
-from RRT.core.info import RouteInfo
+from RRT.core.info import RouteInfo, DistInfo
 from RRT.util import array_hash, dist_calc
 
 
@@ -33,11 +33,16 @@ class RRT:
         self.ndim: int = origin.shape[0]
         self.origin: NDArray[Any] = origin
         self.target: NDArray[Any] = target
+
         # use graph to replace the tree structure
         self.tree: nx.classes.graph.Graph = nx.Graph()
-        self.add_node(origin)
+        self.origin_id = self.add_node(origin)
+        self.target_id = self.add_node(target)
 
-        self.is_reach_target: bool = False
+        self.dist_info: DistInfo = DistInfo(self.tree)
+        self.is_reach_target: bool = self.dist_info.has_path(
+            self.tree, self.origin_id, self.target_id
+        )
 
     def get_nodes(self) -> nx.classes.reportviews.NodeDataView:
 
@@ -60,7 +65,13 @@ class RRT:
         """
         return self.tree.edges.data()
 
-    def get_nearest_neighbors(self, node_info: NDArray[Any], num: int = 1, condition: Callable = lambda x: True) -> List[int]:
+    def get_nearest_neighbors(
+        self,
+        node_info: NDArray[Any],
+        num: int = 1,
+        root_id = 1,
+        condition: Callable = lambda x: True,
+    ) -> List[int]:
         """the instance method to get nearest neighbors according to the given node coordination info
 
         Parameters
@@ -82,6 +93,8 @@ class RRT:
         rel_info = namedtuple("rel_info", ("node_id", "dist"))
         info_list = []
         for id, info in self.get_nodes():
+            if not self.dist_info.has_path(self.tree, root_id, id):
+                continue
             coord_info = info["coord"]
             dist = dist_calc(coord_info, node_info)
             info_list.append(rel_info(id, dist))
@@ -138,41 +151,39 @@ class RRT:
         AttributeError
             The given target is not found in trees
         """
+        origin_id, target_id = None, None
+
         if origin is None:
-            origin = self.origin
+            origin_id = self.origin_id
 
         if target is None:
-            target = self.target
+            target_id = self.target_id
 
-        nodes_info = self.get_nodes()
-        originID, targetID = None, None
-        for nodeID, node_info in nodes_info:
-            if all(origin == node_info["coord"]):
-                originID = nodeID
-            if all(target == node_info["coord"]):
-                targetID = nodeID
-        if originID is None:
-            raise AttributeError("The given origin is not found in trees")
-        if targetID is None:
-            raise AttributeError("The given target is not found in trees")
+        if origin_id is None or target_id is None:
+            nodes_info = self.get_nodes()
+            for node_id, node_info in nodes_info:
+                if origin_id is None and all(origin == node_info["coord"]):
+                    origin_id = node_id
+                if target_id is None and all(target == node_info["coord"]):
+                    target_id = node_id
 
-        try:
-            route = nx.algorithms.shortest_path(
-                self.tree, originID, targetID, weight="weight"
-            )
-        except nx.exception.NetworkXNoPath:
+            if origin_id is None:
+                raise AttributeError("The given origin is not found in trees")
+            if target_id is None:
+                raise AttributeError("The given target is not found in trees")
+
+        if not self.dist_info.has_path(self.tree, origin_id, target_id):
             return RouteInfo(None, None, None)
+        route = []
+        route.extend(self.dist_info.get_path(origin_id, target_id))
 
         axis_info = []
-        for nodeID in route:
-            coord_info = nodes_info[nodeID]["coord"]
+        for node_id in route:
+            coord_info = nodes_info[node_id]["coord"]
             axis_info.append(coord_info)
-            # for dimID in range(self.ndim):
-            #     axis_info[dimID].append(coord_info[dimID])
 
-        length = nx.algorithms.shortest_path_length(
-            self.tree, originID, targetID, weight="weight"
-        )
+        length = self.dist_info.get_path_length(origin_id, target_id)
+
         return RouteInfo(route, axis_info, np.float64(length))
 
     @classmethod
@@ -271,13 +282,8 @@ class RRT:
         self.tree.add_edge(currID, newID, weight=weight)
 
     def update_status(self):
-        """the instance method to update reach status
-        """
-        try:
-            route_info = self.get_route()
-            if route_info.get_length() == None:
-                self.is_reach_target = False
-            else:
-                self.is_reach_target = True
-        except AttributeError :
-            self.is_reach_target = False
+        """the instance method to update reach status"""
+        self.dist_info.update(self.tree)
+        self.is_reach_target = self.dist_info.has_path(
+            self.tree, self.origin_id, self.target_id
+        )

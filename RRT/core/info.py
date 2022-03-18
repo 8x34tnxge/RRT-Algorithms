@@ -3,6 +3,8 @@ import os
 import pickle
 from typing import Any, List, Union
 
+from loguru import logger
+import networkx as nx
 import numpy as np
 from nptyping import NDArray
 from RRT.core.sign import EMPTY, FAILURE, ORIGIN, SUCCESS, TARGET, WALL
@@ -95,7 +97,7 @@ class RouteInfo:
         if not os.path.exists(save_dir):
             os.mkdir(save_dir)
             # raise ValueError("save directory is not exists")
-        with open(os.path.join(save_dir, save_name+'.pickle'), 'wb') as f:
+        with open(os.path.join(save_dir, save_name + ".pickle"), "wb") as f:
             pickle.dump(self, f)
 
     def smooth_route(self, smooth_method, *args, **kwargs):
@@ -109,8 +111,8 @@ class RouteInfo:
             coords = self._coords
         point_num = coords.shape[0]
         length = 0
-        for i in range(point_num-1):
-            length += dist_calc(coords[i, :],  coords[i+1, :])
+        for i in range(point_num - 1):
+            length += dist_calc(coords[i, :], coords[i + 1, :])
         self.length = length
 
 
@@ -167,7 +169,9 @@ class MapInfo:
         return SUCCESS
 
     # [ ] consider the safe distance between drone and wall
-    def is_feasible(self, route_info: RouteInfo, fill_num: int = 30, method='line') -> bool:
+    def is_feasible(
+        self, route_info: RouteInfo, fill_num: int = 30, method="line"
+    ) -> bool:
         """the instance method to determine whether the route solution is feasible
 
         Parameters
@@ -196,7 +200,7 @@ class MapInfo:
                     return FAILURE
 
         # complete the detailed route filing with line points
-        if method == 'line':
+        if method == "line":
             new_coordination = np.linspace(
                 coordination[0, :], coordination[1, :], num=fill_num
             )
@@ -304,3 +308,22 @@ class MissionInfo:
         coord = np.nonzero(self.map_info.map == 2)
         target = np.array(coord).reshape([-1])
         return target
+
+
+class DistInfo:
+    def __init__(self, tree: nx.classes.graph.Graph):
+        self.route_mat = dict(nx.algorithms.all_pairs_shortest_path(tree))
+        self.dist_mat = dict(nx.algorithms.all_pairs_shortest_path_length(tree))
+
+    def update(self, tree: nx.classes.graph.Graph):
+        self.route_mat = dict(nx.algorithms.all_pairs_shortest_path(tree))
+        self.dist_mat = dict(nx.algorithms.all_pairs_shortest_path_length(tree))
+
+    def has_path(self, tree, origin_id, target_id) -> bool:
+        return nx.algorithms.has_path(tree, origin_id, target_id)
+
+    def get_path(self, origin_id, target_id) -> List:
+        return self.route_mat[origin_id][target_id]
+
+    def get_path_length(self, origin_id, target_id) -> List:
+        return self.dist_mat[origin_id][target_id]

@@ -157,8 +157,6 @@ for map_id in range(args.num):
         alg_run_iterator.desc = f"map: test_{map_id+1}\talg: {alg_name}"
         alg_run_iterator.update()
 
-        if alg_name == "basicRRT":
-            continue
         # [ ] change the const into args
         maps.append(map_name)
         algs.append(alg_name)
@@ -184,7 +182,8 @@ for map_id in range(args.num):
             costs.append(route_info.get_length())
             alg_module.save_result(map_name, alg, route_info, args.output_dir)
         else:
-            runtimes.append(np.nan)
+            # runtimes.append(np.nan)
+            runtimes.append(duration)
             costs.append(np.nan)
 
 ## Data Save ##

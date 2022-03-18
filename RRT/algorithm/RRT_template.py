@@ -13,7 +13,7 @@ class RRT_Template(ABC):
         mission_info: MissionInfo,
         explore_prob: np.float64,
         step_size: np.float64,
-        max_attempts: np.int32 = np.Infinity,
+        max_attempts: np.int32 = np.inf,
     ):
         """the init method of RRT
 
@@ -28,7 +28,7 @@ class RRT_Template(ABC):
         step_size : np.float64
             the size/length of each step
         max_attempts : np.int32, optional
-            the maximum number of attempts, by default np.Infinity
+            the maximum number of attempts, by default np.inf
         """
         self.drone_info: DroneInfo = drone_info
         self.mission_info: MissionInfo = mission_info
