@@ -2,7 +2,9 @@ import argparse
 
 from RRT.algorithm.basicRRT import BasicRRT
 from RRT.config import map_loader
-from RRT.core.info import MapInfo, MissionInfo
+from RRT.core.mission_info import MissionInfo
+from RRT.core.map_space import MapSpace
+from RRT.core.sign import Status
 
 from demo.util import save_result
 
@@ -48,7 +50,7 @@ def get_opt():
 
 ## Algorithm Running ##
 def get_alg(map_name, step_size, max_attempts, *args, **kwargs):
-    mission_info = MissionInfo(MapInfo(map_loader.get_map(map_name)))
+    mission_info = MissionInfo(MapSpace(map_loader.get_map(map_name)))
     alg: BasicRRT = BasicRRT(None, mission_info, step_size, max_attempts)
 
     return alg
@@ -60,8 +62,9 @@ def main():
     alg = get_alg(args.map, args.step_size, args.attempt)
     status = alg.run()
 
-    route_info = alg.get_route()
-    save_result(args.map, alg, route_info, args.output)
+    if status == Status.Success:
+        route_info = alg.get_route()
+        save_result(args.map, alg, route_info, args.output)
 
 
 if __name__ == "__main__":

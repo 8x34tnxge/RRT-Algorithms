@@ -3,12 +3,7 @@ import numpy as np
 import argparse
 from typing import List, Any
 from nptyping import NDArray
-
-# declare map constant
-EMPTY = 0
-ORIGIN = 1
-TARGET = 2
-WALL = 3
+from RRT.core.sign import MapType
 
 
 def get_opt():
@@ -85,9 +80,9 @@ def generate_2d_map(opt: argparse.Namespace) -> NDArray[(Any, Any)]:
         boundary -= 2
 
     # basic map generation
-    ret = np.random.choice([EMPTY, WALL], size=boundary, p=[1 - opt.block_prob, opt.block_prob])
+    ret = np.random.choice([MapType.EMPTY, MapType.WALL], size=boundary, p=[1 - opt.block_prob, opt.block_prob])
     if opt.wall is True:
-        ret = np.pad(ret, 1, constant_values=WALL)
+        ret = np.pad(ret, 1, constant_values=MapType.WALL)
 
     # block/obstacle/wall generation
     # rndProb = np.random.random(size=(np.count_nonzero(ret == EMPTY)))
@@ -97,8 +92,8 @@ def generate_2d_map(opt: argparse.Namespace) -> NDArray[(Any, Any)]:
     #         ret[empty_x[id], empty_y[id]] = WALL
 
     # origin & target generation
-    empty_num = np.count_nonzero(ret == EMPTY)
-    empty_x, empty_y = np.nonzero(ret == EMPTY)
+    empty_num = np.count_nonzero(ret == MapType.EMPTY)
+    empty_x, empty_y = np.nonzero(ret == MapType.EMPTY)
 
     origin_id= np.random.choice(range(empty_num), 1)
     available_choice = []
@@ -108,8 +103,8 @@ def generate_2d_map(opt: argparse.Namespace) -> NDArray[(Any, Any)]:
             available_choice.append(available_id)
     target_id = np.random.choice(available_choice, 1)
 
-    ret[empty_x[origin_id], empty_y[origin_id]] = ORIGIN
-    ret[empty_x[target_id], empty_y[target_id]] = TARGET
+    ret[empty_x[origin_id], empty_y[origin_id]] = MapType.ORIGIN
+    ret[empty_x[target_id], empty_y[target_id]] = MapType.TARGET
 
     return ret
 
@@ -119,24 +114,24 @@ def generate_3d_map(opt):
     boundary = np.array(list(map(int, opt.boundary)))[:3]
 
     # basic map generation
-    ret = np.ones(boundary) * EMPTY
+    ret = np.ones(boundary) * MapType.EMPTY
 
     # block/obstacle/wall generation
-    empty_num = np.count_nonzero(ret[:, :, 0] == EMPTY)
+    empty_num = np.count_nonzero(ret[:, :, 0] == MapType.EMPTY)
     rndProb = np.random.random(size=(empty_num))
     rndHeight = np.random.randint(boundary[2]+1, size=(empty_num))
-    empty_x, empty_y = np.nonzero(ret[:, :, 0] == EMPTY)
+    empty_x, empty_y = np.nonzero(ret[:, :, 0] == MapType.EMPTY)
     for id in range(rndProb.shape[0]):
         if rndProb[id] < opt.block_prob:
-            ret[empty_x[id], empty_y[id], :rndHeight[id]+1] = WALL
+            ret[empty_x[id], empty_y[id], :rndHeight[id]+1] = MapType.WALL
 
     # origin & target generation
-    empty_num = np.count_nonzero(ret[:, :, 0] == EMPTY)
-    empty_x, empty_y = np.nonzero(ret[:, :, 0] == EMPTY)
+    empty_num = np.count_nonzero(ret[:, :, 0] == MapType.EMPTY)
+    empty_x, empty_y = np.nonzero(ret[:, :, 0] == MapType.EMPTY)
     origin_id, target_id = np.random.choice(range(empty_num), 2, replace=True)
 
-    ret[empty_x[origin_id], empty_y[origin_id], 0] = ORIGIN
-    ret[empty_x[target_id], empty_y[target_id], np.random.randint(boundary[2]+1)] = TARGET
+    ret[empty_x[origin_id], empty_y[origin_id], 0] = MapType.ORIGIN
+    ret[empty_x[target_id], empty_y[target_id], np.random.randint(boundary[2]+1)] = MapType.TARGET
 
     return ret
 

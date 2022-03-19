@@ -5,7 +5,8 @@ import time
 
 import numpy as np
 import pandas as pd
-from tqdm import trange
+from tqdm import tqdm, trange
+from RRT.core.sign import Status
 
 parser = argparse.ArgumentParser(
     description="""
@@ -137,10 +138,12 @@ import importlib
 
 alg_list = list(filter(lambda x: x not in ['__pycache__', 'util.py'], os.listdir(args.alg_dir)))
 alg_name_list = list(map(lambda x: x.rsplit(".")[0], alg_list))
+print("Import 'demo' as Module...")
 alg_module_list = {
     alg_name: importlib.import_module(".".join([args.alg_dir, alg_name]))
     for alg_name in alg_name_list
 }
+print("Import Finished!")
 
 # prepare for pandas DataFrame
 algs = []
@@ -148,43 +151,45 @@ maps = []
 costs = []
 runtimes = []
 
-alg_run_iterator = trange(args.num * len(alg_list))
-runtime_record = {}
+alg_run_iterator = []
 for map_id in range(args.num):
     map_name = f'test_{map_id+1}'
     for alg_name in alg_name_list:
-        # update process bar
-        alg_run_iterator.desc = f"map: test_{map_id+1}\talg: {alg_name}"
-        alg_run_iterator.update()
+        alg_run_iterator.append(tuple([map_name, alg_name]))
+alg_run_iterator = tqdm(alg_run_iterator, desc='map: empty\talg: empty')
 
-        # [ ] change the const into args
-        maps.append(map_name)
-        algs.append(alg_name)
-        # record time unit: s
-        alg_module = alg_module_list[alg_name]
+for map_name, alg_name in alg_run_iterator:
+    # update process bar
+    alg_run_iterator.set_description(f"map: {map_name} alg: {alg_name}")
 
-        alg = alg_module.get_alg(
-            map_name=map_name,
-            prob=0.3,
-            step_size=3,
-            max_attempts=1000
-        )
-        start_time = time.time()
+    # [ ] change the const into args
+    maps.append(map_name)
+    algs.append(alg_name)
+    # record time unit: s
+    alg_module = alg_module_list[alg_name]
 
-        is_success = alg.run()
+    alg = alg_module.get_alg(
+        map_name=map_name,
+        prob=0.3,
+        step_size=3,
+        max_attempts=np.inf
+    )
+    start_time = time.time()
 
-        duration = time.time() - start_time
+    status = alg.run()
 
-        # here 0 means the program is working with out error
-        if is_success:
-            runtimes.append(duration)
-            route_info = alg.get_route()
-            costs.append(route_info.get_length())
-            alg_module.save_result(map_name, alg, route_info, args.output_dir)
-        else:
-            # runtimes.append(np.nan)
-            runtimes.append(duration)
-            costs.append(np.nan)
+    duration = time.time() - start_time
+
+    # here 0 means the program is working with out error
+    if status == Status.Success:
+        runtimes.append(duration)
+        route_info = alg.get_route()
+        costs.append(route_info.get_length())
+        alg_module.save_result(map_name, alg, route_info, args.output_dir)
+    else:
+        # runtimes.append(np.nan)
+        runtimes.append(duration)
+        costs.append(np.nan)
 
 ## Data Save ##
 run_data = pd.DataFrame(

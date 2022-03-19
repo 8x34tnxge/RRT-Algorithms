@@ -5,6 +5,7 @@ from typing import Any, List, Union
 import numpy as np
 from nptyping import NDArray
 from RRT.util.angle import calc_unit_vector
+from RRT.util.distcalc import dist_calc
 
 
 def random_sample(
@@ -124,8 +125,8 @@ def get3D_sample() -> np.ndarray:
     return sample
 
 
-def resample(origin: NDArray[Any], end: NDArray[Any], step_size: float) -> NDArray[Any]:
-    """the method to resample from origin to end based on step size
+def steer(origin: NDArray[Any], end: NDArray[Any], step_size: float) -> NDArray[Any]:
+    """the method to steer from origin to end based on step size
 
     Parameters
     ----------
@@ -139,9 +140,10 @@ def resample(origin: NDArray[Any], end: NDArray[Any], step_size: float) -> NDArr
     Returns
     -------
     NDArray[Any]
-        the resampled position
+        the steered position
     """
+    dist = dist_calc(origin, end)
     unit_vector = calc_unit_vector(origin, end)
-    new_sample = origin + unit_vector * step_size * 1
+    new_sample = origin + unit_vector * min(dist, step_size) * 1
 
     return new_sample

@@ -1,9 +1,10 @@
 import argparse
 
-from RRT.algorithm.RRT_star_with_bspline import RRT_Star_With_BSpline
+from RRT.algorithm.connect_RRT_star import Connect_RRT_Star
 from RRT.config import map_loader
-from RRT.core.info import MapInfo, MissionInfo
-from RRT.util.bspline import path_smooth_with_bspline
+from RRT.core.mission_info import MissionInfo
+from RRT.core.map_space import MapSpace
+from RRT.core.sign import Status
 
 from demo.util import save_result
 
@@ -63,13 +64,13 @@ def get_opt():
 
 ## Algorithm Running ##
 def get_alg(map_name, prob, step_size, max_attempts, *args, **kwargs):
-    mission_info = MissionInfo(MapInfo(map_loader.get_map(map_name)))
-    alg: RRT_Star_With_BSpline = RRT_Star_With_BSpline(
+    mission_info = MissionInfo(MapSpace(map_loader.get_map(map_name)))
+    alg: Connect_RRT_Star = Connect_RRT_Star(
         None,
         mission_info,
         prob,
         step_size,
-        max_attempts,
+        max_attempts = max_attempts,
     )
 
     return alg
@@ -78,13 +79,14 @@ def get_alg(map_name, prob, step_size, max_attempts, *args, **kwargs):
 def main():
     args = get_opt()
 
-    alg = get_alg(args.map_name, args.prob, args.step_size, args.attempt)
+    alg = get_alg(args.map, args.prob, args.step_size, args.attempt)
     status = alg.run()
 
-    route_info = alg.get_route()
-    route_info.smooth_route(path_smooth_with_bspline)
-    save_result(args.map, alg, route_info, args.output)
+    if status == Status.Success:
+        route_info = alg.get_route()
+        save_result(args.map, alg, route_info, args.output)
 
 
 if __name__ == "__main__":
     main()
+

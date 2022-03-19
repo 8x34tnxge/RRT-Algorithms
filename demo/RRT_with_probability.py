@@ -2,7 +2,9 @@ import argparse
 
 from RRT.algorithm.RRT_with_probability import RRT_With_Probability
 from RRT.config import map_loader
-from RRT.core.info import MapInfo, MissionInfo
+from RRT.core.mission_info import MissionInfo
+from RRT.core.map_space import MapSpace
+from RRT.core.sign import Status
 
 from demo.util import save_result
 
@@ -62,7 +64,7 @@ def get_opt():
 
 ## Algorithm Running ##
 def get_alg(map_name, prob, step_size, max_attempts, *args, **kwargs):
-    mission_info = MissionInfo(MapInfo(map_loader.get_map(map_name)))
+    mission_info = MissionInfo(MapSpace(map_loader.get_map(map_name)))
     alg: RRT_With_Probability = RRT_With_Probability(
         None,
         mission_info,
@@ -80,8 +82,9 @@ def main():
     alg = get_alg(args.map, args.prob, args.step_size, args.attempt)
     status = alg.run()
 
-    route_info = alg.get_route()
-    save_result(args.map, alg, route_info, args.output)
+    if status == Status.Success:
+        route_info = alg.get_route()
+        save_result(args.map, alg, route_info, args.output)
 
 
 if __name__ == "__main__":

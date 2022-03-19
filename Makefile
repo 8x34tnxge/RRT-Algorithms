@@ -5,7 +5,7 @@ WALL:="--wall"
 BOUNDARY_X:=10
 BOUNDARY_Y:=10
 BOUNDARY_Z:=10
-PROB:=0.2
+PROB:=0.1
 MAP_NUM:=1
 
 run:

@@ -1,1 +1,0 @@
-from RRT.core.tree import RRT

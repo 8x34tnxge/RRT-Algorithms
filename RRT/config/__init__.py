@@ -8,7 +8,7 @@ from RRT.config.universal_config_loader import UniversalConfigLoader
 config_dir = "./RRT/config/"
 config_file_name = "base-config.yaml"
 config_loader = UniversalConfigLoader()
-config_update(config_dir, config_file_name, os.path.join(config_dir, 'map'))
+config_update(config_dir, config_file_name, os.path.join(config_dir, "map"))
 config_loader.appendConfig(os.path.join(config_dir, "base-config.yaml"))
 
 # map info loader

@@ -1,9 +1,13 @@
+import random
 from abc import ABC, abstractmethod
-from typing import Any, Union
+from typing import Union
 
 import numpy as np
-from nptyping import NDArray
-from RRT.core.info import DroneInfo, MapInfo, MissionInfo, RouteInfo
+from RRT.core.info import DroneInfo
+from RRT.core.map_space import MapSpace
+from RRT.core.mission_info import MissionInfo
+from RRT.core.route_info import RouteInfo
+from RRT.util.samplemethod import random_sample
 
 
 class RRT_Template(ABC):
@@ -32,15 +36,12 @@ class RRT_Template(ABC):
         """
         self.drone_info: DroneInfo = drone_info
         self.mission_info: MissionInfo = mission_info
-        self.map_info: MapInfo = mission_info.map_info
+        self.map_info: MapSpace = mission_info.map_info
         self.explore_prob: np.float64 = explore_prob
         self.max_attempts: Union[np.int32, None] = max_attempts
         self.step_size: np.float64 = step_size
 
-        # initialize the forward search tree
-        origin: NDArray[Any]
-        target: NDArray[Any]
-        origin, target = mission_info.origin, mission_info.target
+        self.final_ret: RouteInfo = None
 
     @abstractmethod
     def run(self) -> bool:
@@ -52,6 +53,16 @@ class RRT_Template(ABC):
             whether basic RRT algorithm reach the target from origin
         """
         pass
+
+    def sample(self, target=None):
+        if random.random() < self.explore_prob:
+            new_sample = random_sample(
+                self.map_info.min_border, self.map_info.max_border
+            )
+        else:
+            new_sample = self.mission_info.target if target is None else target
+
+        return new_sample
 
     @abstractmethod
     def get_route(self) -> RouteInfo:

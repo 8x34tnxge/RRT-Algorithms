@@ -1,15 +1,14 @@
 from __future__ import annotations
 
-import random
-
 import numpy as np
 from RRT.algorithm.RRT_template import RRT_Template
-from RRT.core import RRT
-from RRT.core.info import DroneInfo, MissionInfo, RouteInfo
-from RRT.core.sign import FAILURE
+from RRT.core.info import DroneInfo
+from RRT.core.mission_info import MissionInfo
+from RRT.core.route_info import RouteInfo
+from RRT.core.sign import Status
+from RRT.core.tree import Tree, TreeNode
 from RRT.util.distcalc import dist_calc
-from RRT.util.extendmethod import directly_extend
-from RRT.util.samplemethod import random_sample, resample
+from RRT.util.samplemethod import steer
 
 
 class RRT_With_Probability(RRT_Template):
@@ -41,7 +40,7 @@ class RRT_With_Probability(RRT_Template):
         super().__init__(
             drone_info, mission_info, explore_prob, step_size, max_attempts
         )
-        self.search_tree: RRT = RRT(mission_info.origin, mission_info.target)
+        self.search_tree: Tree = Tree(mission_info.origin)
 
     def run(self) -> bool:
         """the method to run the basic RRT algorithm
@@ -53,41 +52,39 @@ class RRT_With_Probability(RRT_Template):
         """
         attempt_cnt = 0
         while True:
-            attempt_cnt += 1
-
-            explore = random.random() < self.explore_prob
-            if explore:
-                new_sample = random_sample(
-                    self.map_info.min_border, self.map_info.max_border
-                )
-            else:
-                new_sample = self.mission_info.target
-
-            neighbors = self.search_tree.get_nearest_neighbors(new_sample, num=1)
-            neighbor_info = self.search_tree.get_node_attr(neighbors[0])["coord"]
-
-            if explore:
-                new_sample = resample(neighbor_info, new_sample, self.step_size)
-            else:
-                out_range = dist_calc(neighbor_info, new_sample) > self.step_size
-                new_sample = (
-                    resample(neighbor_info, new_sample, self.step_size)
-                    if out_range
-                    else new_sample
-                )
-
-            if self.mission_info.map_info.is_feasible(
-                self.search_tree.get_route(target=neighbor_info).append(new_sample)
-            ):
-                directly_extend(self.search_tree, new_sample, neighbors[0])
-            self.search_tree.update_status()
-
+            # loop ctrl condition
             if np.isfinite(self.max_attempts) and attempt_cnt > self.max_attempts:
                 break
-            elif np.isinf(self.max_attempts) and self.search_tree.is_reach_target:
+            elif np.isinf(self.max_attempts) and self.final_ret is not None:
                 break
 
-        return self.search_tree.is_reach_target
+            # loop start
+            attempt_cnt += 1
+
+            new_sample = self.sample()
+            neighbors, neighbor_dist = self.search_tree.get_nearest_neighbors(new_sample)
+            new_sample = steer(neighbors[np.argmin(neighbor_dist)].coord, new_sample, self.step_size)
+
+            if self.map_info.collision_free(
+                RouteInfo([neighbors[0]]).append(TreeNode(new_sample))
+            ):
+                new_node = self.search_tree.add_node(new_sample, neighbors[0])
+
+                if dist_calc(new_sample, self.mission_info.target) > self.step_size:
+                    continue
+                if not self.map_info.collision_free(
+                    RouteInfo([new_node]).append(TreeNode(self.mission_info.target))
+                ):
+                    continue
+
+                target_node = self.search_tree.add_node(
+                    self.mission_info.target, new_node
+                )
+                self.final_ret = self.search_tree.get_route(target_node)
+
+        if self.final_ret is not None:
+            return Status.Success
+        return Status.Failure
 
     def get_route(self) -> RouteInfo:
         """the instance method to get route info
@@ -97,6 +94,8 @@ class RRT_With_Probability(RRT_Template):
         RouteInfo
             the route information containing the route from origin to target
         """
-        return self.search_tree.get_route(
-            origin=self.mission_info.origin, target=self.mission_info.target
-        )
+        return self.final_ret
+
+
+if __name__ == "__main__":
+    pass

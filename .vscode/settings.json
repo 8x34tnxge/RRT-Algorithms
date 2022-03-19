@@ -2,5 +2,6 @@
     "cSpell.words": [
         "astype",
         "ndim"
-    ]
+    ],
+    "python.formatting.provider": "black"
 }

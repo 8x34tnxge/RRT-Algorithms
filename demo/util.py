@@ -2,6 +2,7 @@ import os
 import pickle
 
 import matplotlib
+import matplotlib.pyplot as plt
 import pandas as pd
 from RRT.util.visualize import visualize
 
@@ -22,6 +23,7 @@ def save(file, obj):
             f.write(pickle.dumps(obj))
     elif isinstance(obj, matplotlib.figure.Figure):
         obj.savefig(file)
+        plt.close(obj)
     elif isinstance(obj, pd.DataFrame):
         obj.to_csv(file, sep=",")
 

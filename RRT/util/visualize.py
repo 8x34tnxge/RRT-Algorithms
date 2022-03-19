@@ -10,12 +10,15 @@ import numpy as np
 from matplotlib.patches import Patch
 from nptyping import NDArray
 from RRT.config import get_config
-from RRT.core.info import MissionInfo, RouteInfo
+from RRT.core.mission_info import MissionInfo
+from RRT.core.route_info import RouteInfo
 
 plt.set_loglevel("info")
 
 
-def visualize(mission_info: MissionInfo, route_info: RouteInfo) -> matplotlib.figure.Figure:
+def visualize(
+    mission_info: MissionInfo, route_info: RouteInfo
+) -> matplotlib.figure.Figure:
     """the method to visualize the result based on the mission info and route info, and save it to file
 
     Parameters
@@ -74,7 +77,7 @@ def visualize_2d(
     )
 
     # Route Section
-    coordination = route_info.get_route(route_type="coord")
+    coordination = route_info.get_route()
     route = plt.plot(coordination[:, 1], coordination[:, 0], color="C1")
 
     # add origin info
@@ -102,7 +105,7 @@ def visualize_2d(
         Patch(facecolor="C1", edgecolor="w"),
     ]
     fig.legend(handles=legend_handles, labels=["Wall", "Origin", "Target", "Route"])
-    plt.title(f'Length: {route_info.get_length()}')
+    plt.title(f"Length: {route_info.get_length()}")
 
     return fig
 
@@ -126,7 +129,7 @@ def visualize_3d(atlas: NDArray[Any], route_info: RouteInfo):
     ax = plt.subplot(111, projection="3d")
 
     # Route Section
-    coordination = route_info.get_route(route_type="coord")
+    coordination = route_info.get_route()
     (route,) = ax.plot(
         coordination[:, 0],
         coordination[:, 1],
