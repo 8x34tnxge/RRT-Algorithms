@@ -30,7 +30,7 @@ class Tree:
 
         return new_node
 
-    def get_route(self, end_node: TreeNode):
+    def get_route(self, end_node: TreeNode) -> RouteInfo:
         route = [end_node]
         cost = end_node.cost
 

@@ -1,5 +1,6 @@
 from loguru import logger
 from RRT.algorithm.basicRRT import BasicRRT
+from RRT.algorithm.a_star import A_Star
 from RRT.algorithm.RRT_with_probability import RRT_With_Probability
 from RRT.algorithm.RRT_connect import RRT_Connect
 from RRT.algorithm.RRT_star import RRT_Star
@@ -9,6 +10,17 @@ from RRT.core.map_space import MapSpace
 from RRT.util.visualize import visualize
 from RRT.core.sign import Status
 
+def test_basic_A_Star_2d():
+    mission_info = MissionInfo(MapSpace(map_loader.get_map("test_1")))
+    alg: A_Star = A_Star (None, mission_info, 3, 3000)
+    res = alg.run()
+    if res == Status.Success:
+        logger.debug("success")
+        route_info = alg.get_route()
+        logger.debug(f"coordination: {route_info.get_route()}")
+        logger.debug(f"length: {route_info.get_length()}")
+        fig = visualize(mission_info, route_info)
+        fig.savefig("./test_1.png")
 
 def test_basic_RRT_2d():
     mission_info = MissionInfo(MapSpace(map_loader.get_map("test_1")))

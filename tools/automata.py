@@ -156,7 +156,7 @@ for map_id in range(args.num):
     map_name = f'test_{map_id+1}'
     for alg_name in alg_name_list:
         alg_run_iterator.append(tuple([map_name, alg_name]))
-alg_run_iterator = tqdm(alg_run_iterator, desc='map: empty\talg: empty')
+alg_run_iterator = tqdm(alg_run_iterator, desc='map: empty alg: empty')
 
 for map_name, alg_name in alg_run_iterator:
     # update process bar

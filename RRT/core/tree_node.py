@@ -7,6 +7,7 @@ import numpy as np
 class TreeNode:
     def __init__(self, coord, cost=0, p: TreeNode = None):
         self.coord = coord
+        self.real_dist = None
         self.cost = cost
         self.parent = p
 
