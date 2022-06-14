@@ -105,7 +105,8 @@ def visualize_2d(
         Patch(facecolor="C1", edgecolor="w"),
     ]
     fig.legend(handles=legend_handles, labels=["Wall", "Origin", "Target", "Route"])
-    plt.title(f"Length: {route_info.get_length()}")
+    #plt.title(f"Length: {route_info.get_length()}")
+    plt.title("")
 
     return fig
 

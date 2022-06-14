@@ -28,16 +28,48 @@ class A_Star:
         target_node = TreeNode(target)
 
         map_info = self.mission_info.map_info
-        change_dir = [
-            np.array([-1, 0]),
-            np.array([1, 0]),
-            np.array([0, 1]),
-            np.array([0, -1]),
-            np.array([-1, -1]),
-            np.array([-1, 1]),
-            np.array([1, -1]),
-            np.array([1, 1]),
-        ]
+        if map_info.map.ndim == 2:
+            change_dir = [
+                np.array([-1, 0]),
+                np.array([1, 0]),
+                np.array([0, 1]),
+                np.array([0, -1]),
+                np.array([-1, -1]),
+                np.array([-1, 1]),
+                np.array([1, -1]),
+                np.array([1, 1]),
+            ]
+        elif map_info.map.ndim == 3:
+                change_dir = [
+                    np.array([-1, 0, 0]),
+                    np.array([1, 0, 0]),
+                    np.array([0, 1, 0]),
+                    np.array([0, -1, 0]),
+                    np.array([0, 0, 1]),
+                    np.array([0, 0, -1]),
+                    np.array([0, -1, -1]),
+                    np.array([-1, 0, -1]),
+                    np.array([-1, -1, 0]),
+                    np.array([0, 1, 1]),
+                    np.array([1, 0, 1]),
+                    np.array([1, 1, 0]),
+                    np.array([0, -1, 1]),
+                    np.array([-1, 0, 1]),
+                    np.array([-1, 1, 0]),
+                    np.array([0, 1, -1]),
+                    np.array([1, 0, -1]),
+                    np.array([1, -1, 0]),
+                    np.array([-1, 1, 1]),
+                    np.array([1, -1, 1]),
+                    np.array([1, 1, -1]),
+                    np.array([1, -1, -1]),
+                    np.array([-1, 1, -1]),
+                    np.array([-1, -1, 1]),
+                    np.array([1, 1, 1]),
+                    np.array([-1, -1, -1]),
+                ]
+        else:
+            return Status.Failure
 
         used_coord = [tuple(origin)]
         candidates = [origin_node]
@@ -45,6 +77,10 @@ class A_Star:
         while currNode != target_node:
             for dir in change_dir:
                 new_coord = currNode.coord + dir
+                if any(new_coord < 0) == True:
+                    continue
+                if any(new_coord >= np.array(map_info.map.shape)) == True:
+                    continue
                 if not map_info.check_point_feasible(np.array([new_coord]), node_num=1, ndim=map_info.map.ndim):
                     continue
                 if tuple(new_coord) in used_coord:

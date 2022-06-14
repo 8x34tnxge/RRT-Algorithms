@@ -131,7 +131,7 @@ def generate_3d_map(opt):
     origin_id, target_id = np.random.choice(range(empty_num), 2, replace=True)
 
     ret[empty_x[origin_id], empty_y[origin_id], 0] = MapType.ORIGIN
-    ret[empty_x[target_id], empty_y[target_id], np.random.randint(boundary[2]+1)] = MapType.TARGET
+    ret[empty_x[target_id], empty_y[target_id], np.random.randint(boundary[2])] = MapType.TARGET
 
     return ret
 

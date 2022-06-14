@@ -12,8 +12,16 @@ def get_opt() -> argparse.Namespace:
 
     return parser.parse_args()
 
+def show_figure(fig):
+    dummy = plt.figure()
+    new_manager = dummy.canvas.manager
+    new_manager.canvas.figure = fig
+    fig.set_canvas(new_manager.canvas)
+
 if __name__ == '__main__':
     opt = get_opt()
     with open(os.path.join(opt.dir, opt.name), 'rb') as f:
         fig = pickle.load(f)
+    show_figure(fig)
+    # fig.show()
     plt.show()

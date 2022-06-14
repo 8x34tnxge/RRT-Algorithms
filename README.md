@@ -10,13 +10,6 @@ the implementation of Rapidly-exploring Random Tree
 - [x] 3d map & route visualization.
 - [x] route feasibility check in basic RRT.
 - [x] fix tree structure allow different nodes including the same info.
-- [ ] implement the auto-record function to generate large number of 2d/3d maps,
-      monitor the performance of each algorithm in different maps (2d/3d),
-      and save them into files.
-- [ ] rewrite docstring
-- [ ] add more extend methods.
-- [ ] add more sample methods.
-- [ ] optimize the algorithm efficiency.
 
 ## Algorithm
 
@@ -25,3 +18,4 @@ the implementation of Rapidly-exploring Random Tree
 - [x] RRT-Connect
 - [x] RRT*
 - [x] RRT* with B-Spline
+- [x] A*

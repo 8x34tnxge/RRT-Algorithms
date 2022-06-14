@@ -20,7 +20,7 @@ def save(file, obj):
 
     if save_file_name.rsplit(".")[-1] == "pickle":
         with open(file, "wb") as f:
-            f.write(pickle.dumps(obj))
+            pickle.dump(obj, f)
     elif isinstance(obj, matplotlib.figure.Figure):
         obj.savefig(file)
         plt.close(obj)
